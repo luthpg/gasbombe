@@ -1,0 +1,8 @@
+services:
+  dev:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    user: "${UID}:${GID}"
+    # コンテナが終了しないようにttyを有効にする
+    tty: true

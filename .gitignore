@@ -1,0 +1,28 @@
+# Rust build
+/target/
+**/*.rs.bk
+
+# IDE/Editor
+/.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+
+# Docker
+*.log
+
+# Node/npm (もしフロントエンドやnpmを使う場合)
+/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# その他
+package/target/

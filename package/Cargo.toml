@@ -1,0 +1,27 @@
+[package]
+name = "gasbombe"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# 高機能なCLI引数パーサー
+clap = { version = "4.5.4", features = ["derive"] }
+
+# 対話的なプロンプト
+inquire = "0.7.5"
+
+# テンプレートエンジン（Jinja2ライク）
+tera = "1.19.1"
+
+# シリアライズ/デシリアライズ
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Wasm化に必要
+wasm-bindgen = "0.2"
+
+# エラーハンドリング
+anyhow = "1.0.86"
+
+[lib]
+crate-type = ["cdylib"]
