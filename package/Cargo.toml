@@ -1,7 +1,7 @@
 [package]
 name = "gasbombe"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
 # 高機能なCLI引数パーサー
@@ -22,6 +22,6 @@ wasm-bindgen = "0.2"
 
 # エラーハンドリング
 anyhow = "1.0.86"
-
-[lib]
-crate-type = ["cdylib"]
+serde-wasm-bindgen = "0.6.5"
+console_error_panic_hook = "0.1.7"
+wasm-bindgen-futures = "0.4.50"
