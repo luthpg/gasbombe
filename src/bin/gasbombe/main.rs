@@ -1,6 +1,4 @@
-// src/main.rs
-
-use gasbombe::{generate_project, PackageManager, ProjectOptions, TemplateType}; // lib.rsからインポート
+use gasbombe::{generate_project, PackageManager, ProjectOptions, TemplateType};
 use inquire::{Select, Text};
 use anyhow::Result;
 
