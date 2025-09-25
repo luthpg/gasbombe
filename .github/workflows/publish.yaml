@@ -1,0 +1,43 @@
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger on tags like v1.0.0, v0.1.2, etc.
+  workflow_dispatch: # Trigger manually
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+
+      - name: Install wasm-pack
+        run: cargo install wasm-pack
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Build Wasm package
+        # The build script from package.json is executed
+        run: pnpm run build
+
+      - name: Publish to npm
+        working-directory: ./pkg
+        # --access public is required for scoped packages
+        run: npm publish --access public
+        env:
+          # Your NPM_TOKEN must be set in the repository's secrets
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

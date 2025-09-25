@@ -1,0 +1,12 @@
+# Git
+.git
+
+# Node
+/node_modules
+/pkg
+
+# Rust
+/target
+
+# IDE
+.vscode
