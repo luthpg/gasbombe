@@ -2,19 +2,19 @@
   "name": "@ciderjs/gasbombe",
   "version": "0.1.0",
   "description": "A TypeScript Project Generator for GoogleAppsScript, available as CLI",
-  "main": "gasbombe.js",
-  "module": "gasbombe.js",
-  "types": "gasbombe.d.ts",
+  "main": "pkg/gasbombe.js",
+  "module": "pkg/gasbombe.js",
+  "types": "pkg/gasbombe.d.ts",
   "files": [
-    "gasbombe_bg.wasm",
-    "gasbombe.js",
-    "gasbombe.d.ts",
+    "pkg/gasbombe_bg.wasm",
+    "pkg/gasbombe.js",
+    "pkg/gasbombe.d.ts",
     "README.md"
   ],
   "scripts": {
     "generate": "jiti scripts/copyTemplates.ts",
     "dc": "docker-compose build && docker-compose up -d && docker-compose exec dev bash",
-    "build": "wasm-pack build --target web --out-dir pkg -- --features wasm",
+    "build": "wasm-pack build --target web --out-dir pkg -- --no-default-features --features wasm",
     "prepublishOnly": "pnpm run generate && pnpm run build"
   },
   "keywords": [

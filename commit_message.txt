@@ -1,0 +1,10 @@
+fix(build): ビルド、パッケージング、CIの設定を修正
+
+DockerおよびWebAssemblyのビルド失敗と、npmパッケージングの不備を修正しました。
+
+- build: wasm-packのビルドスクリプトに`--no-default-features`を追加し、CLIとWasmの機能を正しく分離
+- build(deps): `Cargo.toml`の`getrandom`依存関係を修正し、Wasmコンパイルを有効化
+- ci: GitHub Actionsの公開ワークフローから無効な`working-directory`を削除
+- npm: `package.json`の`main`, `files`, `types`を正しいビルド成果物ディレクトリ(`pkg/`)を指すように更新
+- docker: `.dockerignore`を追加し、`node_modules`と`target`を除外することでDockerビルドエラーを修正
+- git: `.gitattributes`を追加し、改行コードを統一

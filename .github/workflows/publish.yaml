@@ -31,13 +31,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Build Wasm package
-        # Navigate to the directory containing Cargo.toml and the new package.json
-        working-directory: ./package
         # The build script from package.json is executed
-        run: npm run build
+        run: pnpm run build
 
       - name: Publish to npm
-        working-directory: .
+        working-directory: ./pkg
         # --access public is required for scoped packages
         run: npm publish --access public
         env:
