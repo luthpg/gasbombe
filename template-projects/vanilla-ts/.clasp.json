@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json.schemastore.org/clasp.json",
+  "scriptId": "{{ input your script id of apps-script }}",
+  "rootDir": "dist"
+}
