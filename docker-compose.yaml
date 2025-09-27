@@ -1,7 +1,0 @@
-services:
-  dev:
-    build: .
-    volumes:
-      - .:/usr/src/app
-    # user: "${UID}:${GID}"
-    tty: true
