@@ -67,13 +67,15 @@ async function handleClaspSetup(
 
   consola.start('Setting up .clasp.json...');
 
-  try {
-    await runCommand(npxLikeCommand, ['@google/clasp', 'status'], outputDir);
-  } catch {
-    consola.error(
-      `It seems you are not logged in to clasp. Please run \`${npxLikeCommand} @google/clasp login\` and try again.`,
-    );
-    return;
+  if (claspOption === 'create' || claspOption === 'list') {
+    try {
+      await runCommand(npxLikeCommand, ['@google/clasp', 'status'], outputDir);
+    } catch {
+      consola.error(
+        `It seems you are not logged in to clasp. Please run \`${npxLikeCommand} @google/clasp login\` and try again.`,
+      );
+      return;
+    }
   }
 
   let scriptId: string | undefined;
@@ -220,11 +222,17 @@ export async function generateProject({
         encoding: 'utf-8',
       });
       const renderedContent = ejs.render(templateContent, ejsData);
-      await fs.writeFile(outputPath, renderedContent);
+      await fs.writeFile(outputPath, renderedContent, { encoding: 'utf-8' });
     }
   }
 
-  await handleClaspSetup(clasp, projectName, outputDir, claspProjectId, packageManager);
+  await handleClaspSetup(
+    clasp,
+    projectName,
+    outputDir,
+    claspProjectId,
+    packageManager,
+  );
 
   if (install) {
     consola.start(`Installing dependencies with ${packageManager}...`);
@@ -255,7 +263,6 @@ export async function generateProject({
   consola.success(`Project '${projectName}' created successfully!`);
   consola.log(`\nTo get started, run:\n`);
   projectName !== '.' && consola.log(`  cd ${projectName}`);
-  templateType !== 'vanilla-ts'
-    ? consola.log(`  ${packageManager} dev`)
-    : consola.log(`  ...and write your GAS code!`);
+  templateType !== 'vanilla-ts' && consola.log(`  ${packageManager} dev`);
+  consola.log(`\n...and write your GAS code!`);
 }

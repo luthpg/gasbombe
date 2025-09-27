@@ -69,27 +69,27 @@ export async function main(): Promise<void> {
         });
 
         clasp ||= await select<ClaspOption>({
-          message: 'How do you want to set up the Apps Script project?',
+          message: 'How do you want to set up the Apps Script project?\n* If you use "create" or "select", you need to login to clasp first',
           choices: [
             {
-              name: 'Create a new Apps Script project',
+              name: '[NEW] Create a new Apps Script project (need `npx @google/clasp login`)',
               value: 'create',
               description:
                 'Runs `npx @google/clasp create` to generate a new project.',
             },
             {
-              name: 'Use an existing Apps Script project',
+              name: '[SELECT] Use an existing Apps Script project (need `npx @google/clasp login`)',
               value: 'list',
               description:
                 'Runs `npx @google/clasp list` and lets you choose from your projects.',
             },
             {
-              name: 'Input Script ID manually',
+              name: '[INPUT] Input Script ID manually',
               value: 'input',
               description: 'Manually provide an existing Script ID.',
             },
             {
-              name: 'Skip for now',
+              name: '[NONE] Skip for now',
               value: 'skip',
               description:
                 'Create a `.clasp.json` file without Apps Script project ID.',
