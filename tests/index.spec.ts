@@ -255,7 +255,10 @@ describe('generateProject', () => {
         const mockProcess = createMockProcess();
         process.nextTick(() => {
           if (args?.includes('create')) {
-            mockProcess.stdout.emit('data', `Created new script: ${scriptId}`);
+            mockProcess.stdout.emit(
+              'data',
+              `Created new script: https://script.google.com/d/${scriptId}/edit`,
+            );
           }
           mockProcess.emit('close', 0);
         });
@@ -322,7 +325,7 @@ describe('generateProject', () => {
           if (args?.includes('list')) {
             mockProcess.stdout.emit(
               'data',
-              'Header\nProject 1 - id1\nProject 2 - selected-script-id',
+              `Header\nProject 1 - https://script.google.com/d/id1/edit\nProject 2 - https://script.google.com/d/${scriptId}/edit`,
             );
           }
           mockProcess.emit('close', 0);
