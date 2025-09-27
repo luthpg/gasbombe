@@ -1,6 +1,6 @@
 {
   "name": "@ciderjs/gasbombe",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A TypeScript Project Generator for GoogleAppsScript, available as CLI",
   "type": "module",
   "main": "src/index.ts",
@@ -15,12 +15,12 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
+    "dev": "jiti src/cli",
     "tsc": "tsgo --noEmit src",
     "check": "biome check --write",
     "generate": "jiti scripts/copyTemplates",
-    "prebuild": "pnpm run tsc",
-    "build": "unbuild",
-    "postbuild": "pnpm run generate",
+    "test": "vitest run --coverage",
+    "build": "pnpm run tsc && pnpm run test --silent && unbuild && pnpm run generate",
     "postinstall": "pnpm run generate"
   },
   "keywords": [
@@ -29,7 +29,7 @@
     "typescript",
     "react"
   ],
-  "author": "luthpg",
+  "author": "ciderjs/luthpg",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -51,8 +51,10 @@
     "@types/ejs": "^3.1.5",
     "@types/node": "^24.5.2",
     "@typescript/native-preview": "7.0.0-dev.20250925.1",
+    "@vitest/coverage-v8": "3.2.4",
     "jiti": "^2.6.0",
     "typescript": "^5.9.2",
-    "unbuild": "^3.6.1"
+    "unbuild": "^3.6.1",
+    "vitest": "^3.2.4"
   }
 }

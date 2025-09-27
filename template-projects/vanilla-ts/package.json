@@ -1,5 +1,5 @@
 {
-  "name": "<% projectName %>",
+  "name": "<%= projectName %>",
   "private": true,
   "version": "0.0.0",
   "type": "module",
