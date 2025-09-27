@@ -1,6 +1,6 @@
 {
   "name": "@ciderjs/gasbombe",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A TypeScript Project Generator for GoogleAppsScript, available as CLI",
   "type": "module",
   "main": "src/index.ts",
@@ -19,11 +19,11 @@
     "tsc": "tsgo --noEmit src",
     "check": "biome check --write",
     "generate": "jiti scripts/copyTemplates",
-    "prebuild": "pnpm run tsc",
+    "test": "vitest run --coverage",
+    "prebuild": "pnpm run tsc && pnpm run test --silent passed-only",
     "build": "unbuild",
     "postbuild": "pnpm run generate",
-    "postinstall": "pnpm run generate",
-    "test": "vitest run --coverage"
+    "postinstall": "pnpm run generate"
   },
   "keywords": [
     "googleappsscript",

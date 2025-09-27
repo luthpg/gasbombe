@@ -224,7 +224,7 @@ export async function generateProject({
     }
   }
 
-  await handleClaspSetup(clasp, projectName, outputDir, claspProjectId);
+  await handleClaspSetup(clasp, projectName, outputDir, claspProjectId, packageManager);
 
   if (install) {
     consola.start(`Installing dependencies with ${packageManager}...`);

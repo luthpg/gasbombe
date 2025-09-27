@@ -11,5 +11,8 @@ export default defineConfig({
       '.cache',
       'template-projects',
     ],
+    coverage: {
+      include: ['src/**/*.ts'],
+    },
   },
 });
