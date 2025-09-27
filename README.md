@@ -1,27 +1,36 @@
 # **GasBombe**
 
+[![README-ja](https://img.shields.io/badge/English-blue?logo=ReadMe)](./README.ja.md)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@ciderjs/gasbombe.svg)](https://www.npmjs.com/package/@ciderjs/gasbombe)
+[![GitHub issues](https://img.shields.io/github/issues/luthpg/gasbombe.svg)](https://github.com/luthpg/gasbombe/issues)
+
 🛢 'Gasbombe' the TypeScript Project Generator for GoogleAppsScript.
 
-This project provides both a command-line interface (CLI) and a WebAssembly (Wasm) module to scaffold new TypeScript projects for Google Apps Script, with templates for Vanilla TS and React.
+This project provides a command-line interface (CLI) to scaffold new TypeScript projects for Google Apps Script, with templates for Vanilla TS and React.
 
 ## **Features**
 
-* **CLI Tool**: Interactive command-line prompts to guide you through project setup.  
-* **Wasm Module**: Use the generator logic directly in the browser or other JavaScript environments.  
-* **Templates**:  
-  * Vanilla TypeScript  
-  * React with TSX  
+* **CLI Tool**: Interactive command-line prompts to guide you through project setup.
+* **Templates**:
+  * Vanilla TypeScript
+  * React with TSX
 * **Package Manager Support**: Works with npm, Yarn, and pnpm.
 
-## **1. CLI Usage**
+## **Usage**
 
 ### **Installation**
 
-Install the CLI tool directly using cargo:
+You can use `npx` to run the CLI without installing it globally:
 
 ```bash
-# Replace with your actual repository URL  
-cargo install --git https://github.com/luthpg/gasbombe.git gasbombe
+npx @ciderjs/gasbombe
+```
+
+Or, you can install it globally:
+
+```bash
+npm install -g @ciderjs/gasbombe
 ```
 
 ### **How to Use**
@@ -34,78 +43,56 @@ gasbombe
 
 You will be asked for:
 
-1. Project name  
-2. Package manager (npm, yarn, pnpm)  
+1. Project name
+2. Package manager (npm, yarn, pnpm)
 3. Template (Vanilla TS, React)
 
 The tool will create a new directory with the specified project name, generate the template files, and install the dependencies.
 
-## **2. Wasm Module Usage**
+### **CLI Options**
 
-### **Installation**
-
-Install the Wasm package from npm:
+You can bypass the interactive prompts by providing command-line options. This is useful for scripting and automation.
 
 ```bash
-# Replace with your actual package name  
-npm install @ciderjs/gasbombe
+# Example: Create a new React project with pnpm
+gasbombe --name my-react-app --pkg pnpm --template react-tsx
 ```
 
-### **How to Use**
+| Option     | Argument           | Description                      | Choices                   |
+| ---------- | ------------------ | -------------------------------- | ------------------------- |
+| `--name`   | `[projectName]`    | The name of the project to generate. | -                         |
+| `--pkg`    | `[packageManager]` | The package manager to use.      | `npm`, `pnpm`, `yarn`     |
+| `--template` | `[templateType]`   | The project template to use.     | `vanilla-ts`, `react-tsx` |
 
-You can import and use the run_generator function in your JavaScript/TypeScript code.
-
-```ts
-// Replace with your actual package name  
-import init, { run_generator } from '@ciderjs/gasbombe';
-
-// Initialize the Wasm module  
-async function main() {  
-  await init();
-
-  const options = {  
-    project_name: "my-gas-project-from-wasm",  
-    package_manager: "npm", // "npm", "yarn", or "pnpm"  
-    template_type: "vanilla-ts" // "vanilla-ts" or "react-tsx"  
-  };
-
-  try {  
-    // This will create files and directories.  
-    // Note: This operation may be restricted in a sandboxed browser environment.  
-    await run_generator(options);  
-    console.log("Project generated successfully\!");  
-  } catch (error) {  
-    console.error("Failed to generate project:", error);  
-  }  
-}
-
-main();
-```
-
-**Note:** The Wasm-based generator **cannot** execute the npm install (or equivalent) step due to the sandboxed browser environment. It will only create the project files.
+If any of these options are omitted, you will be prompted to enter the value interactively.
 
 ## **Development**
 
 ### **Prerequisites**
 
-* [Rust](https://www.rust-lang.org/tools/install)  
-* [wasm-pack](https://www.google.com/search?q=https://rustwasm.github.io/wasm-pack/installer/)  
 * [Node.js](https://nodejs.org/)
+* [pnpm](https://pnpm.io/installation)
+
+### **Setup**
+
+Clone the repository and install the dependencies:
+
+```bash
+git clone https://github.com/luthpg/gasbombe.git
+cd gasbombe
+pnpm install
+```
 
 ### **Build**
 
-To build the Wasm package locally:
+To build the project locally:
 
 ```bash
-# Navigate to the package directory  
-cd package
-
-# Run the build script  
-npm run build
+pnpm run build
 ```
 
-This will generate the necessary files (gasbombe\_bg.wasm, gasbombe.js, etc.) in the package directory.
+This will generate the necessary files in the `dist` directory.
 
 ## **License**
 
-This project is licensed under the MIT License. See the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
