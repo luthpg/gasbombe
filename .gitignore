@@ -1,34 +1,28 @@
-# Rust build
-/target/
-**/*.rs.bk
-package/pkg/
-
-# IDE/Editor
-/.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Environment
-.env
-
-# Docker
+# Logs
+logs
 *.log
-
-# Node/npm
-/node_modules/
-package/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# その他
-package/target/
-templates/**/*.tera
-!template-projects
-!template-projects/**/.env
-!template-projects/**/.clasp.json
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+.clasp*.json
+.env*
+coverage
