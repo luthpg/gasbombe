@@ -1,4 +1,4 @@
-# **GasBombe**
+# **Gasbombe**
 
 [![README-ja](https://img.shields.io/badge/日本語-blue?logo=ReadMe)](./README.ja.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -44,8 +44,9 @@ gasbombe
 You will be asked for:
 
 1. Project name
-2. Package manager (npm, yarn, pnpm)
-3. Template (Vanilla TS, React)
+2. Project template (Vanilla TS, React)
+3. How to set up the Apps Script project (`.clasp.json`)
+4. Package manager (npm, yarn, pnpm)
 
 The tool will create a new directory with the specified project name, generate the template files, and install the dependencies.
 
@@ -54,15 +55,17 @@ The tool will create a new directory with the specified project name, generate t
 You can bypass the interactive prompts by providing command-line options. This is useful for scripting and automation.
 
 ```bash
-# Example: Create a new React project with pnpm
-gasbombe --name my-react-app --pkg pnpm --template react-tsx
+# Example: Create a new React project with pnpm, creating a new Apps Script project along with it
+gasbombe --name my-react-app --template react-tsx --clasp create --pkg pnpm
 ```
 
-| Option     | Argument           | Description                      | Choices                   |
-| ---------- | ------------------ | -------------------------------- | ------------------------- |
-| `--name`   | `[projectName]`    | The name of the project to generate. | -                         |
-| `--pkg`    | `[packageManager]` | The package manager to use.      | `npm`, `pnpm`, `yarn`     |
-| `--template` | `[templateType]`   | The project template to use.     | `vanilla-ts`, `react-tsx` |
+| Option | Alias | Argument | Description | Choices |
+| :--- | :--- | :--- | :--- | :--- |
+| `--name` | `-n` | `[projectName]` | The name of the project to generate. | - |
+| `--template` | `-t` | `[templateType]` | The project template to use. | `vanilla-ts`, `react-tsx` |
+| `--clasp` | `-c` | `[claspOption]` | How to set up the `.clasp.json` file.<br/>`create` and `list` require prior login to clasp. | `create`, `list`, `input`, `skip` |
+| `--pkg` | `-p` | `[packageManager]` | The package manager to use. | `npm`, `pnpm`, `yarn` |
+| `--skipInstall` | | | Skip installing dependencies. | - |
 
 If any of these options are omitted, you will be prompted to enter the value interactively.
 

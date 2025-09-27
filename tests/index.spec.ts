@@ -406,11 +406,13 @@ describe('generateProject', () => {
 
   it('should show correct final message for vanilla-ts', async () => {
     await generateProject({ ...projectOptions, templateType: 'vanilla-ts' });
-    expect(consola.log).toHaveBeenCalledWith('  ...and write your GAS code!');
+    expect(consola.log).not.toHaveBeenCalledWith('  pnpm dev');
+    expect(consola.log).toHaveBeenCalledWith('...and write your GAS code!');
   });
 
   it('should show correct final message for other templates', async () => {
     await generateProject({ ...projectOptions, templateType: 'react-tsx' });
     expect(consola.log).toHaveBeenCalledWith('  pnpm dev');
+    expect(consola.log).toHaveBeenCalledWith('...and write your GAS code!');
   });
 });

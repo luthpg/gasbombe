@@ -44,8 +44,9 @@ gasbombe
 以下の項目について質問されます。
 
 1. プロジェクト名
-2. パッケージマネージャー（npm, yarn, pnpm）
-3. テンプレート（Vanilla TS, React）
+2. プロジェクトテンプレート（Vanilla TS, React）
+3. Apps Scriptプロジェクトのセットアップ方法（`.clasp.json`）
+4. パッケージマネージャー（npm, yarn, pnpm）
 
 このツールは、指定されたプロジェクト名で新しいディレクトリを作成し、テンプレートファイルを生成して、依存関係をインストールします。
 
@@ -54,15 +55,17 @@ gasbombe
 コマンドラインオプションを指定することで、対話型のプロンプトを省略できます。これは、スクリプトや自動化に便利です。
 
 ```bash
-# 例: pnpmを使用して新しいReactプロジェクトを作成する
-gasbombe --name my-react-app --pkg pnpm --template react-tsx
+# 例: pnpmを使用して新しいReactプロジェクトを作成し、同時に新しいApps Scriptプロジェクトも作成する
+gasbombe --name my-react-app --template react-tsx --clasp create --pkg pnpm
 ```
 
-| オプション | 引数 | 説明 | 選択肢 |
-| :--- | :--- | :--- | :--- |
-| `--name` | `[projectName]` | 生成するプロジェクトの名前。 | - |
-| `--pkg` | `[packageManager]` | 使用するパッケージマネージャー。 | `npm`, `pnpm`, `yarn` |
-| `--template` | `[templateType]` | 使用するプロジェクトテンプレート。 | `vanilla-ts`, `react-tsx` |
+| オプション | エイリアス | 引数 | 説明 | 選択肢 |
+| :--- | :--- | :--- | :--- | :--- |
+| `--name` | `-n` | `[projectName]` | 生成するプロジェクトの名前。 | - |
+| `--template` | `-t` | `[templateType]` | 使用するプロジェクトテンプレート。 | `vanilla-ts`, `react-tsx` |
+| `--clasp` | `-c` | `[claspOption]` | `.clasp.json`のセットアップ方法。<br/>`create`と`list`は事前にclaspへのログインが必要です。 | `create`, `list`, `input`, `skip` |
+| `--pkg` | `-p` | `[packageManager]` | 使用するパッケージマネージャー。 | `npm`, `pnpm`, `yarn` |
+| `--skipInstall` | | | 依存関係のインストールをスキップします。 | - |
 
 これらのオプションのいずれかが省略された場合、対話形式で値を入力するよう求められます。
 

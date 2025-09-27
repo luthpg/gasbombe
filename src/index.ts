@@ -65,7 +65,9 @@ async function handleClaspSetup(
         ? 'pnpx'
         : 'yarn';
 
-  consola.start('Setting up .clasp.json...');
+  consola.start(
+    `Setting up .clasp.json with \`${npxLikeCommand} @google/clasp\`...`,
+  );
 
   if (claspOption === 'create' || claspOption === 'list') {
     try {
@@ -96,7 +98,7 @@ async function handleClaspSetup(
           outputDir,
           true,
         );
-        const match = result.match(/Created new script: (.*)/);
+        const match = result.match(/Created new script: .+\/d\/(.+)\/edit/);
         if (match?.[1]) {
           scriptId = match[1];
           consola.info(`Created new Apps Script project with ID: ${scriptId}`);
@@ -123,7 +125,16 @@ async function handleClaspSetup(
           .map((line) => {
             const parts = line.split(' - ');
             if (parts.length >= 2) {
-              return { name: parts[0]?.trim(), value: parts[1]?.trim() };
+              const name = parts[0]?.trim();
+              const url = parts[1]?.trim();
+              if (!name || !url) return null;
+
+              const match = url.match(/\/d\/(.+)\/edit/);
+              const scriptId = match?.[1];
+
+              if (scriptId) {
+                return { name, value: scriptId };
+              }
             }
             return null;
           })
@@ -261,8 +272,20 @@ export async function generateProject({
   }
 
   consola.success(`Project '${projectName}' created successfully!`);
-  consola.log(`\nTo get started, run:\n`);
-  projectName !== '.' && consola.log(`  cd ${projectName}`);
-  templateType !== 'vanilla-ts' && consola.log(`  ${packageManager} dev`);
-  consola.log(`\n...and write your GAS code!`);
+
+  const messages: string[] = [];
+  projectName !== '.' && messages.push(`  cd ${projectName}`);
+  !install && messages.push(`  ${packageManager} install`);
+  templateType !== 'vanilla-ts' && messages.push(`  ${packageManager} dev`);
+
+  if (messages.length > 0) {
+    consola.log(`\nTo get started, run:\n`);
+    for (const message of messages) {
+      consola.log(message);
+    }
+    consola.log('');
+    consola.log(`...and write your GAS code!`);
+  } else {
+    consola.log(`\nTo get started, write your GAS code in \`src/\`!`);
+  }
 }
