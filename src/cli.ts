@@ -15,7 +15,7 @@ export async function main(): Promise<void> {
     .description('Create project for GoogleAppsScript')
     .option(
       '-n, --name [projectName]',
-      'Project name what you want to generate',
+      'Project name what you want to generate\n* Project name must be "." or a valid folder name without path characters.',
       '',
     )
     .option(
@@ -56,9 +56,26 @@ export async function main(): Promise<void> {
       let claspProjectId: string | undefined;
 
       try {
+        const validProjectNameRegex = /^(?!.*\.\.)[a-zA-Z0-9_-]+$/;
         projectName ||= await input({
           message: 'Input project name what you want to generate...',
+          validate: (value) => {
+            if (value === '.') {
+              return true;
+            }
+            if (
+              validProjectNameRegex.test(value) &&
+              !value.includes('/') &&
+              !value.includes('\\')
+            ) {
+              return true;
+            }
+            return 'Project name must be "." or a valid folder name without path characters.';
+          },
         });
+        if (!validProjectNameRegex.test(projectName)) {
+          throw Error('Invalid project name');
+        }
 
         templateType ||= await select<TemplateType>({
           message: 'Choice project template...',
@@ -67,9 +84,14 @@ export async function main(): Promise<void> {
             { name: 'react-tsx', value: 'react-tsx' },
           ],
         });
+        const templateTypes: TemplateType[] = ['vanilla-ts', 'react-tsx'];
+        if (!templateTypes.includes(templateType)) {
+          throw Error('Invalid project template');
+        }
 
         clasp ||= await select<ClaspOption>({
-          message: 'How do you want to set up the Apps Script project?\n* If you use "create" or "select", you need to login to clasp first',
+          message:
+            'How do you want to set up the Apps Script project?\n* If you use "create" or "select", you need to login to clasp first',
           choices: [
             {
               name: '[NEW] Create a new Apps Script project (need `npx @google/clasp login`)',
@@ -96,6 +118,10 @@ export async function main(): Promise<void> {
             },
           ],
         });
+        const claspOptions: ClaspOption[] = ['create', 'list', 'input', 'skip'];
+        if (!claspOptions.includes(clasp)) {
+          throw Error('Invalid clasp option');
+        }
 
         if (clasp === 'input') {
           claspProjectId = await input({
@@ -106,7 +132,8 @@ export async function main(): Promise<void> {
 
         if (
           packageManager === ('' as PackageManager) &&
-          clasp !== 'create' && clasp !== 'list' &&
+          clasp !== 'create' &&
+          clasp !== 'list' &&
           skipInstall
         ) {
           packageManager = 'npm';
@@ -120,6 +147,11 @@ export async function main(): Promise<void> {
             { name: 'yarn', value: 'yarn' },
           ],
         });
+
+        const packageManagers: PackageManager[] = ['npm', 'pnpm', 'yarn'];
+        if (!packageManagers.includes(packageManager)) {
+          throw Error('Invalid package manager');
+        }
       } catch (e) {
         (e as Error).message === 'User force closed the prompt with SIGINT' &&
           process.exit(0);
