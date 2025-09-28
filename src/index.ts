@@ -17,6 +17,7 @@ export async function runCommand(
     const child = spawn(command, args, {
       cwd,
       stdio: capture ? 'pipe' : 'inherit',
+      shell: true,
     });
 
     let stdout = '';
