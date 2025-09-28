@@ -81,10 +81,20 @@ async function handleClaspSetup(
   }
 
   let scriptId: string | undefined;
+  let existingClaspJson: { scriptId: string; [key: string]: string | string[] } | null = null;
 
   switch (claspOption) {
     case 'create':
       try {
+        const claspJsonPath = path.join(outputDir, '.clasp.json');
+        try {
+          const existingContent = await fs.readFile(claspJsonPath, 'utf-8');
+          existingClaspJson = JSON.parse(existingContent);
+          await fs.unlink(claspJsonPath);
+        } catch {
+          // No existing .clasp.json, which is fine.
+        }
+
         const result = await runCommand(
           npxLikeCommand,
           [
@@ -169,13 +179,18 @@ async function handleClaspSetup(
     };
     let successMessage = `.clasp.json created successfully with scriptId: ${scriptId}`;
 
-    try {
-      const existingContent = await fs.readFile(claspJsonPath, 'utf-8');
-      const existingJson = JSON.parse(existingContent);
-      claspJson = { ...existingJson, scriptId };
+    if (existingClaspJson) {
+      claspJson = { ...existingClaspJson, scriptId };
       successMessage = `.clasp.json updated successfully with scriptId: ${scriptId}`;
-    } catch {
-      // If file doesn't exist or is invalid, we'll just create a new one.
+    } else {
+      try {
+        const existingContent = await fs.readFile(claspJsonPath, 'utf-8');
+        const currentClaspJson = JSON.parse(existingContent);
+        claspJson = { ...currentClaspJson, scriptId };
+        successMessage = `.clasp.json updated successfully with scriptId: ${scriptId}`;
+      } catch {
+        // If file doesn't exist or is invalid, we'll just create a new one.
+      }
     }
 
     const claspJsonContent = JSON.stringify(claspJson, null, 2);
@@ -201,13 +216,32 @@ export async function generateProject({
     `Creating a new Project for GoogleAppsScript in ${outputDir}...`,
   );
 
-  try {
-    await fs.access(outputDir);
-    consola.error(`Directory ${projectName} already exists.`);
-    process.exit(1);
-    return;
-  } catch {
-    // Directory does not exist, which is what we want.
+  if (projectName === '.') {
+    try {
+      const files = await fs.readdir(outputDir);
+      const relevantFiles = files.filter((file) => !file.startsWith('.'));
+
+      if (relevantFiles.length > 0) {
+        const proceed = await confirm(
+          'Current directory is not empty. Proceed anyway?',
+        );
+
+        if (!proceed) {
+          consola.warn('Operation cancelled.');
+          process.exit(0);
+        }
+      }
+    } catch {
+      // Directory does not exist, then mkdir will create it.
+    }
+  } else {
+    try {
+      await fs.access(outputDir);
+      consola.error(`Directory ${projectName} already exists.`);
+      process.exit(1);
+    } catch {
+      // Directory does not exist, which is what we want.
+    }
   }
 
   await fs.mkdir(outputDir, { recursive: true });
