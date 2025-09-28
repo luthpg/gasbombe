@@ -48,6 +48,7 @@ describe('runCommand', () => {
     expect(spawn).toHaveBeenCalledWith('ls', ['-la'], {
       cwd: '/fake/dir',
       stdio: 'inherit',
+      shell: true,
     });
   });
 
@@ -59,6 +60,7 @@ describe('runCommand', () => {
     expect(spawn).toHaveBeenCalledWith('echo', ['hello'], {
       cwd: '/fake/dir',
       stdio: 'pipe',
+      shell: true,
     });
   });
 
