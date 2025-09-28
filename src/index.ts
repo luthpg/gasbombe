@@ -80,7 +80,10 @@ async function handleClaspSetup(
   }
 
   let scriptId: string | undefined;
-  let existingClaspJson: { scriptId: string; [key: string]: string | string[] } | null = null;
+  let existingClaspJson: {
+    scriptId: string;
+    [key: string]: string | string[];
+  } | null = null;
 
   switch (claspOption) {
     case 'create':
