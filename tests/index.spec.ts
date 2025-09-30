@@ -45,10 +45,11 @@ describe('runCommand', () => {
     const promise = runCommand('ls', ['-la'], '/fake/dir');
     mockProcess.emit('close', 0);
     await expect(promise).resolves.toBe('');
+    const isWindows = process.platform === 'win32';
     expect(spawn).toHaveBeenCalledWith('ls', ['-la'], {
       cwd: '/fake/dir',
       stdio: 'inherit',
-      shell: true,
+      shell: isWindows,
     });
   });
 
@@ -57,10 +58,11 @@ describe('runCommand', () => {
     mockProcess.stdout.emit('data', 'hello ');
     mockProcess.emit('close', 0);
     await expect(promise).resolves.toBe('hello');
+    const isWindows = process.platform === 'win32';
     expect(spawn).toHaveBeenCalledWith('echo', ['hello'], {
       cwd: '/fake/dir',
       stdio: 'pipe',
-      shell: true,
+      shell: isWindows,
     });
   });
 
