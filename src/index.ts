@@ -14,10 +14,11 @@ export async function runCommand(
   capture = false,
 ): Promise<string> {
   return new Promise((resolve, reject) => {
+    const isWindows = process.platform === 'win32';
     const child = spawn(command, args, {
       cwd,
       stdio: capture ? 'pipe' : 'inherit',
-      shell: true,
+      shell: isWindows,
     });
 
     let stdout = '';
