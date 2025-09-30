@@ -1,4 +1,4 @@
-# **GasBombe**
+# **Gasbombe**
 
 [![README-en](https://img.shields.io/badge/English-blue?logo=ReadMe)](./README.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
