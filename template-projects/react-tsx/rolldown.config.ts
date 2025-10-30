@@ -3,7 +3,7 @@ import alias from '@rollup/plugin-alias';
 import { defineConfig } from 'rolldown';
 import { removeExportPlugin } from 'rolldown-plugin-remove-export';
 
-const outputFile = 'index.js';
+const outputFile = 'app.js';
 
 export default defineConfig({
   input: 'server/app.ts',
