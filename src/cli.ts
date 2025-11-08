@@ -25,7 +25,7 @@ export async function main(): Promise<void> {
     )
     .option(
       "-t, --template [templateType]",
-      'Project template label ("vanilla-ts" | "react-tsx")',
+      'Project template label ("vanilla-ts" | "vanilla-js" | "react-tsx")',
       "",
     )
     .option(
@@ -81,10 +81,11 @@ export async function main(): Promise<void> {
           message: "Choice project template...",
           choices: [
             { name: "vanilla-ts", value: "vanilla-ts" },
+            { name: "vanilla-js", value: "vanilla-js" },
             { name: "react-tsx", value: "react-tsx" },
           ],
         });
-        const templateTypes: TemplateType[] = ["vanilla-ts", "react-tsx"];
+        const templateTypes: TemplateType[] = ["vanilla-ts", "vanilla-js", "react-tsx"];
         if (!templateTypes.includes(templateType)) {
           throw Error("Invalid project template");
         }

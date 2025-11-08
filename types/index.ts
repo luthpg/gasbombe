@@ -1,5 +1,5 @@
 export type PackageManager = 'npm' | 'pnpm' | 'yarn';
-export type TemplateType = 'vanilla-ts' | 'react-tsx';
+export type TemplateType = 'vanilla-ts' | 'vanilla-js' | 'react-tsx';
 export type ClaspOption = 'create' | 'list' | 'input' | 'skip';
 
 export interface ProjectOptions {
