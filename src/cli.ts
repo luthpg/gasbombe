@@ -80,15 +80,51 @@ export async function main(): Promise<void> {
         templateType ||= await select<TemplateType>({
           message: "Choice project template...",
           choices: [
-            { name: "vanilla-ts", value: "vanilla-ts" },
-            { name: "vanilla-js", value: "vanilla-js" },
-            { name: "react-tsx", value: "react-tsx" },
+            {
+              name: "ts",
+              value: "server-ts",
+              description: "TypeScript (only Server-Side)",
+            },
+            {
+              name: "js",
+              value: "server-js",
+              description: "JavaScript (only Server-Side)",
+            },
+            {
+              name: "react",
+              value: "react",
+              description: "TSX-React (Client-Side & Server-Side)",
+            },
+            {
+              name: "react-ciderjs",
+              value: "react-ciderjs",
+              description: "TSX-React with CiderJS (Client-Side & Server-Side)",
+            },
+            {
+              name: "vue",
+              value: "vue",
+              description: "Vue3 (Client-Side & Server-Side)",
+            },
+            {
+              name: "vue-ciderjs",
+              value: "vue-ciderjs",
+              description: "Vue3 with CiderJS (Client-Side & Server-Side)",
+            },
+            {
+              name: "html-js",
+              value: "html-js",
+              description: "HTML with JavaScript (Client-Side & Server-Side)",
+            },
           ],
         });
         const templateTypes: TemplateType[] = [
-          "vanilla-ts",
-          "vanilla-js",
-          "react-tsx",
+          "server-ts",
+          "server-js",
+          "react",
+          "react-ciderjs",
+          "vue",
+          "vue-ciderjs",
+          "html-js",
         ];
         if (!templateTypes.includes(templateType)) {
           throw Error("Invalid project template");

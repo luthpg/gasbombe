@@ -1,0 +1,45 @@
+name: Publish to GoogleAppsScript
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger on tags like v1.0.0, v0.1.2, etc.
+  workflow_dispatch: # Trigger manually
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Prebuild
+        run: pnpm run check && pnpm run test
+
+      - name: Build package
+        run: pnpm run build
+
+      - name: Restore clasp credentials
+        uses: ciderjs/clasp-auth@v0.1.3
+        with:
+          json: {{ secrets.CLASPRC_JSON }}
+
+      - name: Publish to AppsScript
+        run: pnpm run push
