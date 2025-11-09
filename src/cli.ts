@@ -1,41 +1,41 @@
 #!/usr/bin/env node
 
-import { input, select } from '@inquirer/prompts';
-import { Command } from 'commander';
-import { version } from '../package.json';
-import type { ClaspOption, PackageManager, TemplateType } from '../types/index';
-import { generateProject } from './index';
+import { input, select } from "@inquirer/prompts";
+import { Command } from "commander";
+import { version } from "../package.json";
+import type { ClaspOption, PackageManager, TemplateType } from "../types/index";
+import { generateProject } from "./index";
 
 export async function main(): Promise<void> {
   const program = new Command();
 
-  program.version(version, '-v, --version');
+  program.version(version, "-v, --version");
 
   program
-    .description('Create project for GoogleAppsScript')
+    .description("Create project for GoogleAppsScript")
     .option(
-      '-n, --name [projectName]',
+      "-n, --name [projectName]",
       'Project name what you want to generate\n* Project name must be "." or a valid folder name without path characters.',
-      '',
+      "",
     )
     .option(
-      '-p, --pkg [packageManager]',
+      "-p, --pkg [packageManager]",
       'Package manager what you want to use ("npm" | "pnpm" | "yarn")',
-      '',
+      "",
     )
     .option(
-      '-t, --template [templateType]',
-      'Project template label ("vanilla-ts" | "react-tsx")',
-      '',
+      "-t, --template [templateType]",
+      'Project template label ("vanilla-ts" | "vanilla-js" | "react-tsx")',
+      "",
     )
     .option(
-      '-c, --clasp [claspSetupCommand]',
+      "-c, --clasp [claspSetupCommand]",
       'Setup command how you want to use for Apps Script Project (create project | select project | input project id | skip)\n* If you use "create" or "select", you need to login to clasp first',
-      '',
+      "",
     )
     .option(
-      '--skipInstall',
-      'Skip install dependencies after generating the project',
+      "--skipInstall",
+      "Skip install dependencies after generating the project",
       false,
     )
     .action(async (_param, command: Command) => {
@@ -58,15 +58,15 @@ export async function main(): Promise<void> {
       try {
         const validProjectNameRegex = /^(?!.*\.\.)[a-zA-Z0-9_-]+$/;
         projectName ||= await input({
-          message: 'Input project name what you want to generate...',
+          message: "Input project name what you want to generate...",
           validate: (value) => {
-            if (value === '.') {
+            if (value === ".") {
               return true;
             }
             if (
               validProjectNameRegex.test(value) &&
-              !value.includes('/') &&
-              !value.includes('\\')
+              !value.includes("/") &&
+              !value.includes("\\")
             ) {
               return true;
             }
@@ -74,19 +74,24 @@ export async function main(): Promise<void> {
           },
         });
         if (!validProjectNameRegex.test(projectName)) {
-          throw Error('Invalid project name');
+          throw Error("Invalid project name");
         }
 
         templateType ||= await select<TemplateType>({
-          message: 'Choice project template...',
+          message: "Choice project template...",
           choices: [
-            { name: 'vanilla-ts', value: 'vanilla-ts' },
-            { name: 'react-tsx', value: 'react-tsx' },
+            { name: "vanilla-ts", value: "vanilla-ts" },
+            { name: "vanilla-js", value: "vanilla-js" },
+            { name: "react-tsx", value: "react-tsx" },
           ],
         });
-        const templateTypes: TemplateType[] = ['vanilla-ts', 'react-tsx'];
+        const templateTypes: TemplateType[] = [
+          "vanilla-ts",
+          "vanilla-js",
+          "react-tsx",
+        ];
         if (!templateTypes.includes(templateType)) {
-          throw Error('Invalid project template');
+          throw Error("Invalid project template");
         }
 
         clasp ||= await select<ClaspOption>({
@@ -94,66 +99,66 @@ export async function main(): Promise<void> {
             'How do you want to set up the Apps Script project?\n* If you use "create" or "select", you need to login to clasp first',
           choices: [
             {
-              name: '[NEW] Create a new Apps Script project (need `npx @google/clasp login`)',
-              value: 'create',
+              name: "[NEW] Create a new Apps Script project (need `npx @google/clasp login`)",
+              value: "create",
               description:
-                'Runs `npx @google/clasp create` to generate a new project.',
+                "Runs `npx @google/clasp create` to generate a new project.",
             },
             {
-              name: '[SELECT] Use an existing Apps Script project (need `npx @google/clasp login`)',
-              value: 'list',
+              name: "[SELECT] Use an existing Apps Script project (need `npx @google/clasp login`)",
+              value: "list",
               description:
-                'Runs `npx @google/clasp list` and lets you choose from your projects.',
+                "Runs `npx @google/clasp list` and lets you choose from your projects.",
             },
             {
-              name: '[INPUT] Input Script ID manually',
-              value: 'input',
-              description: 'Manually provide an existing Script ID.',
+              name: "[INPUT] Input Script ID manually",
+              value: "input",
+              description: "Manually provide an existing Script ID.",
             },
             {
-              name: '[NONE] Skip for now',
-              value: 'skip',
+              name: "[NONE] Skip for now",
+              value: "skip",
               description:
-                'Create a `.clasp.json` file without Apps Script project ID.',
+                "Create a `.clasp.json` file without Apps Script project ID.",
             },
           ],
         });
-        const claspOptions: ClaspOption[] = ['create', 'list', 'input', 'skip'];
+        const claspOptions: ClaspOption[] = ["create", "list", "input", "skip"];
         if (!claspOptions.includes(clasp)) {
-          throw Error('Invalid clasp option');
+          throw Error("Invalid clasp option");
         }
 
-        if (clasp === 'input') {
+        if (clasp === "input") {
           claspProjectId = await input({
-            message: 'Input Apps Script project ID...',
+            message: "Input Apps Script project ID...",
             required: false,
           });
         }
 
         if (
-          packageManager === ('' as PackageManager) &&
-          clasp !== 'create' &&
-          clasp !== 'list' &&
+          packageManager === ("" as PackageManager) &&
+          clasp !== "create" &&
+          clasp !== "list" &&
           skipInstall
         ) {
-          packageManager = 'npm';
+          packageManager = "npm";
         }
 
         packageManager ||= await select<PackageManager>({
-          message: 'Choice package manager what you want to use...',
+          message: "Choice package manager what you want to use...",
           choices: [
-            { name: 'npm', value: 'npm' },
-            { name: 'pnpm', value: 'pnpm' },
-            { name: 'yarn', value: 'yarn' },
+            { name: "npm", value: "npm" },
+            { name: "pnpm", value: "pnpm" },
+            { name: "yarn", value: "yarn" },
           ],
         });
 
-        const packageManagers: PackageManager[] = ['npm', 'pnpm', 'yarn'];
+        const packageManagers: PackageManager[] = ["npm", "pnpm", "yarn"];
         if (!packageManagers.includes(packageManager)) {
-          throw Error('Invalid package manager');
+          throw Error("Invalid package manager");
         }
       } catch (e) {
-        (e as Error).message === 'User force closed the prompt with SIGINT' &&
+        (e as Error).message === "User force closed the prompt with SIGINT" &&
           process.exit(0);
         throw e as Error;
       }

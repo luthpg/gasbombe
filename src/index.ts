@@ -1,11 +1,11 @@
-import { spawn } from 'node:child_process';
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { select } from '@inquirer/prompts';
-import { consola } from 'consola';
-import ejs from 'ejs';
-import { glob } from 'glob';
-import type { ProjectOptions } from '../types';
+import { spawn } from "node:child_process";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { select } from "@inquirer/prompts";
+import { consola } from "consola";
+import ejs from "ejs";
+import { glob } from "glob";
+import type { ProjectOptions } from "../types";
 
 export async function runCommand(
   command: string,
@@ -14,65 +14,65 @@ export async function runCommand(
   capture = false,
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    const isWindows = process.platform === 'win32';
+    const isWindows = process.platform === "win32";
     const child = spawn(command, args, {
       cwd,
-      stdio: capture ? 'pipe' : 'inherit',
+      stdio: capture ? "pipe" : "inherit",
       shell: isWindows,
     });
 
-    let stdout = '';
-    let stderr = '';
+    let stdout = "";
+    let stderr = "";
 
     if (capture) {
-      child.stdout?.on('data', (data) => {
+      child.stdout?.on("data", (data) => {
         stdout += data.toString();
       });
-      child.stderr?.on('data', (data) => {
+      child.stderr?.on("data", (data) => {
         stderr += data.toString();
       });
     }
 
-    child.on('close', (code) => {
+    child.on("close", (code) => {
       if (code === 0) {
         resolve(stdout.trim());
       } else {
-        const errorMsg = `Command failed with exit code ${code}${stderr ? `:\n${stderr}` : ''}`;
+        const errorMsg = `Command failed with exit code ${code}${stderr ? `:\n${stderr}` : ""}`;
         reject(new Error(errorMsg));
       }
     });
 
-    child.on('error', (err) => {
+    child.on("error", (err) => {
       reject(err);
     });
   });
 }
 
 async function handleClaspSetup(
-  claspOption: ProjectOptions['clasp'],
+  claspOption: ProjectOptions["clasp"],
   projectName: string,
   outputDir: string,
   claspProjectId: string | undefined,
-  packageManager: ProjectOptions['packageManager'] = 'npm',
+  packageManager: ProjectOptions["packageManager"] = "npm",
 ): Promise<void> {
-  if (claspOption === 'skip') {
+  if (claspOption === "skip") {
     return;
   }
 
   const npxLikeCommand =
-    packageManager === 'npm'
-      ? 'npx'
-      : packageManager === 'pnpm'
-        ? 'pnpx'
-        : 'yarn';
+    packageManager === "npm"
+      ? "npx"
+      : packageManager === "pnpm"
+        ? "pnpx"
+        : "yarn";
 
   consola.start(
     `Setting up .clasp.json with \`${npxLikeCommand} @google/clasp\`...`,
   );
 
-  if (claspOption === 'create' || claspOption === 'list') {
+  if (claspOption === "create" || claspOption === "list") {
     try {
-      await runCommand(npxLikeCommand, ['@google/clasp', 'status'], outputDir);
+      await runCommand(npxLikeCommand, ["@google/clasp", "status"], outputDir);
     } catch {
       consola.error(
         `It seems you are not logged in to clasp. Please run \`${npxLikeCommand} @google/clasp login\` and try again.`,
@@ -88,11 +88,11 @@ async function handleClaspSetup(
   } | null = null;
 
   switch (claspOption) {
-    case 'create':
+    case "create":
       try {
-        const claspJsonPath = path.join(outputDir, '.clasp.json');
+        const claspJsonPath = path.join(outputDir, ".clasp.json");
         try {
-          const existingContent = await fs.readFile(claspJsonPath, 'utf-8');
+          const existingContent = await fs.readFile(claspJsonPath, "utf-8");
           existingClaspJson = JSON.parse(existingContent);
           await fs.unlink(claspJsonPath);
         } catch {
@@ -102,12 +102,12 @@ async function handleClaspSetup(
         const result = await runCommand(
           npxLikeCommand,
           [
-            '@google/clasp',
-            'create',
-            '--title',
+            "@google/clasp",
+            "create",
+            "--title",
             `"${projectName}"`,
-            '--type',
-            'standalone',
+            "--type",
+            "standalone",
           ],
           outputDir,
           true,
@@ -117,27 +117,27 @@ async function handleClaspSetup(
           scriptId = match[1];
           consola.info(`Created new Apps Script project with ID: ${scriptId}`);
         } else {
-          throw new Error('Could not parse scriptId from clasp output.');
+          throw new Error("Could not parse scriptId from clasp output.");
         }
       } catch (e) {
-        consola.error('Failed to create new Apps Script project.', e);
+        consola.error("Failed to create new Apps Script project.", e);
         return;
       }
       break;
 
-    case 'list':
+    case "list":
       try {
         const listOutput = await runCommand(
           npxLikeCommand,
-          ['@google/clasp', 'list'],
+          ["@google/clasp", "list"],
           outputDir,
           true,
         );
         const projects = listOutput
-          .split('\n')
+          .split("\n")
           .slice(1) // Skip header
           .map((line) => {
-            const parts = line.split(' - ');
+            const parts = line.split(" - ");
             if (parts.length >= 2) {
               const name = parts[0]?.trim();
               const url = parts[1]?.trim();
@@ -156,28 +156,28 @@ async function handleClaspSetup(
 
         if (projects.length === 0) {
           consola.warn(
-            'No existing Apps Script projects found. Please create one first.',
+            "No existing Apps Script projects found. Please create one first.",
           );
           return;
         }
 
         scriptId = await select({
-          message: 'Choose an existing Apps Script project:',
+          message: "Choose an existing Apps Script project:",
           choices: projects,
         });
       } catch (e) {
-        consola.error('Failed to list Apps Script projects.', e);
+        consola.error("Failed to list Apps Script projects.", e);
         return;
       }
       break;
 
-    case 'input':
+    case "input":
       scriptId = claspProjectId;
       break;
   }
 
   if (scriptId) {
-    const claspJsonPath = path.join(outputDir, '.clasp.json');
+    const claspJsonPath = path.join(outputDir, ".clasp.json");
     let claspJson: { scriptId: string; [key: string]: string | string[] } = {
       scriptId,
     };
@@ -188,7 +188,7 @@ async function handleClaspSetup(
       successMessage = `.clasp.json updated successfully with scriptId: ${scriptId}`;
     } else {
       try {
-        const existingContent = await fs.readFile(claspJsonPath, 'utf-8');
+        const existingContent = await fs.readFile(claspJsonPath, "utf-8");
         const currentClaspJson = JSON.parse(existingContent);
         claspJson = { ...currentClaspJson, scriptId };
         successMessage = `.clasp.json updated successfully with scriptId: ${scriptId}`;
@@ -198,7 +198,7 @@ async function handleClaspSetup(
     }
 
     const claspJsonContent = JSON.stringify(claspJson, null, 2);
-    await fs.writeFile(claspJsonPath, claspJsonContent, { encoding: 'utf-8' });
+    await fs.writeFile(claspJsonPath, claspJsonContent, { encoding: "utf-8" });
     consola.success(successMessage);
   }
 }
@@ -212,26 +212,26 @@ export async function generateProject({
   install,
 }: ProjectOptions): Promise<void> {
   const outputDir = path.resolve(process.cwd(), projectName);
-  const templateBaseDir = path.resolve(__dirname, '..', 'dist', 'templates');
-  const commonTemplateDir = path.resolve(templateBaseDir, 'common');
+  const templateBaseDir = path.resolve(__dirname, "..", "dist", "templates");
+  const commonTemplateDir = path.resolve(templateBaseDir, "common");
   const specificTemplateDir = path.resolve(templateBaseDir, templateType);
 
   consola.start(
     `Creating a new Project for GoogleAppsScript in ${outputDir}...`,
   );
 
-  if (projectName === '.') {
+  if (projectName === ".") {
     try {
       const files = await fs.readdir(outputDir);
-      const relevantFiles = files.filter((file) => !file.startsWith('.'));
+      const relevantFiles = files.filter((file) => !file.startsWith("."));
 
       if (relevantFiles.length > 0) {
         const proceed = await confirm(
-          'Current directory is not empty. Proceed anyway?',
+          "Current directory is not empty. Proceed anyway?",
         );
 
         if (!proceed) {
-          consola.warn('Operation cancelled.');
+          consola.warn("Operation cancelled.");
           process.exit(0);
         }
       }
@@ -254,7 +254,7 @@ export async function generateProject({
   const ejsData = { projectName };
   const templateDirs = [commonTemplateDir, specificTemplateDir];
   for (const dir of templateDirs) {
-    const files = await glob('./**/*', {
+    const files = await glob("./**/*", {
       cwd: dir,
       nodir: true,
       dot: true,
@@ -263,15 +263,15 @@ export async function generateProject({
     for (const file of files) {
       const relativePath = path.relative(dir, path.resolve(dir, file));
       const templatePath = path.join(dir, relativePath);
-      const outputPath = path.join(outputDir, relativePath.replace('.ejs', ''));
+      const outputPath = path.join(outputDir, relativePath.replace(".ejs", ""));
 
       await fs.mkdir(path.dirname(outputPath), { recursive: true });
 
       const templateContent = await fs.readFile(templatePath, {
-        encoding: 'utf-8',
+        encoding: "utf-8",
       });
       const renderedContent = ejs.render(templateContent, ejsData);
-      await fs.writeFile(outputPath, renderedContent, { encoding: 'utf-8' });
+      await fs.writeFile(outputPath, renderedContent, { encoding: "utf-8" });
     }
   }
 
@@ -286,42 +286,43 @@ export async function generateProject({
   if (install) {
     consola.start(`Installing dependencies with ${packageManager}...`);
     try {
-      await runCommand(packageManager, ['install'], outputDir);
+      await runCommand(packageManager, ["install"], outputDir);
       consola.success(`Dependencies installed successfully.`);
     } catch (e) {
-      consola.fail('Failed to install dependencies. Please do it manually.');
+      consola.fail("Failed to install dependencies. Please do it manually.");
       consola.error(e);
     }
   }
 
   consola.start(`Initializing Git repository...`);
   try {
-    await runCommand('git', ['init'], outputDir);
-    await runCommand('git', ['add', '-A'], outputDir);
+    await runCommand("git", ["init"], outputDir);
+    await runCommand("git", ["add", "-A"], outputDir);
     await runCommand(
-      'git',
-      ['commit', '-m', '"Initial commit from gasbombe"'],
+      "git",
+      ["commit", "-m", '"Initial commit from gasbombe"'],
       outputDir,
     );
     consola.success(`Git repository initialized successfully.`);
   } catch (e) {
-    consola.fail('Failed to initialize Git repository. Please do it manually.');
+    consola.fail("Failed to initialize Git repository. Please do it manually.");
     consola.error(e);
   }
 
   consola.success(`Project '${projectName}' created successfully!`);
 
   const messages: string[] = [];
-  projectName !== '.' && messages.push(`  cd ${projectName}`);
+  projectName !== "." && messages.push(`  cd ${projectName}`);
   !install && messages.push(`  ${packageManager} install`);
-  templateType !== 'vanilla-ts' && messages.push(`  ${packageManager} dev`);
+  !["vanilla-ts", "vanilla-js"].includes(templateType) &&
+    messages.push(`  ${packageManager} dev`);
 
   if (messages.length > 0) {
     consola.log(`\nTo get started, run:\n`);
     for (const message of messages) {
       consola.log(message);
     }
-    consola.log('');
+    consola.log("");
     consola.log(`...and write your GAS code!`);
   } else {
     consola.log(`\nTo get started, write your GAS code in \`src/\`!`);

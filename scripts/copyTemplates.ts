@@ -1,10 +1,10 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path';
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 // 元となるディレクトリ
-const sourceRoot = './template-projects';
+const sourceRoot = "./template-projects";
 // 出力先のディレクトリ
-const distRoot = './dist/templates';
+const distRoot = "./dist/templates";
 
 /**
  * ファイルを再帰的にコピーし、拡張子 .ejs を付けてリネームします。
@@ -53,7 +53,7 @@ try {
   }
 
   copyAndRenameFilesRecursively(sourceRoot, distRoot);
-  console.log('All files have been copied and renamed successfully.');
+  console.log("All files have been copied and renamed successfully.");
 } catch (error) {
-  console.error('An error occurred:', error);
+  console.error("An error occurred:", error);
 }
