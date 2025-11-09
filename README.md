@@ -13,8 +13,13 @@ This project provides a command-line interface (CLI) to scaffold new TypeScript 
 
 * **CLI Tool**: Interactive command-line prompts to guide you through project setup.
 * **Templates**:
-  * Vanilla TypeScript
-  * React with TSX
+  * Server-side TypeScript
+  * Server-side JavaScript
+  * React
+  * React with CiderJS
+  * Vue
+  * Vue with CiderJS
+  * HTML/JS
 * **Package Manager Support**: Works with npm, Yarn, and pnpm.
 
 ## **Usage**
@@ -56,13 +61,13 @@ You can bypass the interactive prompts by providing command-line options. This i
 
 ```bash
 # Example: Create a new React project with pnpm, creating a new Apps Script project along with it
-gasbombe --name my-react-app --template react-tsx --clasp create --pkg pnpm
+gasbombe --name my-react-app --template react --clasp create --pkg pnpm
 ```
 
 | Option | Alias | Argument | Description | Choices |
 | :--- | :--- | :--- | :--- | :--- |
 | `--name` | `-n` | `[projectName]` | The name of the project to generate. | - |
-| `--template` | `-t` | `[templateType]` | The project template to use. | `vanilla-ts`, `react-tsx` |
+| `--template` | `-t` | `[templateType]` | The project template to use. | `server-ts`, `server-js`, `react`, `react-ciderjs`, `vue`, `vue-ciderjs`, `html-js` |
 | `--clasp` | `-c` | `[claspOption]` | How to set up the `.clasp.json` file.<br/>`create` and `list` require prior login to clasp. | `create`, `list`, `input`, `skip` |
 | `--pkg` | `-p` | `[packageManager]` | The package manager to use. | `npm`, `pnpm`, `yarn` |
 | `--skipInstall` | | | Skip installing dependencies. | - |

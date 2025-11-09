@@ -13,8 +13,13 @@
 
 * **CLIツール**: 対話型のコマンドラインプロンプトにより、プロジェクトのセットアップをガイドします。
 * **テンプレート**:
-  * Vanilla TypeScript
-  * React with TSX
+  * サーバーサイドTypeScript
+  * サーバーサイドJavaScript
+  * React
+  * React with CiderJS
+  * Vue
+  * Vue with CiderJS
+  * HTML/JS
 * **パッケージマネージャーのサポート**: npm、Yarn、pnpmに対応しています。
 
 ## **使用方法**
@@ -56,13 +61,13 @@ gasbombe
 
 ```bash
 # 例: pnpmを使用して新しいReactプロジェクトを作成し、同時に新しいApps Scriptプロジェクトも作成する
-gasbombe --name my-react-app --template react-tsx --clasp create --pkg pnpm
+gasbombe --name my-react-app --template react --clasp create --pkg pnpm
 ```
 
 | オプション | エイリアス | 引数 | 説明 | 選択肢 |
 | :--- | :--- | :--- | :--- | :--- |
 | `--name` | `-n` | `[projectName]` | 生成するプロジェクトの名前。 | - |
-| `--template` | `-t` | `[templateType]` | 使用するプロジェクトテンプレート。 | `vanilla-ts`, `react-tsx` |
+| `--template` | `-t` | `[templateType]` | 使用するプロジェクトテンプレート。 | `server-ts`, `server-js`, `react`, `react-ciderjs`, `vue`, `vue-ciderjs`, `html-js` |
 | `--clasp` | `-c` | `[claspOption]` | `.clasp.json`のセットアップ方法。<br/>`create`と`list`は事前にclaspへのログインが必要です。 | `create`, `list`, `input`, `skip` |
 | `--pkg` | `-p` | `[packageManager]` | 使用するパッケージマネージャー。 | `npm`, `pnpm`, `yarn` |
 | `--skipInstall` | | | 依存関係のインストールをスキップします。 | - |
