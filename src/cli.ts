@@ -85,7 +85,11 @@ export async function main(): Promise<void> {
             { name: "react-tsx", value: "react-tsx" },
           ],
         });
-        const templateTypes: TemplateType[] = ["vanilla-ts", "vanilla-js", "react-tsx"];
+        const templateTypes: TemplateType[] = [
+          "vanilla-ts",
+          "vanilla-js",
+          "react-tsx",
+        ];
         if (!templateTypes.includes(templateType)) {
           throw Error("Invalid project template");
         }

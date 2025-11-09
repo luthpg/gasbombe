@@ -121,6 +121,7 @@ describe('generateProject', () => {
 
   afterEach(() => {
     vi.restoreAllMocks(); // Use restoreAllMocks for spies
+    vi.clearAllMocks();
   });
 
   it('should exit if project directory already exists', async () => {
@@ -411,7 +412,17 @@ describe('generateProject', () => {
 
   it('should show correct final message for vanilla-ts', async () => {
     await generateProject({ ...projectOptions, templateType: 'vanilla-ts' });
-    expect(consola.log).not.toHaveBeenCalledWith('  pnpm dev');
+    const logCalls = vi.mocked(consola.log).mock.calls;
+    const devCommandLog = logCalls.find((call) => call[0].includes("pnpm dev"));
+    expect(devCommandLog).toBeUndefined();
+    expect(consola.log).toHaveBeenCalledWith('...and write your GAS code!');
+  });
+
+  it('should show correct final message for vanilla-js', async () => {
+    await generateProject({ ...projectOptions, templateType: 'vanilla-js' });
+    const logCalls = vi.mocked(consola.log).mock.calls;
+    const devCommandLog = logCalls.find((call) => call[0].includes("pnpm dev"));
+    expect(devCommandLog).toBeUndefined();
     expect(consola.log).toHaveBeenCalledWith('...and write your GAS code!');
   });
 
