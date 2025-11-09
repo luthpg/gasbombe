@@ -93,7 +93,7 @@ describe('generateProject', () => {
   const projectOptions = {
     projectName: 'test-project',
     packageManager: 'pnpm' as const,
-    templateType: 'react-tsx' as const,
+    templateType: 'react' as const,
     clasp: 'skip' as const,
     claspProjectId: undefined,
     install: false,
@@ -410,16 +410,16 @@ describe('generateProject', () => {
     });
   });
 
-  it('should show correct final message for vanilla-ts', async () => {
-    await generateProject({ ...projectOptions, templateType: 'vanilla-ts' });
+  it('should show correct final message for server-ts', async () => {
+    await generateProject({ ...projectOptions, templateType: 'server-ts' });
     const logCalls = vi.mocked(consola.log).mock.calls;
     const devCommandLog = logCalls.find((call) => call[0].includes("pnpm dev"));
     expect(devCommandLog).toBeUndefined();
     expect(consola.log).toHaveBeenCalledWith('...and write your GAS code!');
   });
 
-  it('should show correct final message for vanilla-js', async () => {
-    await generateProject({ ...projectOptions, templateType: 'vanilla-js' });
+  it('should show correct final message for server-js', async () => {
+    await generateProject({ ...projectOptions, templateType: 'server-js' });
     const logCalls = vi.mocked(consola.log).mock.calls;
     const devCommandLog = logCalls.find((call) => call[0].includes("pnpm dev"));
     expect(devCommandLog).toBeUndefined();
@@ -427,7 +427,7 @@ describe('generateProject', () => {
   });
 
   it('should show correct final message for other templates', async () => {
-    await generateProject({ ...projectOptions, templateType: 'react-tsx' });
+    await generateProject({ ...projectOptions, templateType: 'react' });
     expect(consola.log).toHaveBeenCalledWith('  pnpm dev');
     expect(consola.log).toHaveBeenCalledWith('...and write your GAS code!');
   });

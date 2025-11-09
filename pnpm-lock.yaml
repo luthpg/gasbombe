@@ -7,26 +7,13 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@inquirer/prompts':
-        specifier: ^7.9.0
-        version: 7.9.0(@types/node@24.10.0)
-      commander:
-        specifier: ^14.0.2
-        version: 14.0.2
-      consola:
-        specifier: ^3.4.2
-        version: 3.4.2
-      ejs:
-        specifier: ^3.1.10
-        version: 3.1.10
-      glob:
-        specifier: ^11.0.3
-        version: 11.0.3
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.3.4
         version: 2.3.4
+      '@inquirer/prompts':
+        specifier: ^7.9.0
+        version: 7.9.0(@types/node@24.10.0)
       '@types/ejs':
         specifier: ^3.1.5
         version: 3.1.5
@@ -39,6 +26,18 @@ importers:
       '@vitest/coverage-v8':
         specifier: 4.0.8
         version: 4.0.8(vitest@4.0.8(@types/node@24.10.0)(jiti@2.6.1))
+      commander:
+        specifier: ^14.0.2
+        version: 14.0.2
+      consola:
+        specifier: ^3.4.2
+        version: 3.4.2
+      ejs:
+        specifier: ^3.1.10
+        version: 3.1.10
+      glob:
+        specifier: ^11.0.3
+        version: 11.0.3
       jiti:
         specifier: ^2.6.1
         version: 2.6.1
