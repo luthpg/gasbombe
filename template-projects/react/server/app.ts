@@ -2,7 +2,7 @@ import type { ServerParams, WebAppParams } from "~/types/appsscript/server";
 
 export * from "./modules/hello";
 
-const SITE_TITLE = "WebApp";
+const SITE_TITLE = "<%= projectName %>";
 
 /**
  * Procedure to handle GET requests when published as a web app
