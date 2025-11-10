@@ -25,7 +25,7 @@ export async function main(): Promise<void> {
     )
     .option(
       "-t, --template [templateType]",
-      'Project template label ("vanilla-ts" | "vanilla-js" | "react-tsx")',
+      'Project template label ("server-ts" | "server-js" | "react" | "react-ciderjs" | "vue" | "vue-ciderjs" | "html-js")',
       "",
     )
     .option(
@@ -180,14 +180,30 @@ export async function main(): Promise<void> {
           packageManager = "npm";
         }
 
-        packageManager ||= await select<PackageManager>({
-          message: "Choice package manager what you want to use...",
-          choices: [
-            { name: "npm", value: "npm" },
-            { name: "pnpm", value: "pnpm" },
-            { name: "yarn", value: "yarn" },
-          ],
-        });
+        if (
+          packageManager == null ||
+          packageManager === ("" as PackageManager)
+        ) {
+          const selected = await select<PackageManager | null>({
+            message: "Choice package manager what you want to use...",
+            choices: [
+              { name: "npm", value: "npm" },
+              { name: "pnpm", value: "pnpm" },
+              { name: "yarn", value: "yarn" },
+              {
+                name: "skip",
+                value: null,
+                description: "Skip installation for now",
+              },
+            ],
+          });
+          if (selected === null) {
+            skipInstall = true;
+            packageManager = "npm";
+          } else {
+            packageManager = selected;
+          }
+        }
 
         const packageManagers: PackageManager[] = ["npm", "pnpm", "yarn"];
         if (!packageManagers.includes(packageManager)) {
