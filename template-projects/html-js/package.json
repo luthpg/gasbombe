@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build:server": "rolldown -c && cpy server/*.json dist/",
-    "build:front": "tsc -b && vite build",
+    "build:front": "vite build",
     "build": "rimraf dist && pnpm run build:front && pnpm run build:server",
     "check": "biome check --write",
     "test": "vitest run --coverage",
