@@ -1,11 +1,4 @@
-import { createRouter } from "@ciderjs/city-gas";
-import {
-  RouterOutlet,
-  RouterProvider,
-  useNavigate,
-} from "@ciderjs/city-gas/react";
-import { pages } from "@/generated/routes";
-import "@/App.css";
+import { useNavigate } from "@ciderjs/city-gas/react";
 
 function Navigation() {
   const navigate = useNavigate();
@@ -35,15 +28,15 @@ function Navigation() {
   );
 }
 
-function App() {
-  const router = createRouter(pages);
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <RouterProvider router={router}>
+    <div>
       <Navigation />
-      <RouterOutlet />
-    </RouterProvider>
+      <main>{children}</main>
+    </div>
   );
 }
-
-export default App;

@@ -7,6 +7,10 @@ import ejs from "ejs";
 import { glob } from "glob";
 import type { ProjectOptions } from "../types";
 
+export function isWindows(): boolean {
+  return process.platform === "win32";
+}
+
 export async function runCommand(
   command: string,
   args: string[],
@@ -14,11 +18,10 @@ export async function runCommand(
   capture = false,
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    const isWindows = process.platform === "win32";
     const child = spawn(command, args, {
       cwd,
       stdio: capture ? "pipe" : "inherit",
-      shell: isWindows,
+      shell: isWindows(),
     });
 
     let stdout = "";
@@ -216,6 +219,10 @@ export async function generateProject({
   const commonTemplateDir = path.resolve(templateBaseDir, "common");
   const specificTemplateDir = path.resolve(templateBaseDir, templateType);
 
+  const catalogPath = path.resolve(__dirname, "..", "dist", "catalog.json");
+  const catalogJson = await fs.readFile(catalogPath, "utf-8");
+  const catalog = JSON.parse(catalogJson) as Record<string, string>;
+
   consola.start(
     `Creating a new Project for GoogleAppsScript in ${outputDir}...`,
   );
@@ -251,7 +258,10 @@ export async function generateProject({
   await fs.mkdir(outputDir, { recursive: true });
   consola.info(`Generating project files from template '${templateType}'...`);
 
-  const ejsData = { projectName };
+  const ejsData = {
+    projectName,
+    biomeVersion: catalog["@biomejs/biome"]?.replace("^", "") || "2.0.0",
+  };
   const templateDirs = [commonTemplateDir, specificTemplateDir];
   for (const dir of templateDirs) {
     const files = await glob("./**/*", {
@@ -270,6 +280,8 @@ export async function generateProject({
       const templateContent = await fs.readFile(templatePath, {
         encoding: "utf-8",
       });
+      console.log({ relativePath, ejsData });
+      console.warn(templateContent);
       const renderedContent = ejs.render(templateContent, ejsData);
       await fs.writeFile(outputPath, renderedContent, { encoding: "utf-8" });
     }

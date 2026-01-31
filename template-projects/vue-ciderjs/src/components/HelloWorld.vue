@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { parameters } from "@/lib/parameters";
 import { serverScripts } from "@/lib/server";
 
@@ -9,6 +9,11 @@ const { userAddress } = parameters;
 
 const count = ref(0);
 const message = ref("Click to say hello");
+const member = ref<{
+  name: string;
+  age: number;
+  isMember: boolean;
+} | null>(null);
 
 const handleHelloButton = async () => {
   message.value = "Waiting...";
@@ -19,13 +24,17 @@ const handleHelloButton = async () => {
     message.value = "Error. Check the console.";
   }
 };
+
+onMounted(async () => {
+  member.value = await serverScripts.getHelloMember();
+});
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="count++">count is {{ count }} by {{ member?.name ?? 'Unknown' }}</button>
     <button type="button" @click="handleHelloButton" :style="{ marginLeft: '10px' }">
       {{ message }}
     </button>

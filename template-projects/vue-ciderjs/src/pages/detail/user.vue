@@ -8,9 +8,10 @@
 <script setup lang="ts">
 import { useParams } from "@ciderjs/city-gas/vue";
 
-const params = useParams<"/detail/user">();
+const params = useParams("/detail/user");
 </script>
 
 <script lang="ts">
-export const params = { id: 'string' };
+import {z} from 'zod';
+export const schema = z.object({ id: z.string() });
 </script>

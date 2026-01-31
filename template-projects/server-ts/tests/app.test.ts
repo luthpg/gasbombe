@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
-import { myFunction } from "@/main";
+import { myFunction } from "@/app";
 import { useHello } from "@/modules/hello";
 
 describe("main", () => {
