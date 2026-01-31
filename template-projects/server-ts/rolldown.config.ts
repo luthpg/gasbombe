@@ -9,7 +9,5 @@ export default defineConfig({
     format: "esm",
     file: `dist/${outputFile}`,
   },
-  plugins: [
-    removeExportPlugin(outputFile),
-  ],
+  plugins: [removeExportPlugin(outputFile)],
 });

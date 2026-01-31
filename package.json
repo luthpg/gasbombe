@@ -21,7 +21,14 @@
     "check": "biome check --write",
     "generate": "jiti scripts/copyTemplates",
     "test": "vitest run --coverage",
-    "build": "pnpm run tsc && pnpm run test --silent && unbuild && pnpm run generate"
+    "build": "pnpm run tsc && pnpm run test --silent && unbuild && pnpm run generate",
+    ":react-c": "pnpm -C template-projects/react-ciderjs",
+    ":vue-c": "pnpm -C template-projects/vue-ciderjs",
+    ":react": "pnpm -C template-projects/react",
+    ":vue": "pnpm -C template-projects/vue",
+    ":html": "pnpm -C template-projects/html-js",
+    ":ts": "pnpm -C template-projects/server-ts",
+    ":js": "pnpm -C template-projects/server-js"
   },
   "keywords": [
     "googleappsscript",

@@ -1,13 +1,11 @@
 import { createRouter } from "@ciderjs/city-gas";
-import { createRouterPlugin } from "@ciderjs/city-gas/vue";
+import { createRouterPlugin, RouterOutlet } from "@ciderjs/city-gas/vue";
 import { createApp } from "vue";
+import { dynamicRoutes, pages, specialPages } from "./generated/routes";
 import "@/style.css";
-import App from "@/App.vue";
-import { pages, specialPages } from "@/generated/routes";
 
-function main() {
-  const router = createRouter(pages, { specialPages });
-  createApp(App).use(createRouterPlugin(router)).mount("#app");
-}
+const router = createRouter(pages, { specialPages, dynamicRoutes });
+const app = createApp(RouterOutlet);
 
-main();
+app.use(createRouterPlugin(router));
+app.mount("#app");

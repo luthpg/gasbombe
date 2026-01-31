@@ -99,7 +99,9 @@ async function copyAndRenameFilesRecursively(
     const destPath = path.join(destDir, item);
     const stats = fs.statSync(sourcePath);
 
-    if (item === "node_modules") {
+    const skipDirNames = ["node_modules", "dist", "build", "coverage", ".git"];
+
+    if (skipDirNames.includes(item)) {
       continue;
     }
 

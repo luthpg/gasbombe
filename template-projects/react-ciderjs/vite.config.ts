@@ -1,4 +1,4 @@
-/// <reference types="vitest" />
+/// <reference types="vitest/config" />
 
 import { cityGasRouter } from "@ciderjs/city-gas/plugin";
 import { gasnuki } from "@ciderjs/gasnuki/vite";

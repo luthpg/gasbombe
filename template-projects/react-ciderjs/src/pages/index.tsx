@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "@/assets/react.svg";
 import { parameters } from "@/lib/parameters";
 import { serverScripts } from "@/lib/server";
@@ -6,6 +6,11 @@ import viteLogo from "/vite.svg";
 
 export default function Page() {
   const [count, setCount] = useState(0);
+  const [member, setMember] = useState<{
+    name: string;
+    age: number;
+    isMember: boolean;
+  } | null>(null);
   const [message, setMessage] = useState("Click to say hello");
 
   const { userAddress } = parameters;
@@ -21,6 +26,12 @@ export default function Page() {
     }
   };
 
+  useEffect(() => {
+    serverScripts.getHelloMember().then((result) => {
+      setMember(result);
+    });
+  }, []);
+
   return (
     <>
       <div>
@@ -34,7 +45,7 @@ export default function Page() {
       <h1>Vite + React</h1>
       <div className="card">
         <button type="button" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+          count is {count} by {member?.name ?? "guest"}
         </button>
         <button
           type="button"

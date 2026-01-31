@@ -1,11 +1,15 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { createRouter } from "@ciderjs/city-gas";
+import { RouterProvider } from "@ciderjs/city-gas/react";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { dynamicRoutes, pages, specialPages } from "./generated/routes";
 import "./index.css";
-import App from "./App.tsx";
 
-// biome-ignore lint/style/noNonNullAssertion: root is not null
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+const router = createRouter(pages, { specialPages, dynamicRoutes });
+
+// biome-ignore lint/style/noNonNullAssertion: root element is always present
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
 );
