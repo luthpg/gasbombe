@@ -1,2 +1,30 @@
 ignoredBuiltDependencies:
   - esbuild
+
+minimumReleaseAge: 2880
+
+packages:
+  - 'template-projects/*'
+  - '.' # ルート自体も含める場合
+
+catalog:
+  # Frameworks
+  react: ^19.2.2
+  react-dom: ^19.2.2
+  vue: ^3.4.0
+
+  # Build Tools
+  "@biomejs/biome": ^2.3.6
+  vite: ^5.2.0
+  typescript: ^5.4.0
+  "@types/node": ^20.0.0
+  "@types/react": ^19.2.2
+  "@types/react-dom": ^19.2.2
+  "@vitejs/plugin-react": ^5.0.4
+
+  # GAS specific
+  "@ciderjs/city-gas": ^1.1.0
+  "@ciderjs/gasnuki": ^0.5.3
+  "@google/clasp": ^3.1.0
+  "@types/google-apps-script": ^2.0.5
+  "vite-plugin-singlefile": ^2.0.1
