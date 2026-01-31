@@ -1,5 +1,3 @@
-import path from "node:path";
-import alias from "@rollup/plugin-alias";
 import { defineConfig } from "rolldown";
 import { removeExportPlugin } from "rolldown-plugin-remove-export";
 
@@ -12,14 +10,6 @@ export default defineConfig({
     file: `dist/${outputFile}`,
   },
   plugins: [
-    alias({
-      entries: [
-        {
-          find: "~",
-          replacement: path.resolve(__dirname),
-        },
-      ],
-    }),
     removeExportPlugin(outputFile),
   ],
 });

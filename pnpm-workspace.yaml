@@ -1,30 +1,43 @@
+packages:
+  - template-projects/*
+  - .
+
+catalog:
+  '@biomejs/biome': ^2.3.13
+  '@ciderjs/city-gas': ^1.1.0
+  '@ciderjs/clasp-auth': ^0.2.0
+  '@ciderjs/gasnuki': ^0.5.0
+  '@google/clasp': ^3.1.3
+  '@types/google-apps-script': ^2.0.8
+  '@types/node': ^25.1.0
+  '@types/react': ^19.2.10
+  '@types/react-dom': ^19.2.3
+  '@vitejs/plugin-react': ^5.1.2
+  '@vitejs/plugin-vue': ^6.0.3
+  '@vitest/coverage-v8': ^4.0.18
+  '@vue/tsconfig': ^0.8.1
+  cpy-cli: ^6.0.0
+  cross-var: ^1.1.0
+  dotenv-cli: ^11.0.0
+  react: ^19.2.4
+  react-dom: ^19.2.4
+  rimraf: ^6.1.2
+  rolldown: 1.0.0-rc.2
+  rolldown-plugin-remove-export: ^0.1.3
+  typescript: ^5.9.3
+  vite: ^7.3.1
+  vite-plugin-google-apps-script: ^0.4.1
+  vite-plugin-singlefile: ^2.3.0
+  vite-tsconfig-paths: ^6.0.5
+  vitest: ^4.0.18
+  vue: ^3.5.27
+  vue-tsc: ^3.2.4
+  zod: ^4.3.6
+
 ignoredBuiltDependencies:
   - esbuild
 
-minimumReleaseAge: 2880
+minimumReleaseAge: 1440
 
-packages:
-  - 'template-projects/*'
-  - '.' # ルート自体も含める場合
-
-catalog:
-  # Frameworks
-  react: ^19.2.2
-  react-dom: ^19.2.2
-  vue: ^3.4.0
-
-  # Build Tools
-  "@biomejs/biome": ^2.3.6
-  vite: ^5.2.0
-  typescript: ^5.4.0
-  "@types/node": ^20.0.0
-  "@types/react": ^19.2.2
-  "@types/react-dom": ^19.2.2
-  "@vitejs/plugin-react": ^5.0.4
-
-  # GAS specific
-  "@ciderjs/city-gas": ^1.1.0
-  "@ciderjs/gasnuki": ^0.5.3
-  "@google/clasp": ^3.1.0
-  "@types/google-apps-script": ^2.0.5
-  "vite-plugin-singlefile": ^2.0.1
+onlyBuiltDependencies:
+  - core-js

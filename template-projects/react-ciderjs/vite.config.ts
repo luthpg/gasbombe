@@ -22,11 +22,7 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
     cityGasRouter(),
-    gasnuki({
-      srcDir: "server",
-      outDir: "types/appsscript",
-      outputFile: "client.ts",
-    }),
+    gasnuki(),
     gas(),
     viteSingleFile(),
   ],
