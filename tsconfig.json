@@ -38,5 +38,6 @@
     "moduleDetection": "force",
     "moduleResolution": "bundler",
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["node_modules", "dist", "template-projects"]
 }

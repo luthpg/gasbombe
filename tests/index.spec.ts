@@ -103,7 +103,12 @@ describe('generateProject', () => {
     // Default mocks for a successful run
     vi.mocked(fs.access).mockRejectedValue(new Error('ENOENT')); // File doesn't exist
     vi.mocked(fs.mkdir).mockResolvedValue(undefined);
-    vi.mocked(fs.readFile).mockResolvedValue('template content');
+    vi.mocked(fs.readFile).mockImplementation(async (filePath) => {
+      if (typeof filePath === 'string' && filePath.endsWith('catalog.json')) {
+        return JSON.stringify({ '@biomejs/biome': '^2.3.6' });
+      }
+      return 'template content';
+    });
     vi.mocked(fs.writeFile).mockResolvedValue(undefined);
     vi.mocked(glob).mockResolvedValue(['file1.js.ejs', 'file2.css']);
     vi.mocked(ejs.render).mockReturnValue('rendered content');
@@ -141,7 +146,7 @@ describe('generateProject', () => {
 
     expect(fs.mkdir).toHaveBeenCalledWith(outputDir, { recursive: true });
     expect(glob).toHaveBeenCalledTimes(2); // common and specific
-    expect(fs.readFile).toHaveBeenCalledTimes(4); // 2 files * 2 dirs
+    expect(fs.readFile).toHaveBeenCalledTimes(5); // 2 files * 2 dirs + catalog.json
     expect(ejs.render).toHaveBeenCalledTimes(4);
     expect(fs.writeFile).toHaveBeenCalledTimes(4);
     expect(consola.start).toHaveBeenCalledWith(
@@ -388,6 +393,9 @@ describe('generateProject', () => {
       vi.mocked(fs.readFile).mockImplementation(async (p) => {
         if (typeof p === 'string' && p.endsWith('.clasp.json')) {
           return JSON.stringify(existingClaspJson);
+        }
+        if (typeof p === 'string' && p.endsWith('catalog.json')) {
+          return JSON.stringify({ '@biomejs/biome': '^2.0.0' });
         }
         return 'template content';
       });
