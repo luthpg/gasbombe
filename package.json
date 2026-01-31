@@ -17,7 +17,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "jiti src/cli",
-    "tsc": "tsgo --noEmit src",
+    "tsc": "tsgo --noEmit",
     "check": "biome check --write",
     "generate": "jiti scripts/copyTemplates",
     "test": "vitest run --coverage",

@@ -29,7 +29,7 @@ jobs:
 
       - name: Build package
         # The build script from package.json is executed
-        run: pnpm install && pnpm run build
+        run: pnpm install -w && pnpm run build
 
       - name: Publish to npm
         # --access public is required for scoped packages
