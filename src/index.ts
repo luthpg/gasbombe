@@ -280,8 +280,6 @@ export async function generateProject({
       const templateContent = await fs.readFile(templatePath, {
         encoding: "utf-8",
       });
-      console.log({ relativePath, ejsData });
-      console.warn(templateContent);
       const renderedContent = ejs.render(templateContent, ejsData);
       await fs.writeFile(outputPath, renderedContent, { encoding: "utf-8" });
     }
