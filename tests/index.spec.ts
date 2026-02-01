@@ -276,7 +276,7 @@ describe('generateProject', () => {
       await generateProject({ ...projectOptions, clasp: 'create' });
 
       expect(spawn).toHaveBeenCalledWith(
-        'pnpx',
+        'pnpm dlx',
         expect.arrayContaining(['create']),
         expect.objectContaining({ cwd: outputDir }),
       );
@@ -345,7 +345,7 @@ describe('generateProject', () => {
       await generateProject({ ...projectOptions, clasp: 'list' });
 
       expect(spawn).toHaveBeenCalledWith(
-        'pnpx',
+        'pnpm dlx',
         ['@google/clasp', 'list'],
         expect.objectContaining({ cwd: outputDir }),
       );

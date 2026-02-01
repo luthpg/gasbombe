@@ -6,7 +6,7 @@
   "main": "./dist/app.js",
   "scripts": {
     "check": "biome check --write",
-    "build": "tsc && rolldown -c && cpy src/*.json dist/",
+    "build": "rolldown -c && cpy src/*.json dist/",
     "test": "vitest run --coverage",
     "push": "clasp push"
   },
@@ -19,7 +19,6 @@
     "cpy-cli": "catalog:",
     "rolldown": "catalog:",
     "rolldown-plugin-remove-export": "catalog:",
-    "vite-tsconfig-paths": "catalog:",
     "vitest": "catalog:"
   }
 }

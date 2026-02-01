@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { select } from "@inquirer/prompts";
+import { confirm, select } from "@inquirer/prompts";
 import { consola } from "consola";
 import ejs from "ejs";
 import { glob } from "glob";
@@ -66,8 +66,8 @@ async function handleClaspSetup(
     packageManager === "npm"
       ? "npx"
       : packageManager === "pnpm"
-        ? "pnpx"
-        : "yarn";
+        ? "pnpm dlx"
+        : "yarn dlx";
 
   consola.start(
     `Setting up .clasp.json with \`${npxLikeCommand} @google/clasp\`...`,
@@ -233,9 +233,10 @@ export async function generateProject({
       const relevantFiles = files.filter((file) => !file.startsWith("."));
 
       if (relevantFiles.length > 0) {
-        const proceed = await confirm(
-          "Current directory is not empty. Proceed anyway?",
-        );
+        const proceed = await confirm({
+          message: "Current directory is not empty. Proceed anyway?",
+          default: false,
+        });
 
         if (!proceed) {
           consola.warn("Operation cancelled.");

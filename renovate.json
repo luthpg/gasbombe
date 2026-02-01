@@ -1,15 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":combinedPatchMinorReleases"],
-  "pnpm": {
-    "enabled": true
-  },
   "packageRules": [
     {
       "matchPackageNames": ["*"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch"
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ],
   "timezone": "Asia/Tokyo",
