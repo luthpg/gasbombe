@@ -1,6 +1,6 @@
 {
   "name": "@ciderjs/gasbombe",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A TypeScript Project Generator for GoogleAppsScript, available as CLI",
   "type": "module",
   "main": "dist/index.cjs",
