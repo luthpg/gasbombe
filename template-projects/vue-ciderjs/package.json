@@ -27,6 +27,7 @@
   "devDependencies": {
     "@biomejs/biome": "catalog:",
     "@ciderjs/clasp-auth": "catalog:",
+    "@ciderjs/vitest-plugin-gas-mock": "catalog:",
     "@google/clasp": "catalog:",
     "@types/google-apps-script": "catalog:",
     "@types/node": "catalog:",

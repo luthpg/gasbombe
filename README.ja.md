@@ -3,6 +3,7 @@
 [![README-en](https://img.shields.io/badge/English-blue?logo=ReadMe)](./README.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/@ciderjs/gasbombe.svg)](https://www.npmjs.com/package/@ciderjs/gasbombe)
+[![NPM Downloads](https://img.shields.io/npm/dw/@ciderjs/gasbombe)](https://www.npmjs.com/package/@ciderjs/gasbombe)
 [![GitHub issues](https://img.shields.io/github/issues/luthpg/gasbombe.svg)](https://github.com/luthpg/gasbombe/issues)
 
 🛢 「Gasbombe」は、GoogleAppsScriptのためのTypeScriptプロジェクトジェネレーターです。
@@ -15,6 +16,7 @@
 * **テンプレート**:
   * サーバーサイドTypeScript
   * サーバーサイドJavaScript
+  * サーバーサイドTypeScript with CiderJS
   * React
   * React with CiderJS
   * Vue
@@ -67,7 +69,7 @@ gasbombe --name my-react-app --template react --clasp create --pkg pnpm
 | オプション | エイリアス | 引数 | 説明 | 選択肢 |
 | :--- | :--- | :--- | :--- | :--- |
 | `--name` | `-n` | `[projectName]` | 生成するプロジェクトの名前。 | - |
-| `--template` | `-t` | `[templateType]` | 使用するプロジェクトテンプレート。 | `server-ts`, `server-js`, `react`, `react-ciderjs`, `vue`, `vue-ciderjs`, `html-js` |
+| `--template` | `-t` | `[templateType]` | 使用するプロジェクトテンプレート。 | `server-ts`, `server-js`, `server-ciderjs`, `react`, `react-ciderjs`, `vue`, `vue-ciderjs`, `html-js` |
 | `--clasp` | `-c` | `[claspOption]` | `.clasp.json`のセットアップ方法。<br/>`create`と`list`は事前にclaspへのログインが必要です。 | `create`, `list`, `input`, `skip` |
 | `--pkg` | `-p` | `[packageManager]` | 使用するパッケージマネージャー。 | `npm`, `pnpm`, `yarn` |
 | `--skipInstall` | | | 依存関係のインストールをスキップします。 | - |

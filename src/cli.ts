@@ -25,7 +25,7 @@ export async function main(): Promise<void> {
     )
     .option(
       "-t, --template [templateType]",
-      'Project template label ("server-ts" | "server-js" | "react" | "react-ciderjs" | "vue" | "vue-ciderjs" | "html-js")',
+      'Project template label ("server-ts" | "server-js" | "server-ciderjs" | "react" | "react-ciderjs" | "vue" | "vue-ciderjs" | "html-js")',
       "",
     )
     .option(
@@ -91,6 +91,11 @@ export async function main(): Promise<void> {
               description: "JavaScript (only Server-Side)",
             },
             {
+              name: "server-ciderjs",
+              value: "server-ciderjs",
+              description: "TypeScript with CiderJS (only Server-Side)",
+            },
+            {
               name: "react",
               value: "react",
               description: "TSX-React (Client-Side & Server-Side)",
@@ -120,6 +125,7 @@ export async function main(): Promise<void> {
         const templateTypes: TemplateType[] = [
           "server-ts",
           "server-js",
+          "server-ciderjs",
           "react",
           "react-ciderjs",
           "vue",

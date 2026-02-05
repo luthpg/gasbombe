@@ -3,6 +3,7 @@
 [![README-ja](https://img.shields.io/badge/日本語-blue?logo=ReadMe)](./README.ja.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/@ciderjs/gasbombe.svg)](https://www.npmjs.com/package/@ciderjs/gasbombe)
+[![NPM Downloads](https://img.shields.io/npm/dw/@ciderjs/gasbombe)](https://www.npmjs.com/package/@ciderjs/gasbombe)
 [![GitHub issues](https://img.shields.io/github/issues/luthpg/gasbombe.svg)](https://github.com/luthpg/gasbombe/issues)
 
 🛢 'Gasbombe' the TypeScript Project Generator for GoogleAppsScript.
@@ -15,6 +16,7 @@ This project provides a command-line interface (CLI) to scaffold new TypeScript 
 * **Templates**:
   * Server-side TypeScript
   * Server-side JavaScript
+  * Server-side TypeScript with CiderJS
   * React
   * React with CiderJS
   * Vue
@@ -67,7 +69,7 @@ gasbombe --name my-react-app --template react --clasp create --pkg pnpm
 | Option | Alias | Argument | Description | Choices |
 | :--- | :--- | :--- | :--- | :--- |
 | `--name` | `-n` | `[projectName]` | The name of the project to generate. | - |
-| `--template` | `-t` | `[templateType]` | The project template to use. | `server-ts`, `server-js`, `react`, `react-ciderjs`, `vue`, `vue-ciderjs`, `html-js` |
+| `--template` | `-t` | `[templateType]` | The project template to use. | `server-ts`, `server-js`, `server-ciderjs`, `react`, `react-ciderjs`, `vue`, `vue-ciderjs`, `html-js` |
 | `--clasp` | `-c` | `[claspOption]` | How to set up the `.clasp.json` file.<br/>`create` and `list` require prior login to clasp. | `create`, `list`, `input`, `skip` |
 | `--pkg` | `-p` | `[packageManager]` | The package manager to use. | `npm`, `pnpm`, `yarn` |
 | `--skipInstall` | | | Skip installing dependencies. | - |

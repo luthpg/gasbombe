@@ -7,6 +7,7 @@ catalog:
   '@ciderjs/city-gas': ^1.1.0
   '@ciderjs/clasp-auth': ^0.2.0
   '@ciderjs/gasnuki': ^0.5.5
+  '@ciderjs/vitest-plugin-gas-mock': ^0.0.1
   '@google/clasp': ^3.1.3
   '@types/google-apps-script': ^2.0.8
   '@types/node': ^25.1.0
