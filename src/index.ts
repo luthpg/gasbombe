@@ -325,7 +325,7 @@ export async function generateProject({
   const messages: string[] = [];
   projectName !== "." && messages.push(`  cd ${projectName}`);
   !install && messages.push(`  ${packageManager} install`);
-  !["server-ts", "server-js"].includes(templateType) &&
+  !["server-ts", "server-js", "server-ciderjs"].includes(templateType) &&
     messages.push(`  ${packageManager} dev`);
 
   if (messages.length > 0) {

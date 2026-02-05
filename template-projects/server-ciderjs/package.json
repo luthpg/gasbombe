@@ -1,0 +1,29 @@
+{
+  "name": "@gasbombe/server-ciderjs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/app.js",
+  "scripts": {
+    "check": "biome check --write",
+    "build": "tsc && rolldown -c && cpy src/*.json dist/",
+    "test": "vitest run --coverage",
+    "auth": "clasp-auth upload",
+    "push": "clasp push"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@ciderjs/clasp-auth": "catalog:",
+    "@ciderjs/vitest-plugin-gas-mock": "catalog:",
+    "@google/clasp": "catalog:",
+    "@types/google-apps-script": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "cpy-cli": "catalog:",
+    "rolldown": "catalog:",
+    "rolldown-plugin-remove-export": "catalog:",
+    "typescript": "catalog:",
+    "vite-tsconfig-paths": "catalog:",
+    "vitest": "catalog:"
+  }
+}

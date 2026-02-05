@@ -28,7 +28,8 @@
     ":vue": "pnpm -C template-projects/vue",
     ":html": "pnpm -C template-projects/html-js",
     ":ts": "pnpm -C template-projects/server-ts",
-    ":js": "pnpm -C template-projects/server-js"
+    ":js": "pnpm -C template-projects/server-js",
+    ":ts-c": "pnpm -C template-projects/server-ciderjs"
   },
   "keywords": [
     "googleappsscript",

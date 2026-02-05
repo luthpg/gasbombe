@@ -2,6 +2,7 @@
 
 import { cityGasRouter } from "@ciderjs/city-gas/plugin";
 import { gasnuki } from "@ciderjs/gasnuki/vite";
+import { mockGas } from "@ciderjs/vitest-plugin-gas-mock";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
 import { gas } from "vite-plugin-google-apps-script";
@@ -22,6 +23,7 @@ export default defineConfig({
       outputFile: "client.ts",
     }),
     gas(),
+    mockGas(),
     viteSingleFile(),
   ],
 });
