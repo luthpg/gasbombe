@@ -1,6 +1,7 @@
 import { serialize } from "@ciderjs/gasnuki/json";
 
 export function sayHello(name: string): string {
+  Logger.log("sayHello");
   return `Hello, ${name}!`;
 }
 
