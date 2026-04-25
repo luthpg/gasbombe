@@ -30,6 +30,8 @@
     "@ciderjs/clasp-auth": "catalog:",
     "@ciderjs/vitest-plugin-gas-mock": "catalog:",
     "@google/clasp": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
     "@types/google-apps-script": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
@@ -39,6 +41,7 @@
     "cpy-cli": "catalog:",
     "cross-var": "catalog:",
     "dotenv-cli": "catalog:",
+    "jsdom": "catalog:",
     "rimraf": "catalog:",
     "rolldown": "catalog:",
     "rolldown-plugin-remove-export": "catalog:",
@@ -46,7 +49,6 @@
     "vite": "catalog:",
     "vite-plugin-google-apps-script": "catalog:",
     "vite-plugin-singlefile": "catalog:",
-    "vite-tsconfig-paths": "catalog:",
     "vitest": "catalog:"
   }
 }

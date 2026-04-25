@@ -27,4 +27,5 @@ const mockupFunctions: PartialScriptType<ServerScripts> = {
 export const serverScripts = getPromisedServerScripts<ServerScripts>({
   mockupFunctions,
   parseJson: true,
+  strictMock: true,
 });

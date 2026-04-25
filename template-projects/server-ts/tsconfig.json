@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "useDefineForClassFields": true,
+    "useDefineForClassFields": false,
     "module": "esnext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["google-apps-script"],
     "skipLibCheck": true,
 
     /* Bundler mode */

@@ -6,7 +6,7 @@ export default defineConfig({
       include: ["src/**/*"],
     },
   },
-  resolver: {
+  resolve: {
     alias: {
       "@": "./src",
     },
