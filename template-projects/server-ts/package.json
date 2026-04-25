@@ -20,7 +20,6 @@
     "rolldown": "catalog:",
     "rolldown-plugin-remove-export": "catalog:",
     "typescript": "catalog:",
-    "vite-tsconfig-paths": "catalog:",
     "vitest": "catalog:"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@ciderjs/gasbombe",
-  "version": "0.4.5",
+  "version": "0.4.7",
   "description": "A TypeScript Project Generator for GoogleAppsScript, available as CLI",
   "type": "module",
   "main": "dist/index.cjs",
@@ -41,7 +41,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/luthpg/gasbombe.git"
+    "url": "https://github.com/luthpg/gasbombe"
   },
   "bugs": {
     "url": "https://github.com/luthpg/gasbombe/issues"
@@ -49,16 +49,16 @@
   "homepage": "https://github.com/luthpg/gasbombe#readme",
   "devDependencies": {
     "@biomejs/biome": "catalog:",
-    "@inquirer/prompts": "^8.2.1",
+    "@inquirer/prompts": "^8.4.2",
     "@types/ejs": "^3.1.5",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "catalog:",
-    "@typescript/native-preview": "7.0.0-dev.20260217.1",
+    "@typescript/native-preview": "7.0.0-dev.20260423.1",
     "@vitest/coverage-v8": "catalog:",
     "commander": "^14.0.3",
     "consola": "^3.4.2",
-    "ejs": "^4.0.1",
-    "glob": "^13.0.5",
+    "ejs": "^5.0.2",
+    "glob": "^13.0.6",
     "jiti": "^2.6.1",
     "js-yaml": "^4.1.1",
     "typescript": "catalog:",
@@ -71,5 +71,13 @@
     "consola": "^3",
     "ejs": "^3 || ^4",
     "glob": "^11 || ^12  || ^13"
+  },
+  "overrides": {
+    "axios": "1.14.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "axios": "1.14.0"
+    }
   }
 }

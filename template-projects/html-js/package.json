@@ -19,14 +19,16 @@
   "devDependencies": {
     "@biomejs/biome": "catalog:",
     "@google/clasp": "catalog:",
+    "@testing-library/dom": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
     "@types/google-apps-script": "catalog:",
     "@types/node": "catalog:",
     "cpy-cli": "catalog:",
+    "jsdom": "catalog:",
     "rimraf": "catalog:",
     "rolldown": "catalog:",
     "rolldown-plugin-remove-export": "catalog:",
     "vite": "catalog:",
-    "vite-tsconfig-paths": "catalog:",
     "vitest": "catalog:"
   }
 }

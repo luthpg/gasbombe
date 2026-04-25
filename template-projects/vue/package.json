@@ -26,10 +26,12 @@
     "@types/node": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "@vitest/coverage-v8": "catalog:",
+    "@vue/test-utils": "catalog:",
     "@vue/tsconfig": "catalog:",
     "cpy-cli": "catalog:",
     "cross-var": "catalog:",
     "dotenv-cli": "catalog:",
+    "jsdom": "catalog:",
     "rimraf": "catalog:",
     "rolldown": "catalog:",
     "rolldown-plugin-remove-export": "catalog:",
@@ -37,7 +39,6 @@
     "vite": "catalog:",
     "vite-plugin-google-apps-script": "catalog:",
     "vite-plugin-singlefile": "catalog:",
-    "vite-tsconfig-paths": "catalog:",
     "vitest": "catalog:",
     "vue-tsc": "catalog:"
   }

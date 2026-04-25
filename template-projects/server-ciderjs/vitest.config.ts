@@ -1,5 +1,4 @@
 import { mockGas } from "@ciderjs/vitest-plugin-gas-mock";
-import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -8,5 +7,8 @@ export default defineConfig({
       include: ["src/**/*.ts"],
     },
   },
-  plugins: [tsconfigPaths(), mockGas()],
+  resolve: {
+    tsconfigPaths: true,
+  },
+  plugins: [mockGas()],
 });

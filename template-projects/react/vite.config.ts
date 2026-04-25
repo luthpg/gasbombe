@@ -4,7 +4,6 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { gas } from "vite-plugin-google-apps-script";
 import { viteSingleFile } from "vite-plugin-singlefile";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,9 +11,14 @@ export default defineConfig({
     outDir: "dist",
   },
   test: {
+    environment: "jsdom",
+    setupFiles: ["./tests/vitest.setup.ts"],
     coverage: {
       include: ["src/**/*.ts", "src/**/*.tsx", "server/**/*.ts"],
     },
   },
-  plugins: [react(), tsconfigPaths(), gas(), viteSingleFile()],
+  resolve: {
+    tsconfigPaths: true,
+  },
+  plugins: [react(), gas(), viteSingleFile()],
 });
