@@ -1,6 +1,6 @@
 {
   "name": "@ciderjs/gasbombe",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "A TypeScript Project Generator for GoogleAppsScript, available as CLI",
   "type": "module",
   "main": "dist/index.cjs",
@@ -16,12 +16,13 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "jiti src/cli",
-    "tsc": "tsgo --noEmit",
+    "dev": "tsx src/cli",
+    "tsc": "tsc --noEmit",
     "check": "biome check --write",
-    "generate": "jiti scripts/copyTemplates",
+    "check:ci": "biome ci",
+    "generate": "tsx scripts/copyTemplates",
     "test": "vitest run --coverage",
-    "build": "pnpm run tsc && pnpm run test --silent && unbuild && pnpm run generate",
+    "build": "pnpm run tsc && unbuild && pnpm run generate",
     ":react-c": "pnpm -C template-projects/react-ciderjs",
     ":vue-c": "pnpm -C template-projects/vue-ciderjs",
     ":react": "pnpm -C template-projects/react",
@@ -49,35 +50,31 @@
   "homepage": "https://github.com/luthpg/gasbombe#readme",
   "devDependencies": {
     "@biomejs/biome": "catalog:",
-    "@inquirer/prompts": "^8.4.2",
+    "@inquirer/prompts": "^8.7.2",
     "@types/ejs": "^3.1.5",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "catalog:",
-    "@typescript/native-preview": "7.0.0-dev.20260423.1",
+    "@typescript/typescript6": "^6.0.2",
     "@vitest/coverage-v8": "catalog:",
-    "commander": "^14.0.3",
+    "commander": "^15.0.0",
     "consola": "^3.4.2",
-    "ejs": "^5.0.2",
+    "ejs": "^6.0.1",
     "glob": "^13.0.6",
-    "jiti": "^2.6.1",
-    "js-yaml": "^4.1.1",
+    "js-yaml": "^5.4.2",
+    "tsx": "^4.23.15",
     "typescript": "catalog:",
     "unbuild": "^3.6.1",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
     "@inquirer/prompts": "^7 || ^8",
-    "commander": "^14",
+    "commander": "^14 || ^15",
     "consola": "^3",
-    "ejs": "^3 || ^4",
-    "glob": "^11 || ^12  || ^13"
+    "ejs": "^3 || ^4 || ^5 || ^6",
+    "glob": "^11 || ^12 || ^13"
   },
   "overrides": {
     "axios": "1.14.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "axios": "1.14.0"
-    }
   }
 }

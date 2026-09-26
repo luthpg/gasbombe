@@ -28,3 +28,5 @@ dist-ssr
 .env*
 !template-projects/**/.env*
 coverage
+**/types/appsscript/client.ts
+**/src/generated/
