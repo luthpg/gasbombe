@@ -70,8 +70,9 @@ await generateProject({
 });
 ```
 
-**なぜこの方法が効率的か:**
-`projectName: '.'` と `install: false` を組み合わせることで、余計なサブディレクトリの作成や重複した `node_modules` のインストールを回避できます。既存の開発環境を汚さずにシームレスにGASテンプレートをマージでき、さらにカレントディレクトリに既存の `.clasp.json` があれば自動的に `scriptId` を更新します。
+**注意点とポイント:**
+`projectName: '.'` と `install: false` を組み合わせることで、余計なサブディレクトリの作成や重複した `node_modules` のインストールを回避できます。また、カレントディレクトリに既存の `.clasp.json` があれば自動的に `scriptId` が更新されます。
+ただし、`generateProject` はファイル展開後に `git init` および `git add -A` / `git commit` を自動実行します（`install: false` でも Git 初期化はスキップされません）。既存のリポジトリやモノレポ内のパッケージで実行する場合は、既存ファイルがコミット対象に含まれる点や、サブディレクトリ内に新たな Git リポジトリが初期化される点に留意してください。
 
 ## 4. 型定義とAPIリファレンスのハイライト (API Highlights)
 

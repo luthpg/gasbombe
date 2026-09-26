@@ -19,6 +19,7 @@
     "dev": "tsx src/cli",
     "tsc": "tsc --noEmit",
     "check": "biome check --write",
+    "check:ci": "biome ci",
     "generate": "tsx scripts/copyTemplates",
     "test": "vitest run --coverage",
     "build": "pnpm run tsc && pnpm run test --silent && unbuild && pnpm run generate",
@@ -68,10 +69,10 @@
   },
   "peerDependencies": {
     "@inquirer/prompts": "^7 || ^8",
-    "commander": "^14",
+    "commander": "^14 || ^15",
     "consola": "^3",
-    "ejs": "^3 || ^4",
-    "glob": "^11 || ^12  || ^13"
+    "ejs": "^3 || ^4 || ^5 || ^6",
+    "glob": "^11 || ^12 || ^13"
   },
   "overrides": {
     "axios": "1.14.0"

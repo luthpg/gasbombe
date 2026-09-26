@@ -43,6 +43,12 @@ const TYPECHECK_COMMANDS: Partial<Record<TemplateName, string>> = {
 const ROOT_DIR = path.resolve(__dirname, "..");
 const TEMPLATES_DIR = path.resolve(ROOT_DIR, "template-projects");
 
+// 子プロセスの実行オプション（タイムアウト60秒でハングを防止）
+const EXEC_OPTIONS = {
+  cwd: ROOT_DIR,
+  timeout: 60_000,
+};
+
 /**
  * テンプレートディレクトリ配下の dist フォルダを安全に削除するヘルパー
  */
@@ -97,7 +103,7 @@ describe("テンプレートプロジェクト検証テストスイート", { ti
     it("記法・構文チェック（Biome check）にパスすること", async () => {
       const { stdout, stderr } = await execAsync(
         `pnpm -C template-projects/${templateName} run check`,
-        { cwd: ROOT_DIR },
+        EXEC_OPTIONS,
       );
       // Biome check が正常に終了（エラーなし）
       expect(stderr).not.toContain("error");
@@ -108,7 +114,7 @@ describe("テンプレートプロジェクト検証テストスイート", { ti
         const typecheckCmd = TYPECHECK_COMMANDS[templateName];
         expect(typecheckCmd).toBeDefined();
         if (typecheckCmd !== undefined) {
-          const { stderr } = await execAsync(typecheckCmd, { cwd: ROOT_DIR });
+          const { stderr } = await execAsync(typecheckCmd, EXEC_OPTIONS);
           expect(stderr).not.toContain("error TS");
         }
       });
@@ -148,16 +154,17 @@ describe("テンプレートプロジェクト検証テストスイート", { ti
     it("プロジェクト内単体テスト（vitest）にパスすること", async () => {
       const { stderr } = await execAsync(
         `pnpm -C template-projects/${templateName} run test`,
-        { cwd: ROOT_DIR },
+        EXEC_OPTIONS,
       );
       expect(stderr).not.toContain("FAIL");
     });
 
     it("ビルド（build）が成功し、成果物が出力された後、クリーンアップされること", async () => {
       try {
-        await execAsync(`pnpm -C template-projects/${templateName} run build`, {
-          cwd: ROOT_DIR,
-        });
+        await execAsync(
+          `pnpm -C template-projects/${templateName} run build`,
+          EXEC_OPTIONS,
+        );
 
         const distDir = path.resolve(templateDir, "dist");
         const files = await fs.readdir(distDir);
