@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build:server": "rolldown -c && cpy server/*.json dist/",
-    "build:front": "pnpm run generate && tsc -b && vite build",
+    "build:front": "pnpm run generate && vite build && tsc -b",
     "build": "rimraf dist && pnpm run build:front && pnpm run build:server",
     "check": "biome check --write",
     "generate": "gasnuki",

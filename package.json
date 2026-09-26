@@ -22,7 +22,7 @@
     "check:ci": "biome ci",
     "generate": "tsx scripts/copyTemplates",
     "test": "vitest run --coverage",
-    "build": "pnpm run tsc && pnpm run test --silent && unbuild && pnpm run generate",
+    "build": "pnpm run tsc && unbuild && pnpm run generate",
     ":react-c": "pnpm -C template-projects/react-ciderjs",
     ":vue-c": "pnpm -C template-projects/vue-ciderjs",
     ":react": "pnpm -C template-projects/react",

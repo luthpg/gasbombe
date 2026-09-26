@@ -7,7 +7,7 @@
     "dev": "vite",
     "tsc": "node ./node_modules/@typescript/v7/bin/tsc --noEmit",
     "build:server": "pnpm run tsc && rolldown -c && cpy server/*.json dist/",
-    "build:front": "pnpm run generate && vue-tsc -b && vite build",
+    "build:front": "pnpm run generate && vite build && vue-tsc -b",
     "build": "rimraf dist && pnpm run build:front && pnpm run build:server",
     "check": "biome check --write",
     "generate": "gasnuki",
