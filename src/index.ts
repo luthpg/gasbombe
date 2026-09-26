@@ -1,11 +1,15 @@
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { confirm, select } from "@inquirer/prompts";
 import { consola } from "consola";
 import ejs from "ejs";
 import { glob } from "glob";
 import type { ProjectOptions } from "../types";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function isWindows(): boolean {
   return process.platform === "win32";
