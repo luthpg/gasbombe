@@ -109,17 +109,6 @@ describe("テンプレートプロジェクト検証テストスイート", { ti
       expect(stderr).not.toContain("error");
     });
 
-    if (TYPECHECK_COMMANDS[templateName]) {
-      it("TypeScript 型チェックにパスすること", async () => {
-        const typecheckCmd = TYPECHECK_COMMANDS[templateName];
-        expect(typecheckCmd).toBeDefined();
-        if (typecheckCmd !== undefined) {
-          const { stderr } = await execAsync(typecheckCmd, EXEC_OPTIONS);
-          expect(stderr).not.toContain("error TS");
-        }
-      });
-    }
-
     if (FRONTEND_TEMPLATES.has(templateName)) {
       it("Vite 開発サーバーが正常に起動し、HTTPリクエストに応答できること", async () => {
         const server = await createServer({
@@ -147,6 +136,17 @@ describe("テンプレートプロジェクト検証テストスイート", { ti
           expect(html.toLowerCase()).toContain("<!doctype html");
         } finally {
           await server.close();
+        }
+      });
+    }
+
+    if (TYPECHECK_COMMANDS[templateName]) {
+      it("TypeScript 型チェックにパスすること", async () => {
+        const typecheckCmd = TYPECHECK_COMMANDS[templateName];
+        expect(typecheckCmd).toBeDefined();
+        if (typecheckCmd !== undefined) {
+          const { stderr } = await execAsync(typecheckCmd, EXEC_OPTIONS);
+          expect(stderr).not.toContain("error TS");
         }
       });
     }
