@@ -18,7 +18,8 @@
       "template-projects/**/*.json",
       "./*.ts",
       "./*.json",
-      "!**/coverage/**/*"
+      "!**/coverage/**/*",
+      "!**/dist/**/*"
     ]
   },
   "formatter": {
