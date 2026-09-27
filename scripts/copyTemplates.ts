@@ -99,7 +99,14 @@ async function copyAndRenameFilesRecursively(
     const destPath = path.join(destDir, item);
     const stats = fs.statSync(sourcePath);
 
-    const skipDirNames = ["node_modules", "dist", "build", "coverage", ".git"];
+    const skipDirNames = [
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".git",
+      "ai-files",
+    ];
 
     if (skipDirNames.includes(item)) {
       continue;
@@ -132,6 +139,68 @@ async function copyAndRenameFilesRecursively(
   );
 }
 
+const TEMPLATE_AI_MAPPING: Record<string, string[]> = {
+  common: ["base"],
+  "server-ts": ["server"],
+  "server-js": ["server"],
+  "server-ciderjs": ["server", "ciderjs"],
+  react: ["spa"],
+  vue: ["spa"],
+  "html-js": ["spa"],
+  "react-ciderjs": ["spa", "ciderjs"],
+  "vue-ciderjs": ["spa", "ciderjs"],
+};
+
+/**
+ * ai-files 配下のファイルを再帰的に対象テンプレートディレクトリにマージコピーし、拡張子 .ejs を付与します。
+ */
+async function copyAiFilesRecursively(srcDir: string, destDir: string) {
+  if (!fs.existsSync(srcDir)) return;
+  if (!fs.existsSync(destDir)) {
+    fs.mkdirSync(destDir, { recursive: true });
+  }
+
+  const items = fs.readdirSync(srcDir);
+  for (const item of items) {
+    const srcPath = path.join(srcDir, item);
+    const destPath = path.join(destDir, item);
+    const stats = fs.statSync(srcPath);
+
+    if (stats.isDirectory()) {
+      await copyAiFilesRecursively(srcPath, destPath);
+    } else if (stats.isFile()) {
+      const newDestPath = destPath.endsWith(".ejs")
+        ? destPath
+        : `${destPath}.ejs`;
+      fs.mkdirSync(path.dirname(newDestPath), { recursive: true });
+      fs.copyFileSync(srcPath, newDestPath);
+    }
+  }
+}
+
+/**
+ * TEMPLATE_AI_MAPPING に基づき、ai-files の各モジュールを各テンプレートディレクトリへマージします。
+ */
+async function mergeAiFiles() {
+  const aiFilesBaseDir = path.join(DIRS.SRC, "ai-files");
+  if (!fs.existsSync(aiFilesBaseDir)) {
+    console.log("No ai-files directory found. Skipping ai-files merge.");
+    return;
+  }
+
+  console.log("Merging ai-files into template directories...");
+  for (const [templateName, modules] of Object.entries(TEMPLATE_AI_MAPPING)) {
+    const templateDestDir = path.join(DIRS.DIST_TEMPLATES, templateName);
+    for (const mod of modules) {
+      const moduleSrcDir = path.join(aiFilesBaseDir, mod);
+      if (fs.existsSync(moduleSrcDir)) {
+        await copyAiFilesRecursively(moduleSrcDir, templateDestDir);
+        console.log(`Merged ai-files/${mod} -> dist/templates/${templateName}`);
+      }
+    }
+  }
+}
+
 // スクリプトの実行
 (async () => {
   try {
@@ -139,6 +208,7 @@ async function copyAndRenameFilesRecursively(
       `Starting process from ${DIRS.SRC} to ${DIRS.DIST_TEMPLATES}...`,
     );
     await copyAndRenameFilesRecursively(DIRS.SRC, DIRS.DIST_TEMPLATES);
+    await mergeAiFiles();
     console.log("All files have been copied and renamed successfully.");
   } catch (error) {
     console.error("An error occurred:", error);

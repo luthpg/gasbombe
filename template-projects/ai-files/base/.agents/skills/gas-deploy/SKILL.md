@@ -1,0 +1,80 @@
+---
+name: gas-deploy
+description: Web App / APIとしてのデプロイ作成、バージョン管理、および @ciderjs/clasp-auth による CI/CD 連携手順
+---
+
+# GAS デプロイスキル (gas-deploy)
+
+本スキルは、Google Apps Script のデプロイ作成（Web App / API）および GitHub Actions での CI/CD 連携（`@ciderjs/clasp-auth`）の手順書です。
+
+---
+
+## 1. ローカルからのデプロイ作成
+
+コードを push した後、新しいバージョンとしてデプロイを作成します。
+
+```bash
+# 新規デプロイの作成
+pnpm run deploy
+```
+
+内部的には `clasp create-deployment` が実行され、デプロイ ID と URL が発行されます。
+
+---
+
+## 2. GitHub Actions CI/CD のセットアップ (`@ciderjs/clasp-auth`)
+
+チーム開発や自動デプロイを行うため、ローカルの clasp 認証情報を GitHub Secrets に安全に登録します。
+
+### 前提条件
+
+- GitHub CLI (`gh`) がインストールされ、`gh auth login` でログイン済みであること
+- `clasp login` でローカルに `~/.clasprc.json` が生成されていること
+
+### 認証情報のアップロード
+
+```bash
+# owner/repo に GitHub Secrets (CLASPRC_JSON) を登録
+pnpm run auth <owner/repo>
+```
+
+### GitHub Actions ワークフローの例 (`.github/workflows/deploy.yml`)
+
+```yaml
+name: Deploy GAS
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Setup clasp auth
+        uses: ciderjs/clasp-auth@v0.1.3
+        with:
+          json: ${{ secrets.CLASPRC_JSON }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check and Test
+        run: pnpm run check && pnpm test
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Push to GAS
+        run: pnpm run push
+
+      - name: Deploy
+        run: pnpm run deploy
+```
