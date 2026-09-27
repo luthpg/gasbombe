@@ -22,7 +22,16 @@
   * Vue
   * Vue with CiderJS
   * HTML/JS
+* **AIエージェント対応**: Claude Code、Cursor、GitHub Copilot、Gemini などの AI コーディングエージェントに最適化されたルール資産（`.agents/rules/`）と定型ワークフロー（`.agents/skills/`）を標準バンドル。選択したテンプレートに合わせて動的に最適化されます。
 * **パッケージマネージャーのサポート**: npm、Yarn、pnpmに対応しています。
+
+## **AIエージェント対応アーキテクチャ (`.agents`)**
+
+生成されるすべてのプロジェクトには、AI コーディングエージェントが GAS 特有の制約を理解し、安全かつ高精度にコード生成を行うためのコンテキスト資産（`.agents/`）が同梱されています。
+
+* **総合ガイド (`.agents/AGENTS.md`)**: プロジェクト概要、ライフサイクルコマンド、および厳守すべき制約事項。
+* **ルール集 (`.agents/rules/`)**: GAS サンドボックス制約（Node.js / ブラウザ DOM API の禁止、Spreadsheet の一括読み書き）、Biome コーディング規約、アーキテクチャ設計、およびアンチパターン集。
+* **スキル集 (`.agents/skills/`)**: サーバー関数の追加、Vitest による GAS API モック作成、ビルド & clasp push、デプロイなどの定型作業を再現する手順書。
 
 ## **使用方法**
 

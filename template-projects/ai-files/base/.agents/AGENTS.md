@@ -24,7 +24,7 @@ AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ド
 | コマンド | 説明 |
 | :--- | :--- |
 | `npm run check` / `pnpm run check` | Biomeによるリント & フォーマット修正（コミット前に必ず実行） |
-| `npm test` / `pnpm test` | Vitestによる単体テスト実行（`@ciderjs/vitest-plugin-gas-mock` 内包） |
+| `npm test` / `pnpm test` | Vitestによる単体テスト実行<%= templateType.includes('ciderjs') ? '（`@ciderjs/vitest-plugin-gas-mock` 内包）' : '' %> |
 | `npm run build` / `pnpm run build` | プロジェクトの完全ビルド（型チェック、バンドル処理） |
 | `npm run push` / `pnpm run push` | `@google/clasp` による GAS へのスクリプト反映（`clasp push`） |
 | `npm run deploy` / `pnpm run deploy` | GAS デプロイの作成（`clasp create-deployment`） |
@@ -60,7 +60,7 @@ AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ド
 定型作業を実行する際は、`.agents/skills/` 内の手順書を参照・実行してください。
 
 1. **単体テストの作成・実行**: [.agents/skills/gas-test/SKILL.md](.agents/skills/gas-test/SKILL.md)
-   - `@ciderjs/vitest-plugin-gas-mock` を使用した型安全な GAS API モック作成。
+<%= templateType.includes('ciderjs') ? '   - `@ciderjs/vitest-plugin-gas-mock` を使用した型安全な GAS API モック作成。' : '   - Vitest による GAS API モック作成と単体テスト実行。' %>
 2. **ビルド & Push**: [.agents/skills/gas-build-and-push/SKILL.md](.agents/skills/gas-build-and-push/SKILL.md)
    - `check` → `test` → `build` → `clasp push` の検証・トラブルシュート。
 3. **デプロイ & CI/CD**: [.agents/skills/gas-deploy/SKILL.md](.agents/skills/gas-deploy/SKILL.md)

@@ -1,6 +1,6 @@
 # クライアント UI / HtmlService アーキテクチャ規約 (04-spa-architecture)
 
-本ドキュメントは、フロントエンド連携テンプレート（`react`, `vue`, `html-js`, `react-ciderjs`, `vue-ciderjs`）における SPA ビルドと HtmlService 連携の規約です。
+本ドキュメントは、フロントエンド連携における SPA ビルドと HtmlService 連携の規約です。
 
 ---
 
@@ -57,9 +57,14 @@ export default defineConfig({
 
 ## 2. クライアント・サーバー間通信の基本
 
-### (1) `google.script.run` のプロミス化パターン (標準テンプレート)
+<% if (templateType.includes('ciderjs')) { -%>
 
-標準の `react`, `vue`, `html-js` では、コールバック地獄を防ぐために Promise ラッパーを作成して呼び出します。
+自動型付け・モックライブラリ `@ciderjs/gasnuki` を使用してサーバー関数を型安全に呼び出します（詳細は `04-ciderjs-architecture.md` を参照）。
+<% } else { -%>
+
+### `google.script.run` のプロミス化パターン
+
+コールバック地獄を防ぐために Promise ラッパーを作成して呼び出します。
 
 ```typescript
 export function callGasServer<T>(functionName: string, ...args: any[]): Promise<T> {
@@ -78,7 +83,7 @@ export function callGasServer<T>(functionName: string, ...args: any[]): Promise<
 }
 ```
 
-※ CiderJS テンプレート（`*-ciderjs`）では、自動型付けライブラリ `@ciderjs/gasnuki` を使用します（詳細は `04-ciderjs-architecture.md` を参照）。
+<% } -%>
 
 ---
 

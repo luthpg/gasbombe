@@ -22,7 +22,16 @@ This project provides a command-line interface (CLI) to scaffold new TypeScript 
   * Vue
   * Vue with CiderJS
   * HTML/JS
+* **AI Agent-Ready**: Out-of-the-box support for AI coding assistants (Claude Code, Cursor, Copilot, Gemini, etc.) with pre-configured rules (`.agents/rules/`) and actionable workflows (`.agents/skills/`) dynamically tailored to the chosen template.
 * **Package Manager Support**: Works with npm, Yarn, and pnpm.
+
+## **AI Agent-Ready Architecture (`.agents`)**
+
+Every scaffolded project includes a comprehensive set of AI coding agent configuration files in `.agents/`, tailored to guide AI assistants toward generating robust, idiomatically sound Google Apps Script code:
+
+* **Master Guide (`.agents/AGENTS.md`)**: Project architecture overview, core lifecycle commands, and critical constraints.
+* **Rules (`.agents/rules/`)**: Strict rules covering GAS sandbox limitations (banning Node.js/DOM APIs, spreadsheet cell batching), Biome code style, template architecture, and anti-patterns.
+* **Skills (`.agents/skills/`)**: Executable, step-by-step workflows for adding server functions, mocking GAS APIs with Vitest, building, pushing with clasp, and deploying.
 
 ## **Usage**
 

@@ -5,7 +5,7 @@ description: CiderJS プロジェクトにおける新規 RPC エンドポイン
 
 # CiderJS エンドポイント追加スキル (gas-add-endpoint)
 
-本スキルは、`react-ciderjs`, `vue-ciderjs`, `server-ciderjs` テンプレートにおいて、新しいサーバーサイド関数を追加し、クライアントから型安全に呼び出せるようにする手順書です。
+本スキルは、新しいサーバーサイド関数を追加し、<%= templateType.startsWith('server-') ? '型安全に公開' : 'クライアントから型安全に呼び出せるように' %>する手順書です。
 
 ---
 
@@ -44,10 +44,9 @@ pnpm run generate
 ```
 
 `types/appsscript.d.ts` が自動生成・更新され、`ServerScripts` インターフェースに `getItemList` が反映されます。
+<% if (!templateType.startsWith('server-')) { -%>
 
-### Step 3: ローカルモックの追加 (フロントエンド構成: `src/lib/server.ts`)
-
-> ※ `react-ciderjs` および `vue-ciderjs` で使用します（サーバー専用の `server-ciderjs` にはクライアント RPC ファイルは含まれないため、このステップはスキップします）。
+### Step 3: ローカルモックの追加 (`src/lib/server.ts`)
 
 ローカル開発（`pnpm dev`）時に動作するように、モック関数を登録します。
 
@@ -63,7 +62,7 @@ const mockupFunctions: PartialScriptType<ServerScripts> = {
 };
 ```
 
-### Step 4: クライアントコンポーネントからの呼び出し (フロントエンド構成)
+### Step 4: クライアントコンポーネントからの呼び出し
 
 ```tsx
 import { serverScripts } from '../lib/server';
@@ -75,7 +74,9 @@ async function fetchItems() {
 }
 ```
 
-### Step 5: リント・テスト・ビルド検証
+<% } -%>
+
+### Step <%= !templateType.startsWith('server-') ? '5' : '3' %>: リント・テスト・ビルド検証
 
 ```bash
 pnpm run check && pnpm test && pnpm run build

@@ -1,6 +1,6 @@
 # CiderJS フルスタックアーキテクチャ規約 (04-ciderjs-architecture)
 
-本ドキュメントは、CiderJS を採用したテンプレート（`react-ciderjs`, `vue-ciderjs`, `server-ciderjs`）における設計規約です。
+本ドキュメントは、CiderJS を採用した本プロジェクトにおける設計規約です。
 
 ---
 
@@ -17,9 +17,20 @@
 
 ---
 
-## 1. ファイルベースルーティング (`@ciderjs/city-gas`)
+## 1. サーバーサイド関数公開と `rolldown-plugin-remove-export`
 
-CiderJS プロジェクトでは、`src/pages/` 配下のファイル構造に基づいた型安全なファイルベースルーティングを提供します。
+- **サーバー側エントリーポイント**: `<%= templateType.startsWith('server-') ? 'src/app.ts' : 'server/app.ts' %>`
+- **バンドル出力先**: `dist/app.js`
+- **ルール**:
+  GAS から実行させたい関数（Web App, トリガー, RPC）は通常通り `export function ...` として定義してください。
+  Rolldown ビルド時に `removeExportPlugin` が末尾の export 宣言を除去し、GAS のグローバルスコープに関数宣言を展開します。
+<% if (!templateType.startsWith('server-')) { -%>
+
+---
+
+## 2. ファイルベースルーティング (`@ciderjs/city-gas`)
+
+本プロジェクトでは、`src/pages/` 配下のファイル構造に基づいた型安全なファイルベースルーティングを提供します。
 
 ### (1) ページコンポーネントとスキーマ定義
 
@@ -27,9 +38,9 @@ CiderJS プロジェクトでは、`src/pages/` 配下のファイル構造に�
 - ページパラメータのバリデーションは **`export const schema = z.object(...)`** で定義します。
 
 ```tsx
-// src/pages/users/[id].tsx
+// src/pages/users/[id].<%= templateType === 'vue-ciderjs' ? 'vue' : 'tsx' %>
 import { z } from 'zod';
-import { useParams, useNavigate } from '@ciderjs/city-gas/react';
+import { useParams, useNavigate } from '<%= templateType === 'vue-ciderjs' ? '@ciderjs/city-gas/vue' : '@ciderjs/city-gas/react' %>';
 
 // ★ 同一ファイル内に直接スキーマを定義する（別ファイルからの import は禁止）
 export const schema = z.object({
@@ -67,26 +78,14 @@ export default function UserDetailPage() {
 
 ### (3) 特殊ファイル
 
-- `_root.tsx`: アプリケーション全体の最上位レイアウト
-- `_layout.tsx`: ディレクトリ内の全ルートに適用されるネストレイアウト
-- `_404.tsx`: 存在しないルートへアクセスされた際のコンポーネント
-- `_loading.tsx`: 画面遷移時・初期化中に表示されるコンポーネント
-
----
-
-## 2. サーバーサイド関数公開と `rolldown-plugin-remove-export`
-
-- **サーバー側エントリーポイント**: `<%= templateType.startsWith('server-') ? 'src/app.ts' : 'server/app.ts' %>`
-- **バンドル出力先**: `dist/app.js`
-- **ルール**:
-  GAS から実行させたい関数（Web App, トリガー, RPC）は通常通り `export function ...` として定義してください。
-  Rolldown ビルド時に `removeExportPlugin` が末尾の export 宣言を除去し、GAS のグローバルスコープに関数宣言を展開します。
+- `_root.<%= templateType === 'vue-ciderjs' ? 'vue' : 'tsx' %>`: アプリケーション全体の最上位レイアウト
+- `_layout.<%= templateType === 'vue-ciderjs' ? 'vue' : 'tsx' %>`: ディレクトリ内の全ルートに適用されるネストレイアウト
+- `_404.<%= templateType === 'vue-ciderjs' ? 'vue' : 'tsx' %>`: 存在しないルートへアクセスされた際のコンポーネント
+- `_loading.<%= templateType === 'vue-ciderjs' ? 'vue' : 'tsx' %>`: 画面遷移時・初期化中に表示されるコンポーネント
 
 ---
 
 ## 3. ローカル開発用モック機能 (`gasnuki`)
-
-> ※ `react-ciderjs` および `vue-ciderjs` のフロントエンド構成で使用します（サーバー専用の `server-ciderjs` にはクライアント RPC ファイルは含まれません）。
 
 `clasp push` せずにローカル Vite dev サーバー上で画面開発・デバッグを行うため、`mockupFunctions` を定義します。
 
@@ -112,3 +111,5 @@ export const serverScripts = getPromisedServerScripts<ServerScripts>({
   strictMock: false,
 });
 ```
+
+<% } -%>

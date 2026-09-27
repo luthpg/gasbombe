@@ -47,6 +47,8 @@ export function doGet(e: GoogleAppsScript.Events.DoGet) { ... }
 
 ---
 
+<% if (templateType.includes('ciderjs')) { -%>
+
 ## 3. テストにおける GAS グローバルの手作業モック
 
 `@ciderjs/vitest-plugin-gas-mock` が組み込まれているため、`global.SpreadsheetApp = ...` などの手作業による不完全なモックを作成してはいけません。
@@ -68,6 +70,34 @@ import { mockChain } from '@ciderjs/vitest-plugin-gas-mock';
 mockChain('SpreadsheetApp.getActiveSpreadsheet.getName', 'TestSheet');
 ```
 
+<% } else { -%>
+
+## 3. テストにおけるグローバル直接代入モック
+
+他のテストスイートへの影響を防ぐため、`global.SpreadsheetApp = ...` などの直接代入を避け、Vitest の `vi.stubGlobal` を使用してください。
+
+### ❌ Bad (グローバル直接破壊)
+
+```typescript
+// @ts-ignore
+global.SpreadsheetApp = {
+  getActiveSpreadsheet: vi.fn().mockReturnValue({ ... })
+};
+```
+
+### ⭕ Good (`vi.stubGlobal` を利用)
+
+```typescript
+vi.stubGlobal('SpreadsheetApp', {
+  getActiveSpreadsheet: () => ({
+    getName: () => 'TestSheet',
+  }),
+});
+```
+
+<% } -%>
+<% if (!templateType.startsWith('server-')) { -%>
+
 ---
 
 ## 4. クライアント側での通常 `fetch` の使用
@@ -81,14 +111,23 @@ const res = await fetch('/api/users');
 const data = await res.json();
 ```
 
-### ⭕ Good (プロジェクトの提供する RPC または `google.script.run`)
+### ⭕ Good
+
+<% if (templateType.includes('ciderjs')) { -%>
 
 ```typescript
-// CiderJS プロジェクトの場合
-const data = await gas.getUsers();
+import { serverScripts } from '../lib/server';
 
-// 標準プロジェクトの場合
+const data = await serverScripts.getUsers();
+```
+
+<% } else { -%>
+
+```typescript
 google.script.run
   .withSuccessHandler((users) => { ... })
   .getUsers();
 ```
+
+<% } -%>
+<% } -%>

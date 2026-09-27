@@ -1,6 +1,6 @@
 # サーバーサイド GAS アーキテクチャ規約 (04-server-architecture)
 
-本ドキュメントは、サーバーサイド特化テンプレート（`server-ts`, `server-js`, `server-ciderjs`）におけるアーキテクチャおよび関数公開の規約です。
+本ドキュメントは、サーバーサイド GAS アーキテクチャおよび関数公開の規約です。
 
 ---
 
@@ -18,9 +18,9 @@
 
 ## 1. エントリーポイントとバンドル構造
 
-- **エントリーポイント**: `src/app.ts` (または `src/app.js`)
+- **エントリーポイント**: `<%= templateType === 'server-js' ? 'src/app.js' : 'src/app.ts' %>`
 - **出力先**: `dist/app.js`
-- **バンドラー**: **Rolldown** (`rolldown.config.ts`)
+- **バンドラー**: **Rolldown** (`<%= templateType === 'server-js' ? 'rolldown.config.mjs' : 'rolldown.config.ts' %>`)
 
 ---
 
@@ -35,6 +35,26 @@ Google Apps Script のランタイムは ES モジュールの `export { ... }` 
 
 - GAS のエディタやトリガー、Web App から直接呼び出したい関数は、**通常の ES モジュールとして `export function ...` と定義してください**。
 - バンドラーが export 宣言を除去するため、GAS 上ではグローバルスコープの関数宣言として展開されます。
+<% if (templateType === 'server-js') { -%>
+
+```javascript
+// Good: GAS から実行可能な関数として公開される
+export function main() {
+  Logger.log('Executed main task');
+}
+
+export function doGet(e) {
+  return ContentService.createTextOutput(JSON.stringify({ status: 'ok' }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// 内部でのみ使用するヘルパー関数は export しない
+function calculateTax(amount) {
+  return amount * 0.1;
+}
+```
+
+<% } else { -%>
 
 ```typescript
 // Good: GAS から実行可能な関数として公開される
@@ -52,6 +72,8 @@ function calculateTax(amount: number): number {
   return amount * 0.1;
 }
 ```
+
+<% } -%>
 
 ---
 

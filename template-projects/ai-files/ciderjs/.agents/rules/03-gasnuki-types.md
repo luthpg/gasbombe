@@ -1,6 +1,6 @@
 # gasnuki の型保持 JSON 通信と型安全復元 (03-gasnuki-types)
 
-本ドキュメントは、CiderJS 採用テンプレート（`react-ciderjs`, `vue-ciderjs`, `server-ciderjs`）における `@ciderjs/gasnuki` を用いた型安全なデータ通信の規約です。
+本ドキュメントは、本プロジェクトにおける `@ciderjs/gasnuki` を用いた型安全なデータ通信の規約です。
 
 ---
 
@@ -34,7 +34,7 @@ declare const __brand: unique symbol;
 export type JsonString<T> = string & { [__brand]: T };
 ```
 
-### サーバー側の実装 (`server/app.ts` など)
+### サーバー側の実装 (`<%= templateType.startsWith('server-') ? 'src/app.ts' : 'server/app.ts' %>`)
 
 オブジェクトをクライアントへ返す際は、必ず `@ciderjs/gasnuki` の `serialize` 関数を使用してください。
 
@@ -59,9 +59,9 @@ export function getUserProfile(userId: string): JsonString<UserProfile> {
 }
 ```
 
-### クライアント側の実装 (`src/lib/server.ts`)
+<% if (!templateType.startsWith('server-')) { -%>
 
-> ※ `react-ciderjs` および `vue-ciderjs` のフロントエンド構成で使用します（サーバー専用の `server-ciderjs` にはクライアント RPC ファイルは含まれません）。
+### クライアント側の実装 (`src/lib/server.ts`)
 
 クライアント側では、`getPromisedServerScripts` に `{ parseJson: true }` を渡します。
 
@@ -83,6 +83,8 @@ const profile = await serverScripts.getUserProfile('123');
 console.log(profile.name); // string
 console.log(profile.createdAt instanceof Date); // true (自動的に Date に復元される)
 ```
+
+<% } -%>
 
 ---
 

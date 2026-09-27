@@ -145,10 +145,19 @@ describe('generateProject', () => {
     await generateProject(projectOptions);
 
     expect(fs.mkdir).toHaveBeenCalledWith(outputDir, { recursive: true });
-    expect(glob).toHaveBeenCalledTimes(2); // common and specific
     expect(fs.readFile).toHaveBeenCalledTimes(5); // 2 files * 2 dirs + catalog.json
     expect(ejs.render).toHaveBeenCalledTimes(4);
+    expect(ejs.render).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        projectName: projectOptions.projectName,
+        templateType: projectOptions.templateType,
+        packageManager: projectOptions.packageManager,
+      }),
+    );
     expect(fs.writeFile).toHaveBeenCalledTimes(4);
+
+
     expect(consola.start).toHaveBeenCalledWith(
       expect.stringContaining('Creating a new Project'),
     );

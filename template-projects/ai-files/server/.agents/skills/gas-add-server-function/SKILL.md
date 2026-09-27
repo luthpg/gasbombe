@@ -5,7 +5,7 @@ description: サーバーサイド GAS 関数の新規追加、型定義、テ�
 
 # サーバー関数追加スキル (gas-add-server-function)
 
-本スキルは、`server-ts`, `server-js`, `server-ciderjs` テンプレートにおいて、新しいサーバーサイド GAS 関数やトリガー関数を追加する手順書です。
+本スキルは、新しいサーバーサイド GAS 関数やトリガー関数を追加する手順書です。
 
 ---
 
