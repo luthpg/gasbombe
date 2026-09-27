@@ -176,6 +176,9 @@ importers:
       '@biomejs/biome':
         specifier: 'catalog:'
         version: 2.5.14
+      '@ciderjs/clasp-auth':
+        specifier: 'catalog:'
+        version: 0.2.0(@types/node@26.6.2)
       '@google/clasp':
         specifier: 'catalog:'
         version: 3.3.0(@types/node@26.6.2)(supports-color@7.2.0)(typescript@7.0.2)
@@ -225,6 +228,9 @@ importers:
       '@biomejs/biome':
         specifier: 'catalog:'
         version: 2.5.14
+      '@ciderjs/clasp-auth':
+        specifier: 'catalog:'
+        version: 0.2.0(@types/node@26.6.2)
       '@google/clasp':
         specifier: 'catalog:'
         version: 3.3.0(@types/node@26.6.2)(supports-color@7.2.0)(typescript@7.0.2)
@@ -424,6 +430,9 @@ importers:
       '@biomejs/biome':
         specifier: 'catalog:'
         version: 2.5.14
+      '@ciderjs/clasp-auth':
+        specifier: 'catalog:'
+        version: 0.2.0(@types/node@26.6.2)
       '@google/clasp':
         specifier: 'catalog:'
         version: 3.3.0(@types/node@26.6.2)(supports-color@7.2.0)(typescript@7.0.2)
@@ -454,6 +463,9 @@ importers:
       '@biomejs/biome':
         specifier: 'catalog:'
         version: 2.5.14
+      '@ciderjs/clasp-auth':
+        specifier: 'catalog:'
+        version: 0.2.0(@types/node@26.6.2)
       '@google/clasp':
         specifier: 'catalog:'
         version: 3.3.0(@types/node@26.6.2)(supports-color@7.2.0)(typescript@7.0.2)
@@ -491,6 +503,9 @@ importers:
       '@biomejs/biome':
         specifier: 'catalog:'
         version: 2.5.14
+      '@ciderjs/clasp-auth':
+        specifier: 'catalog:'
+        version: 0.2.0(@types/node@26.6.2)
       '@google/clasp':
         specifier: 'catalog:'
         version: 3.3.0(@types/node@26.6.2)(supports-color@7.2.0)(typescript@5.9.3)
@@ -2706,9 +2721,6 @@ packages:
 
   character-reference-invalid@2.0.1:
     resolution: {integrity: sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw==}
-
-  chardet@2.1.1:
-    resolution: {integrity: sha512-PsezH1rqdV9VvyNhxxOW32/d75r01NY7TQCmOqomRo15ZSOKbpTFVsfjghxo6JloQUCGnH4k1LGu0R4yCLlWQQ==}
 
   chardet@2.2.0:
     resolution: {integrity: sha512-rddelWYNPRrXq6PtNEN2S3f6t9ILzvqaN5pVgi4kqt9jHQaXIial9PznB5iSPVlQSLNaaH22ItWz3EJtQ10+OA==}
@@ -5658,8 +5670,8 @@ snapshots:
 
   '@inquirer/external-editor@1.0.3(@types/node@26.6.2)':
     dependencies:
-      chardet: 2.1.1
-      iconv-lite: 0.7.2
+      chardet: 2.2.0
+      iconv-lite: 0.7.3
     optionalDependencies:
       '@types/node': 26.6.2
 
@@ -7136,8 +7148,6 @@ snapshots:
   character-entities@2.0.2: {}
 
   character-reference-invalid@2.0.1: {}
-
-  chardet@2.1.1: {}
 
   chardet@2.2.0: {}
 

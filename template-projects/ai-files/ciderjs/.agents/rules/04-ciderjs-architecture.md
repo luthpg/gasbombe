@@ -76,9 +76,7 @@ export default function UserDetailPage() {
 
 ## 2. サーバーサイド関数公開と `rolldown-plugin-remove-export`
 
-- **サーバー側エントリーポイント**:
-  - フルスタック（`react-ciderjs`, `vue-ciderjs`）: `server/app.ts`
-  - サーバー専用（`server-ciderjs`）: `src/app.ts`
+- **サーバー側エントリーポイント**: `<%= templateType.startsWith('server-') ? 'src/app.ts' : 'server/app.ts' %>`
 - **バンドル出力先**: `dist/app.js`
 - **ルール**:
   GAS から実行させたい関数（Web App, トリガー, RPC）は通常通り `export function ...` として定義してください。

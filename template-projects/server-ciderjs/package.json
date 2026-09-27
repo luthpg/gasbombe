@@ -9,7 +9,8 @@
     "build": "tsc && rolldown -c && cpy src/*.json dist/",
     "test": "vitest run --coverage",
     "auth": "clasp-auth upload",
-    "push": "clasp push"
+    "push": "clasp push",
+    "deploy": "clasp create-deployment"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",

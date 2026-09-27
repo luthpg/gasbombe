@@ -27,7 +27,7 @@ AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ド
 | `npm test` / `pnpm test` | Vitestによる単体テスト実行（`@ciderjs/vitest-plugin-gas-mock` 内包） |
 | `npm run build` / `pnpm run build` | プロジェクトの完全ビルド（型チェック、バンドル処理） |
 | `npm run push` / `pnpm run push` | `@google/clasp` による GAS へのスクリプト反映（`clasp push`） |
-| `npm run deploy` / `pnpm run deploy` | GAS デプロイの作成（または `pnpm exec clasp create-deployment`） |
+| `npm run deploy` / `pnpm run deploy` | GAS デプロイの作成（`clasp create-deployment`） |
 
 ---
 

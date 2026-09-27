@@ -8,10 +8,13 @@
     "check": "biome check --write",
     "build": "tsc && rolldown -c && cpy src/*.json dist/",
     "test": "vitest run --coverage",
-    "push": "clasp push"
+    "auth": "clasp-auth upload",
+    "push": "clasp push",
+    "deploy": "clasp create-deployment"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
+    "@ciderjs/clasp-auth": "catalog:",
     "@google/clasp": "catalog:",
     "@types/google-apps-script": "catalog:",
     "@types/node": "catalog:",

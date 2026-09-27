@@ -275,6 +275,8 @@ export async function generateProject({
 
   const ejsData = {
     projectName,
+    templateType,
+    packageManager,
     biomeVersion: catalog["@biomejs/biome"]?.replace("^", "") || "2.0.0",
   };
   const templateDirs = [commonTemplateDir, specificTemplateDir];
