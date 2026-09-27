@@ -6,6 +6,9 @@ import { version } from "../package.json";
 import type { ClaspOption, PackageManager, TemplateType } from "../types/index";
 import { generateProject } from "./index";
 
+/**
+ * CLI entry point for gasbombe
+ */
 export async function main(): Promise<void> {
   const program = new Command();
 

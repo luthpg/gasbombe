@@ -11,10 +11,16 @@ import type { ProjectOptions } from "../types";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+/**
+ * Check if current OS is Windows
+ */
 export function isWindows(): boolean {
   return process.platform === "win32";
 }
 
+/**
+ * Execute child process command
+ */
 export async function runCommand(
   command: string,
   args: string[],
@@ -210,6 +216,9 @@ async function handleClaspSetup(
   }
 }
 
+/**
+ * Generate a new Google Apps Script project from template
+ */
 export async function generateProject({
   projectName,
   packageManager,

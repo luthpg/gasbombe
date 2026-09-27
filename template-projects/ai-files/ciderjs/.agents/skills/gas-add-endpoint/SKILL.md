@@ -11,12 +11,12 @@ description: CiderJS プロジェクトにおける新規 RPC エンドポイン
 
 ## ワークフロー
 
-### Step 1: サーバー関数の実装 (`server/app.ts`)
+### Step 1: サーバー関数の実装 (フルスタック: `server/app.ts` / サーバー専用: `src/app.ts`)
 
 1. `@ciderjs/gasnuki` の `serialize` を使用して、型情報を保持した関数を定義します。
 
 ```typescript
-// server/app.ts
+// server/app.ts (または server-ciderjs の場合は src/app.ts)
 import { serialize, type JsonString } from '@ciderjs/gasnuki';
 
 export interface Item {

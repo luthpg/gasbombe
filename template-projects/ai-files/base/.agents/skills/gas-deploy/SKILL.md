@@ -14,8 +14,11 @@ description: Web App / APIとしてのデプロイ作成、バージョン管理
 コードを push した後、新しいバージョンとしてデプロイを作成します。
 
 ```bash
-# 新規デプロイの作成
+# 新規デプロイの作成 (package.json に deploy が定義されている場合)
 pnpm run deploy
+
+# または直接 clasp コマンドを実行（server-* など deploy スクリプトがない場合）
+pnpm exec clasp create-deployment
 ```
 
 内部的には `clasp create-deployment` が実行され、デプロイ ID と URL が発行されます。
@@ -30,12 +33,16 @@ pnpm run deploy
 
 - GitHub CLI (`gh`) がインストールされ、`gh auth login` でログイン済みであること
 - `clasp login` でローカルに `~/.clasprc.json` が生成されていること
+- ※ プロジェクトに `@ciderjs/clasp-auth` がインストールされていない場合は `npx @ciderjs/clasp-auth upload <owner/repo>` を使用してください。
 
 ### 認証情報のアップロード
 
 ```bash
 # owner/repo に GitHub Secrets (CLASPRC_JSON) を登録（例: my-org/my-repo）
 pnpm run auth my-org/my-repo
+
+# または npx で直接実行
+npx @ciderjs/clasp-auth upload my-org/my-repo
 ```
 
 ### GitHub Actions ワークフローの例 (`.github/workflows/deploy.yml`)
@@ -51,11 +58,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          version: 11.24.0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
           cache: 'pnpm'
 
       - name: Setup clasp auth
@@ -76,5 +85,6 @@ jobs:
         run: pnpm run push
 
       - name: Deploy
-        run: pnpm run deploy
+        # deploy スクリプトがないテンプレートでも動作するよう clasp を直接実行
+        run: pnpm exec clasp create-deployment
 ```
