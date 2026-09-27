@@ -45,12 +45,14 @@ pnpm run generate
 
 `types/appsscript.d.ts` が自動生成・更新され、`ServerScripts` インターフェースに `getItemList` が反映されます。
 
-### Step 3: ローカルモックの追加 (`src/lib/gas.ts`)
+### Step 3: ローカルモックの追加 (フロントエンド構成: `src/lib/server.ts`)
+
+> ※ `react-ciderjs` および `vue-ciderjs` で使用します（サーバー専用の `server-ciderjs` にはクライアント RPC ファイルは含まれないため、このステップはスキップします）。
 
 ローカル開発（`pnpm dev`）時に動作するように、モック関数を登録します。
 
 ```typescript
-// src/lib/gas.ts
+// src/lib/server.ts
 const mockupFunctions: PartialScriptType<ServerScripts> = {
   // 既存のモック...
   getItemList: async (category) => {
@@ -61,14 +63,14 @@ const mockupFunctions: PartialScriptType<ServerScripts> = {
 };
 ```
 
-### Step 4: クライアントコンポーネントからの呼び出し
+### Step 4: クライアントコンポーネントからの呼び出し (フロントエンド構成)
 
 ```tsx
-import { gas } from '../lib/gas';
+import { serverScripts } from '../lib/server';
 
 async function fetchItems() {
   // items は自動的に Item[] 型（Date 復元済み）として推論されます！
-  const items = await gas.getItemList('books');
+  const items = await serverScripts.getItemList('books');
   console.log(items[0].title);
 }
 ```

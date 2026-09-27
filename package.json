@@ -7,6 +7,9 @@
   "bin": {
     "gasbombe": "dist/cli.cjs"
   },
+  "engines": {
+    "node": ">=22"
+  },
   "files": [
     "dist",
     "LICENSE",

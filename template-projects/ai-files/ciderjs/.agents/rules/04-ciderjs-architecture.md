@@ -86,12 +86,14 @@ export default function UserDetailPage() {
 
 ## 3. ローカル開発用モック機能 (`gasnuki`)
 
+> ※ `react-ciderjs` および `vue-ciderjs` のフロントエンド構成で使用します（サーバー専用の `server-ciderjs` にはクライアント RPC ファイルは含まれません）。
+
 `clasp push` せずにローカル Vite dev サーバー上で画面開発・デバッグを行うため、`mockupFunctions` を定義します。
 
 ```typescript
-// src/lib/gas.ts
+// src/lib/server.ts
 import { getPromisedServerScripts, type PartialScriptType } from '@ciderjs/gasnuki/promise';
-import type { ServerScripts } from '../../types/appsscript';
+import type { ServerScripts } from '~/types/appsscript/client';
 
 const mockupFunctions: PartialScriptType<ServerScripts> = {
   getUserProfile: async (id) => {
@@ -104,7 +106,7 @@ const mockupFunctions: PartialScriptType<ServerScripts> = {
   },
 };
 
-export const gas = getPromisedServerScripts<ServerScripts>({
+export const serverScripts = getPromisedServerScripts<ServerScripts>({
   mockupFunctions,
   parseJson: true,
   strictMock: false,

@@ -59,15 +59,17 @@ export function getUserProfile(userId: string): JsonString<UserProfile> {
 }
 ```
 
-### クライアント側の実装 (`src/lib/gas.ts` など)
+### クライアント側の実装 (`src/lib/server.ts`)
+
+> ※ `react-ciderjs` および `vue-ciderjs` のフロントエンド構成で使用します（サーバー専用の `server-ciderjs` にはクライアント RPC ファイルは含まれません）。
 
 クライアント側では、`getPromisedServerScripts` に `{ parseJson: true }` を渡します。
 
 ```typescript
 import { getPromisedServerScripts } from '@ciderjs/gasnuki/promise';
-import type { ServerScripts } from '../../types/appsscript';
+import type { ServerScripts } from '~/types/appsscript/client';
 
-export const gas = getPromisedServerScripts<ServerScripts>({
+export const serverScripts = getPromisedServerScripts<ServerScripts>({
   parseJson: true, // ★ これにより UnwrapJson<T> が適用される
 });
 ```
@@ -75,7 +77,7 @@ export const gas = getPromisedServerScripts<ServerScripts>({
 ### コンポーネントからの呼び出し
 
 ```typescript
-const profile = await gas.getUserProfile('123');
+const profile = await serverScripts.getUserProfile('123');
 
 // profile の型は any ではなく完全な UserProfile として推論されます！
 console.log(profile.name); // string
