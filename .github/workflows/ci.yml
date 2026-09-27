@@ -40,6 +40,9 @@ jobs:
       - name: Lint & Format Check (Biome)
         run: pnpm run check:ci
 
+      - name: Lint & Format Check (Markdownlint)
+        run: pnpm run lint:md
+
       - name: Type Check
         run: pnpm run tsc
 

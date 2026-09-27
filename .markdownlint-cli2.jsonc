@@ -1,0 +1,29 @@
+{
+  "globs": [
+    "**/*.md",
+    "**/*.mdc"
+  ],
+  "ignores": [
+    "node_modules/**",
+    "dist/**",
+    "coverage/**",
+    ".git/**",
+    ".local/**",
+    "template-projects/**/node_modules/**",
+    "template-projects/**/dist/**",
+    "src/**"
+  ],
+  "config": {
+    "default": true,
+    // 行長制限は無効化（URLや日本語散文のため）
+    "MD013": false,
+    // HTMLインライン要素の利用を許可（バッジ、詳細タグ、表内改行など）
+    "MD033": false,
+    // 同一セクション以外での同名見出しを許可
+    "MD024": {
+      "siblings_only": true
+    },
+    // ファイル先頭の見出しルール（Frontmatterやタイトルに対応）
+    "MD041": false
+  }
+}
