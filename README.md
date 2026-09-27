@@ -63,7 +63,7 @@ You can bypass the interactive prompts by providing command-line options. This i
 
 ```bash
 # Example: Create a new React project with pnpm, creating a new Apps Script project along with it
-gasbombe --name my-react-app --template react --clasp create --pkg pnpm
+gasbombe --name my-react-app --template react --clasp create --pkg pnpm --git
 ```
 
 | Option | Alias | Argument | Description | Choices |

@@ -34,8 +34,8 @@ pnpm run deploy
 ### 認証情報のアップロード
 
 ```bash
-# owner/repo に GitHub Secrets (CLASPRC_JSON) を登録
-pnpm run auth <owner/repo>
+# owner/repo に GitHub Secrets (CLASPRC_JSON) を登録（例: my-org/my-repo）
+pnpm run auth my-org/my-repo
 ```
 
 ### GitHub Actions ワークフローの例 (`.github/workflows/deploy.yml`)

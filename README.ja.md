@@ -63,7 +63,7 @@ gasbombe
 
 ```bash
 # 例: pnpmを使用して新しいReactプロジェクトを作成し、同時に新しいApps Scriptプロジェクトも作成する
-gasbombe --name my-react-app --template react --clasp create --pkg pnpm
+gasbombe --name my-react-app --template react --clasp create --pkg pnpm --git
 ```
 
 | オプション | エイリアス | 引数 | 説明 | 選択肢 |

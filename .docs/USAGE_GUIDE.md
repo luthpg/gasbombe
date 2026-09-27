@@ -23,7 +23,7 @@ pnpm dlx @ciderjs/gasbombe@latest
 CI環境や自動化用に、引数を使用してプロンプトをスキップし一括生成することも可能です。
 
 ```bash
-npx @ciderjs/gasbombe -n my-gas-project -p pnpm -t react-ciderjs -c skip --skipInstall
+npx @ciderjs/gasbombe -n my-gas-project -p pnpm -t react-ciderjs -c skip --git --skipInstall
 ```
 
 ## 3. 実践的な活用方法とベストプラクティス (Advanced Recipes)

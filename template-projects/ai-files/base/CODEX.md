@@ -31,8 +31,8 @@ Codex および ChatGPT は、以下の英語制約ブロックおよび日本�
 
 ## 設計規約と詳細ルール
 
-- 総合ガイド: [.agents/AGENTS.md](file:///.agents/AGENTS.md)
-- GASサンドボックス制約: [.agents/rules/01-gas-constraints.md](file:///.agents/rules/01-gas-constraints.md)
-- コーディング規約: [.agents/rules/02-coding-style.md](file:///.agents/rules/02-coding-style.md)
-- tsconfig & 型設定: [.agents/rules/03-tsconfig-and-types.md](file:///.agents/rules/03-tsconfig-and-types.md)
-- アンチパターン集: [.agents/rules/05-antipatterns.md](file:///.agents/rules/05-antipatterns.md)
+- 総合ガイド: [.agents/AGENTS.md](.agents/AGENTS.md)
+- GASサンドボックス制約: [.agents/rules/01-gas-constraints.md](.agents/rules/01-gas-constraints.md)
+- コーディング規約: [.agents/rules/02-coding-style.md](.agents/rules/02-coding-style.md)
+- tsconfig & 型設定: [.agents/rules/03-tsconfig-and-types.md](.agents/rules/03-tsconfig-and-types.md)
+- アンチパターン集: [.agents/rules/05-antipatterns.md](.agents/rules/05-antipatterns.md)
