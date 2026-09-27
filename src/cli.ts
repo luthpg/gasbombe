@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { input, select } from "@inquirer/prompts";
+import { confirm, input, select } from "@inquirer/prompts";
 import { Command } from "commander";
 import { version } from "../package.json";
 import type { ClaspOption, PackageManager, TemplateType } from "../types/index";
@@ -38,6 +38,15 @@ export async function main(): Promise<void> {
       "Skip install dependencies after generating the project",
       false,
     )
+    .option(
+      "-g, --git [boolean]",
+      "Initialize Git repository after generating the project",
+    )
+    .option(
+      "--skipGit",
+      "Skip Git repository initialization after generating the project",
+      false,
+    )
     .action(async (_param, command: Command) => {
       let {
         name: projectName,
@@ -45,12 +54,16 @@ export async function main(): Promise<void> {
         template: templateType,
         clasp,
         skipInstall,
+        git,
+        skipGit,
       } = command.opts<{
         name: string;
         pkg: PackageManager;
         template: TemplateType;
         clasp: ClaspOption;
         skipInstall: boolean;
+        git?: boolean | string;
+        skipGit?: boolean;
       }>();
 
       let claspProjectId: string | undefined;
@@ -215,20 +228,33 @@ export async function main(): Promise<void> {
         if (!packageManagers.includes(packageManager)) {
           throw Error("Invalid package manager");
         }
+
+        let initGit: boolean;
+        if (skipGit || git === false || git === "false") {
+          initGit = false;
+        } else if (git === true || git === "true") {
+          initGit = true;
+        } else {
+          initGit = await confirm({
+            message: "Initialize Git repository?",
+            default: true,
+          });
+        }
+
+        await generateProject({
+          projectName,
+          packageManager,
+          templateType,
+          clasp,
+          claspProjectId,
+          install: !skipInstall,
+          git: initGit,
+        });
       } catch (e) {
         (e as Error).message === "User force closed the prompt with SIGINT" &&
           process.exit(0);
         throw e as Error;
       }
-
-      await generateProject({
-        projectName,
-        packageManager,
-        templateType,
-        clasp,
-        claspProjectId,
-        install: !skipInstall,
-      });
     });
 
   program.parse(process.argv);

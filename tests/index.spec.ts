@@ -174,6 +174,14 @@ describe('generateProject', () => {
     );
   });
 
+  it('should skip git initialization when git is false', async () => {
+    await generateProject({ ...projectOptions, git: false });
+
+    const spawnCalls = vi.mocked(spawn).mock.calls;
+    const gitCalls = spawnCalls.filter((call) => call[0] === 'git');
+    expect(gitCalls.length).toBe(0);
+  });
+
   it('should handle git initialization failure', async () => {
     vi.mocked(spawn).mockImplementation((command) => {
       const mockProcess = createMockProcess();

@@ -67,12 +67,13 @@ await generateProject({
   clasp: 'input',
   claspProjectId: 'your-existing-script-id', // 既存のScript IDを直接指定
   install: false, // 依存関係のインストールはスキップ（モノレポのルートで管理するため）
+  git: false, // 既存リポジトリ内のため Git 初期化をスキップ
 });
 ```
 
 **注意点とポイント:**
 `projectName: '.'` と `install: false` を組み合わせることで、余計なサブディレクトリの作成や重複した `node_modules` のインストールを回避できます。また、カレントディレクトリに既存の `.clasp.json` があれば自動的に `scriptId` が更新されます。
-ただし、`generateProject` はファイル展開後に `git init` および `git add -A` / `git commit` を自動実行します（`install: false` でも Git 初期化はスキップされません）。既存のリポジトリやモノレポ内のパッケージで実行する場合は、既存ファイルがコミット対象に含まれる点や、サブディレクトリ内に新たな Git リポジトリが初期化される点に留意してください。
+なお、`git` オプションはデフォルトで `true` となっており、ファイル展開後に `git init` および `git add -A` / `git commit` を自動実行します。既存のリポジトリやモノレポ内のパッケージで実行する場合は、上記のように `git: false`（CLI の場合は `--skipGit` オプション）を指定することで Git 初期化をスキップできます。
 
 ## 4. 型定義とAPIリファレンスのハイライト (API Highlights)
 
@@ -86,6 +87,7 @@ export interface ProjectOptions {
   clasp: 'create' | 'list' | 'input' | 'skip';
   claspProjectId?: string | undefined;
   install: boolean;
+  git?: boolean;
 }
 ```
 

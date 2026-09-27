@@ -73,6 +73,8 @@ gasbombe --name my-react-app --template react --clasp create --pkg pnpm
 | `--clasp` | `-c` | `[claspOption]` | `.clasp.json`のセットアップ方法。<br/>`create`と`list`は事前にclaspへのログインが必要です。 | `create`, `list`, `input`, `skip` |
 | `--pkg` | `-p` | `[packageManager]` | 使用するパッケージマネージャー。 | `npm`, `pnpm`, `yarn` |
 | `--skipInstall` | | | 依存関係のインストールをスキップします。 | - |
+| `--git` | `-g` | `[boolean]` | Gitリポジトリを初期化します（デフォルト: `true`）。 | `true`, `false` |
+| `--skipGit` | | | Gitリポジトリの初期化をスキップします。 | - |
 
 これらのオプションのいずれかが省略された場合、対話形式で値を入力するよう求められます。
 

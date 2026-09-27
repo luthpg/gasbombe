@@ -217,6 +217,7 @@ export async function generateProject({
   clasp,
   claspProjectId,
   install,
+  git = true,
 }: ProjectOptions): Promise<void> {
   const outputDir = path.resolve(process.cwd(), projectName);
   const templateBaseDir = path.resolve(__dirname, "..", "dist", "templates");
@@ -309,19 +310,23 @@ export async function generateProject({
     }
   }
 
-  consola.start(`Initializing Git repository...`);
-  try {
-    await runCommand("git", ["init"], outputDir);
-    await runCommand("git", ["add", "-A"], outputDir);
-    await runCommand(
-      "git",
-      ["commit", "-m", '"Initial commit from gasbombe"'],
-      outputDir,
-    );
-    consola.success(`Git repository initialized successfully.`);
-  } catch (e) {
-    consola.fail("Failed to initialize Git repository. Please do it manually.");
-    consola.error(e);
+  if (git) {
+    consola.start(`Initializing Git repository...`);
+    try {
+      await runCommand("git", ["init"], outputDir);
+      await runCommand("git", ["add", "-A"], outputDir);
+      await runCommand(
+        "git",
+        ["commit", "-m", '"Initial commit from gasbombe"'],
+        outputDir,
+      );
+      consola.success(`Git repository initialized successfully.`);
+    } catch (e) {
+      consola.fail(
+        "Failed to initialize Git repository. Please do it manually.",
+      );
+      consola.error(e);
+    }
   }
 
   consola.success(`Project '${projectName}' created successfully!`);
