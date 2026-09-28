@@ -33,8 +33,8 @@ Claude Code は、以下の英語制約ブロックおよび日本語のワー�
 ## 設計規約と詳細ルール
 
 - 総合ガイド: [.agents/AGENTS.md](.agents/AGENTS.md)
-- GASサンドボックス制約: [.agents/rules/01-gas-constraints.md](.agents/rules/01-gas-constraints.md)
-- コーディング規約: [.agents/rules/02-coding-style.md](.agents/rules/02-coding-style.md)
-- tsconfig & 型設定: [.agents/rules/03-tsconfig-and-types.md](.agents/rules/03-tsconfig-and-types.md)
-- アンチパターン集: [.agents/rules/05-antipatterns.md](.agents/rules/05-antipatterns.md)
+- GASサンドボックス制約: [.agents/rules/gas-constraints.md](.agents/rules/gas-constraints.md)
+- コーディング規約: [.agents/rules/coding-style.md](.agents/rules/coding-style.md)
+- tsconfig & 型設定: [.agents/rules/tsconfig-and-types.md](.agents/rules/tsconfig-and-types.md)
+- アンチパターン集: [.agents/rules/antipatterns.md](.agents/rules/antipatterns.md)
 - 定型タスク手順: `.agents/skills/`

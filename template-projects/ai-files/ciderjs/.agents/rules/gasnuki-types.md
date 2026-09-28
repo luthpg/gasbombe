@@ -1,4 +1,4 @@
-# gasnuki の型保持 JSON 通信と型安全復元 (03-gasnuki-types)
+# gasnuki の型保持 JSON 通信と型安全復元 (gasnuki-types)
 
 本ドキュメントは、本プロジェクトにおける `@ciderjs/gasnuki` を用いた型安全なデータ通信の規約です。
 

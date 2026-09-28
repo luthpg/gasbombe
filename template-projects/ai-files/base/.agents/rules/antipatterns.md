@@ -1,4 +1,4 @@
-# GAS / モダン開発におけるアンチパターン集 (05-antipatterns)
+# GAS / モダン開発におけるアンチパターン集 (antipatterns)
 
 AI Coding Agent が Google Apps Script 開発において生成しがちな失敗例（Bad）と、推奨される正解コード（Good）の対比集です。
 

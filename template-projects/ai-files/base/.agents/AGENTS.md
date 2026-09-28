@@ -38,20 +38,20 @@ AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ド
 - サーバーサイドのコードは Node.js ではなく Google Apps Script (V8) 上で実行されます。
 - `fs`, `path`, `http`, `crypto`, `child_process` 等の **Node.js 組み込みモジュールは絶対に使用できません**。
 - `window`, `document` 等のブラウザ API はサーバーコード内では使用できません。
-- 詳細は [.agents/rules/01-gas-constraints.md](.agents/rules/01-gas-constraints.md) を参照してください。
+- 詳細は [.agents/rules/gas-constraints.md](.agents/rules/gas-constraints.md) を参照してください。
 
 ### (2) コーディング規約 (Biome & TypeScript)
 
 - リント・フォーマットは Biome のルールに従います。
 - 常に厳格等価演算子（`===` / `!==`）を使用してください（nullish 比較 `== null` / `!= null` のみ例外）。
 - TypeScript 5.8+ の `verbatimModuleSyntax: true` を採用しているため、型のみのインポートには必ず `import type { ... }` を使用してください。
-- 詳細は [.agents/rules/02-coding-style.md](.agents/rules/02-coding-style.md) を参照してください。
+- 詳細は [.agents/rules/coding-style.md](.agents/rules/coding-style.md) を参照してください。
 
 ### (3) tsconfig と型解決ルール
 
 - `tsconfig.json`（または `tsconfig.app.json`）では `"types": ["google-apps-script"]` を指定しています。
 - 新規ファイルを作成する際は、必ず `include` に含まれるディレクトリ（`src`, `tests`, `server`, `types` 等）に配置してください。
-- 詳細は [.agents/rules/03-tsconfig-and-types.md](.agents/rules/03-tsconfig-and-types.md) を参照してください。
+- 詳細は [.agents/rules/tsconfig-and-types.md](.agents/rules/tsconfig-and-types.md) を参照してください。
 
 ---
 
@@ -70,4 +70,4 @@ AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ド
 
 ## 4. やってはいけないアンチパターン
 
-AI Agent が最も起こしやすいミス（スプレッドシートのループ内セルアクセス、手動モックの自作、`export default` の多用等）については、[.agents/rules/05-antipatterns.md](.agents/rules/05-antipatterns.md) を必ず確認してください。
+AI Agent が最も起こしやすいミス（スプレッドシートのループ内セルアクセス、手動モックの自作、`export default` の多用等）については、[.agents/rules/antipatterns.md](.agents/rules/antipatterns.md) を必ず確認してください。

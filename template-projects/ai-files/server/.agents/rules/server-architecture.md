@@ -1,4 +1,4 @@
-# サーバーサイド GAS アーキテクチャ規約 (04-server-architecture)
+# サーバーサイド GAS アーキテクチャ規約 (server-architecture)
 
 本ドキュメントは、サーバーサイド GAS アーキテクチャおよび関数公開の規約です。
 

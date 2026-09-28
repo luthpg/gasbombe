@@ -33,19 +33,19 @@ Gemini および Google Antigravity は、以下の英語制約ブロックお�
 
 1. **GAS サンドボックス制約**:
    - サーバーサイドコードでは Node.js 組み込みモジュール（`fs`, `path`, `http` 等）やブラウザ API（`window`, `document` 等）は使用できません。
-   - 詳細: [.agents/rules/01-gas-constraints.md](.agents/rules/01-gas-constraints.md)
+   - 詳細: [.agents/rules/gas-constraints.md](.agents/rules/gas-constraints.md)
 
 2. **コーディングスタイル (Biome & Strict Equality)**:
    - Biome ルールに従い、常に `===` / `!==` を使用してください（nullish 比較 `== null` / `!= null` のみ例外）。
    - 型インポートは `import type { ... }` を使用してください。
-   - 詳細: [.agents/rules/02-coding-style.md](.agents/rules/02-coding-style.md)
+   - 詳細: [.agents/rules/coding-style.md](.agents/rules/coding-style.md)
 
 3. **型定義 & tsconfig**:
    - GAS グローバル型は `@types/google-apps-script` で提供されます。
-   - 詳細: [.agents/rules/03-tsconfig-and-types.md](.agents/rules/03-tsconfig-and-types.md)
+   - 詳細: [.agents/rules/tsconfig-and-types.md](.agents/rules/tsconfig-and-types.md)
 
 4. **アンチパターン防止**:
-   - スプレッドシートのループ内アクセス禁止など、[.agents/rules/05-antipatterns.md](.agents/rules/05-antipatterns.md) を確認してください。
+   - スプレッドシートのループ内アクセス禁止など、[.agents/rules/antipatterns.md](.agents/rules/antipatterns.md) を確認してください。
 
 ---
 

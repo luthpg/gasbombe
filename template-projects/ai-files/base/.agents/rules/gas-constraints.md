@@ -1,4 +1,4 @@
-# GAS 実行環境の制約とガードレール (01-gas-constraints)
+# GAS 実行環境の制約とガードレール (gas-constraints)
 
 Google Apps Script (GAS) のサーバー実行環境は、一般的な Node.js やブラウザ環境とは根本的に異なるサンドボックスです。
 AI Coding Agent は以下の制約を厳守してコードを生成してください。

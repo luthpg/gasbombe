@@ -1,4 +1,4 @@
-# tsconfig と型解決ルール (03-tsconfig-and-types)
+# tsconfig と型解決ルール (tsconfig-and-types)
 
 本プロジェクトにおける TypeScript の設定方針と、型解決を正常に行うための重要なルールです。
 

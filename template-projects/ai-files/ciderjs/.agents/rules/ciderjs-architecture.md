@@ -1,4 +1,4 @@
-# CiderJS フルスタックアーキテクチャ規約 (04-ciderjs-architecture)
+# CiderJS フルスタックアーキテクチャ規約 (ciderjs-architecture)
 
 本ドキュメントは、CiderJS を採用した本プロジェクトにおける設計規約です。
 

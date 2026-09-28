@@ -1,4 +1,4 @@
-# クライアント UI / HtmlService アーキテクチャ規約 (04-spa-architecture)
+# クライアント UI / HtmlService アーキテクチャ規約 (spa-architecture)
 
 本ドキュメントは、フロントエンド連携における SPA ビルドと HtmlService 連携の規約です。
 
@@ -59,7 +59,7 @@ export default defineConfig({
 
 <% if (templateType.includes('ciderjs')) { -%>
 
-自動型付け・モックライブラリ `@ciderjs/gasnuki` を使用してサーバー関数を型安全に呼び出します（詳細は `04-ciderjs-architecture.md` を参照）。
+自動型付け・モックライブラリ `@ciderjs/gasnuki` を使用してサーバー関数を型安全に呼び出します（詳細は `ciderjs-architecture.md` を参照）。
 <% } else { -%>
 
 ### `google.script.run` のプロミス化パターン
