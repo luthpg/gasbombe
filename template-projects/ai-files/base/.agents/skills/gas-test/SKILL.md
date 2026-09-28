@@ -69,8 +69,12 @@ mockChain('SpreadsheetApp.getActiveSpreadsheet.getSheetByName', (sheetName) => {
 GAS のグローバルオブジェクト（`SpreadsheetApp`, `Logger` 等）は、Vitest の `vi.stubGlobal` を使用してモックします。
 
 ```<%= templateType === 'server-js' ? 'javascript' : 'typescript' %>
-import { describe, it, expect, vi } from 'vitest';
+import { afterEach, describe, it, expect, vi } from 'vitest';
 import { myFunction } from '../src/app';
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 describe('myFunction', () => {
   it('正常にログが出力されること', () => {
@@ -86,7 +90,11 @@ describe('myFunction', () => {
 ### 3. スプレッドシート等のメソッドチェーンモック
 
 ```<%= templateType === 'server-js' ? 'javascript' : 'typescript' %>
-import { it, expect, vi } from 'vitest';
+import { afterEach, it, expect, vi } from 'vitest';
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 it('シート名を取得するテスト', () => {
   vi.stubGlobal('SpreadsheetApp', {

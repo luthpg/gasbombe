@@ -7,21 +7,36 @@
 ## 🚨 Critical Constraints (エージェント遵守事項)
 
 ```text
-- ALWAYS configure Vite plugins in strict order: plugins: [..., gas(), viteSingleFile()].
-- gas() (vite-plugin-google-apps-script) MUST be placed BEFORE viteSingleFile().
 - NEVER use standard fetch() for GAS backend calls on the client side (use gasnuki / google.script.run).
 - ALL static assets (images, icons) are bundled into a single HTML file; keep them small (SVG / inline base64).
+- vite-plugin-google-apps-script (gas()) は createTemplateFromFile() + スクリプトレット使用時に必要。
+  createHtmlOutputFromFile() のみ使う場合は省略可能。
+- gas() を使用する場合は ALWAYS configure Vite plugins in strict order: [..., gas(), viteSingleFile()].
 ```
 
 ---
 
-## 1. ビルドシステムと Vite プラグイン順序の鉄則
+## 1. ビルドシステムの設計方針
 
-Google Apps Script の `HtmlService` は、外部リソースへの参照ではなく、単一の HTML ファイル内に JS/CSS がインライン化された形式を要求します。
+HtmlService では、JS / CSS をそれぞれ HTML ファイルとして GAS プロジェクトにアップロードし、サーバーサイドのスクリプトレット（`<?= ?>` 等）を通じて出力します。このスクリプトレット構文はローカル IDE では補完が効かないため、**本テンプレートではローカル開発を標準的な Vite + TypeScript + HMR のスキームで行い、ビルドで GAS 向けに変換する**設計を採用しています。
 
-### プラグイン順序の厳守
+`viteSingleFile()` を使うことで、すべての JS / CSS を単一の `index.html` にインライン化し、GAS へのファイルアップロードを 1 ファイルに集約します。
 
-`vite.config.ts` において、**必ず `gas()` を `viteSingleFile()` の前に配置してください**。
+### `vite-plugin-google-apps-script` (`gas()`) が必要なケース
+
+`gas()` プラグインは以下の処理を行います:
+
+- Vite 内部で `terser` を強制利用し、テンプレートリテラル内の改行を保護
+- GAS の 2 重 iframe セキュリティによる URL 文字列の削除（Vue / React のエラーリファレンス URL 等）への対策
+- スクリプトレット（`<?= ?>`, `<?!= ?>`）の自動エスケープ
+
+**必要なケース**: `HtmlService.createTemplateFromFile()` を使い、サーバーサイドでスクリプトレットに動的な値を埋め込む場合
+
+**不要なケース**: `HtmlService.createHtmlOutputFromFile()` のみを使う場合（スクリプトレット不使用）。この場合 `viteSingleFile()` のみで十分です。
+
+### `gas()` を使用する場合のプラグイン順序
+
+`gas()` が先にコードをサニタイズしないと、`viteSingleFile()` でインライン化された後に URL やコードが削られてクラッシュします。
 
 ```typescript
 // vite.config.ts
@@ -32,9 +47,9 @@ import { gas } from 'vite-plugin-google-apps-script';
 export default defineConfig({
   plugins: [
     // 1. フレームワークプラグイン (react, vue 等)
-    // 2. gas() プラグイン (Terser改行保護、URL除去、スクリプトレットエスケープ)
+    // 2. gas() プラグイン — createTemplateFromFile() + スクリプトレット使用時のみ
     gas(),
-    // 3. viteSingleFile() プラグイン (単一HTMLへのインライン化)
+    // 3. viteSingleFile() — 単一 HTML へのインライン化
     viteSingleFile(),
   ],
   build: {
@@ -42,16 +57,6 @@ export default defineConfig({
   },
 });
 ```
-
-### なぜ順序が重要なのか？
-
-- **GASの2重iframeセキュリティによる構文破壊問題**:
-  GAS（HtmlService）はWebアプリ描画時に2重のiframeを使って埋め込みますが、その展開時にソースコード内のURL文字列（Vue/ReactのエラーリファレンスURL等）をセキュリティ目的の正規表現で削ってしまい、`Uncaught SyntaxError: Invalid destructuring assignment target` 等の構文エラーを引き起こします。
-- `gas()` (`vite-plugin-google-apps-script`):
-  Vite内部で `terser` を強制利用し、テンプレートリテラル内の改行を保護するとともに、GAS展開時にエラーの原因となるURLやJSDocコメント、スクリプトレット（`<?!= ... ?>`）を自動的にサニタイズ・エスケープします。
-- `viteSingleFile()`:
-  すべての JS/CSS チャンクを単一の `index.html` にインライン埋め込みします。
-- `gas()` が先にコードをサニタイズしないと、インライン化された HTML 内でコードが削られてクラッシュします。
 
 ---
 
@@ -64,14 +69,14 @@ export default defineConfig({
 
 ### `google.script.run` のプロミス化パターン
 
-コールバック地獄を防ぐために Promise ラッパーを作成して呼び出します。
+コールバック地獄を防ぐために Promise ラッパーを作成して呼び出します。ローカル開発環境では `google.script.run` が存在しないため、モック or reject で対応してください。
 
 ```typescript
-export function callGasServer<T>(functionName: string, ...args: any[]): Promise<T> {
+export function callGasServer<T>(functionName: string, ...args: unknown[]): Promise<T> {
   return new Promise((resolve, reject) => {
     if (!('google' in window) || !google?.script?.run) {
-      console.warn(`[Local Dev] Simulated call to ${functionName}`);
-      resolve({} as T);
+      // ローカル開発環境: 空オブジェクトを返さず、明示的に reject して未対応呼び出しを検知する
+      reject(new Error(`[Local Dev] google.script.run is unavailable. Mock the function: ${functionName}`));
       return;
     }
 

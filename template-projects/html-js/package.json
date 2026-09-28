@@ -10,7 +10,6 @@
     "build": "rimraf dist && pnpm run build:front && pnpm run build:server",
     "check": "biome check --write",
     "test": "vitest run --coverage",
-    "auth": "clasp-auth upload",
     "push": "clasp push",
     "deploy": "clasp create-deployment",
     "update": "dotenv cross-var \"clasp update-deployment $GAS_DEPLOYMENT_ID\"",
@@ -19,7 +18,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
-    "@ciderjs/clasp-auth": "catalog:",
     "@google/clasp": "catalog:",
     "@testing-library/dom": "catalog:",
     "@testing-library/jest-dom": "catalog:",

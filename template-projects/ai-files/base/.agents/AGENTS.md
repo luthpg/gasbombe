@@ -27,7 +27,12 @@ AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ド
 | `npm test` / `pnpm test` | Vitestによる単体テスト実行<%= templateType.includes('ciderjs') ? '（`@ciderjs/vitest-plugin-gas-mock` 内包）' : '' %> |
 | `npm run build` / `pnpm run build` | プロジェクトの完全ビルド（型チェック、バンドル処理） |
 | `npm run push` / `pnpm run push` | `@google/clasp` による GAS へのスクリプト反映（`clasp push`） |
-| `npm run deploy` / `pnpm run deploy` | GAS デプロイの作成（`clasp create-deployment`） |
+| `npm run deploy` / `pnpm run deploy` | 新規 GAS デプロイの作成（`clasp create-deployment`） |
+| `npm run update` / `pnpm run update` | 既存デプロイのバージョン更新（`clasp update-deployment` + `$GAS_DEPLOYMENT_ID`） |
+
+<% if (templateType.includes('ciderjs')) { -%>
+| `pnpm run auth <owner/repo>` | `@ciderjs/clasp-auth` で clasp 認証情報を GitHub Secrets に登録 |
+<% } -%>
 
 ---
 
@@ -38,6 +43,7 @@ AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ド
 - サーバーサイドのコードは Node.js ではなく Google Apps Script (V8) 上で実行されます。
 - `fs`, `path`, `http`, `crypto`, `child_process` 等の **Node.js 組み込みモジュールは絶対に使用できません**。
 - `window`, `document` 等のブラウザ API はサーバーコード内では使用できません。
+- **外部 npm ライブラリについて**: `dayjs`, `zod` など、Node.js / ブラウザ固有 API に依存しない「純粋な JavaScript ロジックのみのライブラリ」は、Rolldown / Vite によるビルド時にバンドルすることで GAS 上でも使用可能です。
 - 詳細は [.agents/rules/gas-constraints.md](.agents/rules/gas-constraints.md) を参照してください。
 
 ### (2) コーディング規約 (Biome & TypeScript)
@@ -64,7 +70,7 @@ AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ド
 2. **ビルド & Push**: [.agents/skills/gas-build-and-push/SKILL.md](.agents/skills/gas-build-and-push/SKILL.md)
    - `check` → `test` → `build` → `clasp push` の検証・トラブルシュート。
 3. **デプロイ & CI/CD**: [.agents/skills/gas-deploy/SKILL.md](.agents/skills/gas-deploy/SKILL.md)
-   - Web App デプロイおよび `@ciderjs/clasp-auth` による GitHub Actions 連携。
+<%= templateType.includes('ciderjs') ? '   - `@ciderjs/clasp-auth` による GitHub Actions 連携。' : '   - GitHub Actions での `CLASPRC_JSON` / `.clasp.json` シークレットを使った CI/CD 連携。' %>
 
 ---
 

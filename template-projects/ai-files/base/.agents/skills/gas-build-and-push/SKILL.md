@@ -33,16 +33,17 @@ pnpm test
 pnpm run build
 ```
 
-- TypeScript の型チェック、Rolldown / Vite によるバンドルが実行され、`dist/` ディレクトリに生成されます。
+- `package.json` の `build` スクリプトに定義されたビルドパイプライン（型チェック、Rolldown / Vite バンドル等）が実行され、`dist/` ディレクトリに生成されます。
 
 #### ビルドエラー時のトラブルシューティング
 
 1. **型エラー (`tsc`)**:
    - `verbatimModuleSyntax: true` のため、型インポートに `import type` が抜けていないか確認。
    - `tsconfig` の `include` に含まれるディレクトリ内にファイルがあるか確認。
-2. **バンドルエラー (Vite / Rolldown)**:
-   - `vite.config.ts` のプラグイン順序が `plugins: [gas(), viteSingleFile()]` になっているか確認。
+2. **バンドルエラー (Rolldown)**:
    - サーバーコードに Node.js 組み込みモジュールの依存が混入していないか確認。
+<%= !templateType.startsWith('server-') ? `3. **バンドルエラー (Vite)**:
+   - \`vite.config.ts\` で \`gas()\` プラグインが \`viteSingleFile()\` より前に配置されているか確認（詳細は \`spa-architecture.md\` 参照）。` : '' %>
 
 ### Step 4: GAS への Push
 

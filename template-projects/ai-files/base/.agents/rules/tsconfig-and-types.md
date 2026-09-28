@@ -9,7 +9,6 @@
 ```text
 - ALWAYS configure "types": ["google-apps-script"] in tsconfig for global GAS APIs.
 - ALWAYS place source code within directories listed in tsconfig "include" (src, tests, server, types).
-- NEVER omit the "types" directory from tsconfig "include", as generated gasnuki types live there.
 - ALWAYS use path aliases (@/* -> ./src/*, ~/* -> ./*) instead of deeply nested relative imports.
 ```
 
@@ -47,8 +46,13 @@ GAS のグローバル API（`SpreadsheetApp`, `DriveApp`, `Logger` 等）をグ
 
 ### 特に重要な注意点
 
+<% if (templateType.includes('ciderjs')) { -%>
+
 - **`types` ディレクトリ**:
-  型定義ファイルや自動生成ファイル（`gasnuki` 生成物等）は `types/` ディレクトリ配下に出力されます。これが `include` から外れると、型推論が完全に失われ、ビルドエラーの原因となります。
+  `gasnuki` の自動生成ファイル（`types/appsscript/client.ts`）はここに出力されます。これが `include` から外れると、型推論が失われ、ビルドエラーの原因になります。
+
+<% } -%>
+
 - **新規ファイル追加時**:
   スクリプトやヘルパー関数を追加する際は、必ず `src/` または `server/` 配下に作成し、未登録の新規トップレベルディレクトリに直接配置しないようにしてください。
 

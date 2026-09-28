@@ -39,7 +39,7 @@ export type JsonString<T> = string & { [__brand]: T };
 オブジェクトをクライアントへ返す際は、必ず `@ciderjs/gasnuki` の `serialize` 関数を使用してください。
 
 ```typescript
-import { serialize, type JsonString } from '@ciderjs/gasnuki';
+import { serialize, type JsonString } from '@ciderjs/gasnuki/json';
 
 export interface UserProfile {
   id: string;
@@ -91,5 +91,5 @@ console.log(profile.createdAt instanceof Date); // true (自動的に Date に�
 ## 3. 型定義の自動生成と tsconfig
 
 - サーバー関数を追加・変更した際は、必ず **`pnpm run generate`**（`gasnuki` コマンド）を実行してください。
-- `types/appsscript.d.ts` に最新の `ServerScripts` 型が生成されます。
+- `types/appsscript/client.ts` に最新の `ServerScripts` 型が生成されます。
 - `tsconfig.app.json` の `include` に `"types"` が含まれているため、プロジェクト全体で型が即座に同期されます。

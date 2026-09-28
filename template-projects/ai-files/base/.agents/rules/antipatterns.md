@@ -21,9 +21,12 @@ for (let i = 1; i <= 1000; i++) {
 
 ```typescript
 const lastRow = sheet.getLastRow();
-const values = sheet.getRange(1, 1, lastRow, 1).getValues(); // 1回で取得
+// ※ 空シート時の対応はビジネスロジックの要件次第です。
+//   データが必須ならエラー、任意なら以下のようにスキップするなど要件に応じて選択してください。
+if (lastRow === 0) return;
+const values = sheet.getRange(1, 1, lastRow, 1).getValues();
 const newValues = values.map(([val]) => [Number(val) * 2]);
-sheet.getRange(1, 2, lastRow, 1).setValues(newValues);        // 1回で書き込み
+sheet.getRange(1, 2, lastRow, 1).setValues(newValues);
 ```
 
 ---
@@ -102,7 +105,7 @@ vi.stubGlobal('SpreadsheetApp', {
 
 ## 4. クライアント側での通常 `fetch` の使用
 
-GAS の Web App や HtmlService において、バックエンド通信に通常の `fetch('/api/...')` を呼ぶことはできません（GAS には独立した HTTP エンドポイントの内部ルーティングがないため）。
+GAS の Web App や HtmlService において、SPA からのバックエンド非同期通信に内部相対パスの `fetch('/api/...')` を使うことはできません（GAS は独立した HTTP エンドポイントの内部ルーティングを持たないため。`doPost` トリガーは `form.submit()` によるフォーム送信では有効です）。
 
 ### ❌ Bad
 
@@ -118,14 +121,19 @@ const data = await res.json();
 ```typescript
 import { serverScripts } from '../lib/server';
 
-const data = await serverScripts.getUsers();
+// parseJson: true 設定済みのため、型付きオブジェクトとして得られます
+const users = await serverScripts.getUsers();
 ```
 
 <% } else { -%>
 
 ```typescript
+// google.script.run の成功ハンドラで JSON 文字列が返る場合はパースが必要です
 google.script.run
-  .withSuccessHandler((users) => { ... })
+  .withSuccessHandler((json: string) => {
+    const users = JSON.parse(json) as User[];
+    // ...
+  })
   .getUsers();
 ```
 
