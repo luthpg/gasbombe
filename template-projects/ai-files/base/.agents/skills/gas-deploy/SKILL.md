@@ -98,7 +98,7 @@ jobs:
       - name: Setup clasp auth
         uses: ciderjs/clasp-auth@v0.3.0
         with:
-          json: ${{ secrets.CLASPRC_JSON }}
+          clasprc_json: ${{ secrets.CLASPRC_JSON }}
           clasp_json: ${{ secrets.CLASP_JSON }}
 
       - name: Install dependencies
