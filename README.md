@@ -22,7 +22,16 @@ This project provides a command-line interface (CLI) to scaffold new TypeScript 
   * Vue
   * Vue with CiderJS
   * HTML/JS
+* **AI Agent-Ready**: Out-of-the-box support for AI coding assistants (Claude Code, Cursor, Copilot, Gemini, etc.) with pre-configured rules (`.agents/rules/`) and actionable workflows (`.agents/skills/`) dynamically tailored to the chosen template.
 * **Package Manager Support**: Works with npm, Yarn, and pnpm.
+
+## **AI Agent-Ready Architecture (`.agents`)**
+
+Every scaffolded project includes a comprehensive set of AI coding agent configuration files in `.agents/`, tailored to guide AI assistants toward generating robust, idiomatically sound Google Apps Script code:
+
+* **Master Guide (`.agents/AGENTS.md`)**: Project architecture overview, core lifecycle commands, and critical constraints.
+* **Rules (`.agents/rules/`)**: Strict rules covering GAS sandbox limitations (banning Node.js/DOM APIs, spreadsheet cell batching), Biome code style, template architecture, and anti-patterns.
+* **Skills (`.agents/skills/`)**: Executable, step-by-step workflows for adding server functions, mocking GAS APIs with Vitest, building, pushing with clasp, and deploying.
 
 ## **Usage**
 
@@ -63,7 +72,7 @@ You can bypass the interactive prompts by providing command-line options. This i
 
 ```bash
 # Example: Create a new React project with pnpm, creating a new Apps Script project along with it
-gasbombe --name my-react-app --template react --clasp create --pkg pnpm
+gasbombe --name my-react-app --template react --clasp create --pkg pnpm --git
 ```
 
 | Option | Alias | Argument | Description | Choices |
@@ -73,6 +82,8 @@ gasbombe --name my-react-app --template react --clasp create --pkg pnpm
 | `--clasp` | `-c` | `[claspOption]` | How to set up the `.clasp.json` file.<br/>`create` and `list` require prior login to clasp. | `create`, `list`, `input`, `skip` |
 | `--pkg` | `-p` | `[packageManager]` | The package manager to use. | `npm`, `pnpm`, `yarn` |
 | `--skipInstall` | | | Skip installing dependencies. | - |
+| `--git` | `-g` | `[boolean]` | Initialize Git repository (default: `true`). | `true`, `false` |
+| `--skipGit` | | | Skip Git repository initialization. | - |
 
 If any of these options are omitted, you will be prompted to enter the value interactively.
 

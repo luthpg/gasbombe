@@ -11,10 +11,16 @@ import type { ProjectOptions } from "../types";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+/**
+ * Check if current OS is Windows
+ */
 export function isWindows(): boolean {
   return process.platform === "win32";
 }
 
+/**
+ * Execute child process command
+ */
 export async function runCommand(
   command: string,
   args: string[],
@@ -210,6 +216,9 @@ async function handleClaspSetup(
   }
 }
 
+/**
+ * Generate a new Google Apps Script project from template
+ */
 export async function generateProject({
   projectName,
   packageManager,
@@ -217,6 +226,7 @@ export async function generateProject({
   clasp,
   claspProjectId,
   install,
+  git = true,
 }: ProjectOptions): Promise<void> {
   const outputDir = path.resolve(process.cwd(), projectName);
   const templateBaseDir = path.resolve(__dirname, "..", "dist", "templates");
@@ -265,6 +275,8 @@ export async function generateProject({
 
   const ejsData = {
     projectName,
+    templateType,
+    packageManager,
     biomeVersion: catalog["@biomejs/biome"]?.replace("^", "") || "2.0.0",
   };
   const templateDirs = [commonTemplateDir, specificTemplateDir];
@@ -309,19 +321,23 @@ export async function generateProject({
     }
   }
 
-  consola.start(`Initializing Git repository...`);
-  try {
-    await runCommand("git", ["init"], outputDir);
-    await runCommand("git", ["add", "-A"], outputDir);
-    await runCommand(
-      "git",
-      ["commit", "-m", '"Initial commit from gasbombe"'],
-      outputDir,
-    );
-    consola.success(`Git repository initialized successfully.`);
-  } catch (e) {
-    consola.fail("Failed to initialize Git repository. Please do it manually.");
-    consola.error(e);
+  if (git) {
+    consola.start(`Initializing Git repository...`);
+    try {
+      await runCommand("git", ["init"], outputDir);
+      await runCommand("git", ["add", "-A"], outputDir);
+      await runCommand(
+        "git",
+        ["commit", "-m", '"Initial commit from gasbombe"'],
+        outputDir,
+      );
+      consola.success(`Git repository initialized successfully.`);
+    } catch (e) {
+      consola.fail(
+        "Failed to initialize Git repository. Please do it manually.",
+      );
+      consola.error(e);
+    }
   }
 
   consola.success(`Project '${projectName}' created successfully!`);

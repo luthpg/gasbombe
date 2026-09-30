@@ -1,0 +1,29 @@
+---
+description: Gasbombe GAS Development Guidelines
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Gasbombe Project Guidelines
+
+このプロジェクトは、モダン TypeScript とバンドラーを用いた Google Apps Script (GAS) 開発環境です。
+
+## 🚨 Critical Constraints (エージェント遵守事項)
+
+```text
+- NEVER use Node.js runtime modules (fs, path, http, crypto, child_process, etc.) in server code.
+- NEVER use browser DOM globals (window, document, localStorage) in server code.
+- NEVER use standard fetch() for GAS backend calls on client side (use gasnuki / google.script.run).
+- NEVER access Spreadsheet cells in loops (ALWAYS use getValues() / setValues() for batching).
+- ALWAYS use strict equality (=== and !==), excluding nullish checks (== null and != null).
+- ALWAYS use `import type` for type-only imports (verbatimModuleSyntax: true).
+- ALWAYS place code inside directories included in tsconfig (src, tests, server, types).
+```
+
+## 基本ルール
+
+- **Biome**: Biome のリント・フォーマッタールールを遵守。
+- **tsconfig Include**: `tsconfig` に含まれるディレクトリ（`src`, `tests`, `server`, `types`）内にのみコードを配置。
+- **Spreadsheet Performance**: ループ内での `getRange()` / `getValue()` 呼び出しは禁止。一括バッチ処理を行うこと。
+
+詳細なルールは `.agents/rules/` を参照してください。

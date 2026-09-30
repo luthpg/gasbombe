@@ -8,7 +8,9 @@
     "check": "biome check --write",
     "build": "rolldown -c && cpy src/*.json dist/",
     "test": "vitest run --coverage",
-    "push": "clasp push"
+    "push": "clasp push",
+    "deploy": "clasp create-deployment",
+    "update": "dotenv cross-var \"clasp update-deployment $GAS_DEPLOYMENT_ID\""
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
@@ -17,6 +19,8 @@
     "@types/node": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "cpy-cli": "catalog:",
+    "cross-var": "catalog:",
+    "dotenv-cli": "catalog:",
     "rolldown": "catalog:",
     "rolldown-plugin-remove-export": "catalog:",
     "vitest": "catalog:"

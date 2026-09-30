@@ -1,11 +1,14 @@
 {
   "name": "@ciderjs/gasbombe",
-  "version": "0.4.7",
+  "version": "0.5.0",
   "description": "A TypeScript Project Generator for GoogleAppsScript, available as CLI",
   "type": "module",
   "main": "dist/index.cjs",
   "bin": {
     "gasbombe": "dist/cli.cjs"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "files": [
     "dist",
@@ -20,6 +23,8 @@
     "tsc": "tsc --noEmit",
     "check": "biome check --write",
     "check:ci": "biome ci",
+    "lint:md": "markdownlint-cli2",
+    "lint:md:fix": "markdownlint-cli2 --fix",
     "generate": "tsx scripts/copyTemplates",
     "test": "vitest run --coverage",
     "build": "pnpm run tsc && unbuild && pnpm run generate",
@@ -61,6 +66,7 @@
     "ejs": "^6.0.1",
     "glob": "^13.0.6",
     "js-yaml": "^5.4.2",
+    "markdownlint-cli2": "^0.23.3",
     "tsx": "^4.23.15",
     "typescript": "catalog:",
     "unbuild": "^3.6.1",

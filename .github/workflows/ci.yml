@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
           version: 11.24.0
 
@@ -39,6 +39,9 @@ jobs:
 
       - name: Lint & Format Check (Biome)
         run: pnpm run check:ci
+
+      - name: Lint & Format Check (Markdownlint)
+        run: pnpm run lint:md
 
       - name: Type Check
         run: pnpm run tsc
