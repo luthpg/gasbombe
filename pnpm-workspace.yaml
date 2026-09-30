@@ -9,7 +9,7 @@ allowBuilds:
 catalog:
   '@biomejs/biome': ^2.5.14
   '@ciderjs/city-gas': ^1.1.1
-  '@ciderjs/clasp-auth': ^0.2.0
+  '@ciderjs/clasp-auth': ^0.3.0
   '@ciderjs/gasnuki': ^0.5.8
   '@ciderjs/vitest-plugin-gas-mock': ^0.2.0
   '@google/clasp': ^3.3.0

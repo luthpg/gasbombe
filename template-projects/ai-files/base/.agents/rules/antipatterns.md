@@ -88,17 +88,32 @@ global.SpreadsheetApp = {
 };
 ```
 
-### ⭕ Good (`vi.stubGlobal` を利用)
+### ⭕ Good (`vi.stubGlobal` を利用し、`afterEach` でクリーンアップ)
 
 ```typescript
-vi.stubGlobal('SpreadsheetApp', {
-  getActiveSpreadsheet: () => ({
-    getName: () => 'TestSheet',
-  }),
+import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest';
+
+describe('SpreadsheetApp を使うテスト', () => {
+  beforeEach(() => {
+    vi.stubGlobal('SpreadsheetApp', {
+      getActiveSpreadsheet: () => ({
+        getName: () => 'TestSheet',
+      }),
+    });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals(); // 他テストへのスタブ漏れを防ぐ
+  });
+
+  it('シート名を取得できること', () => {
+    expect(SpreadsheetApp.getActiveSpreadsheet().getName()).toBe('TestSheet');
+  });
 });
 ```
 
 <% } -%>
+
 <% if (!templateType.startsWith('server-')) { -%>
 
 ---

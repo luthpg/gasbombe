@@ -12,7 +12,8 @@
 - NEVER use the reserved word `page` in schema keys (use `pageIndex` instead).
 - NEVER pass large objects as route parameters (GAS URL limit is ~2KB).
 - NEVER execute side effects at the top level of page files (they evaluate on app startup).
-- ALWAYS return a cleanup function in useEffect / onMounted to prevent memory leaks in SPA.
+- ALWAYS return a cleanup function from useEffect (React) to prevent memory leaks in SPA.
+- ALWAYS register cleanup via onUnmounted (Vue) — do NOT return a cleanup function from onMounted.
 ```
 
 ---
@@ -73,8 +74,9 @@ export default function UserDetailPage() {
    パラメータは URL に JSON シリアライズされるため、巨大な配列やオブジェクトをルートパラメータとして渡さないでください。
 4. **トップレベル副作用の禁止**:
    全ページがアプリ起動時に初期評価されます。トップレベルでの API 呼び出しやログ出力は避け、必ず `useEffect` / `onMounted` 内で行ってください。
-5. **クリーンアップ関数の返却**:
-   SPA のため、タイマーやイベントリスナーは必ずクリーンアップ関数を返して解除してください。
+5. **クリーンアップの実装**:
+   - **React**: `useEffect` のコールバックからクリーンアップ関数を返してください（タイマー・イベントリスナーの解除）。
+   - **Vue**: `onMounted` からはクリーンアップ関数を返せません。代わりに `onUnmounted` を使用してください。
 
 ### (3) 特殊ファイル
 

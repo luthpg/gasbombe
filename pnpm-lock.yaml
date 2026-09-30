@@ -13,8 +13,8 @@ catalogs:
       specifier: ^1.1.1
       version: 1.1.1
     '@ciderjs/clasp-auth':
-      specifier: ^0.2.0
-      version: 0.2.0
+      specifier: ^0.3.0
+      version: 0.3.0
     '@ciderjs/gasnuki':
       specifier: ^0.5.8
       version: 0.5.8
@@ -312,7 +312,7 @@ importers:
         version: 2.5.14
       '@ciderjs/clasp-auth':
         specifier: 'catalog:'
-        version: 0.2.0(@types/node@26.6.2)
+        version: 0.3.0(@types/node@26.6.2)
       '@ciderjs/vitest-plugin-gas-mock':
         specifier: 'catalog:'
         version: 0.2.0(vitest@5.0.1)
@@ -387,7 +387,7 @@ importers:
         version: 2.5.14
       '@ciderjs/clasp-auth':
         specifier: 'catalog:'
-        version: 0.2.0(@types/node@26.6.2)
+        version: 0.3.0(@types/node@26.6.2)
       '@ciderjs/vitest-plugin-gas-mock':
         specifier: 'catalog:'
         version: 0.2.0(vitest@5.0.1)
@@ -593,7 +593,7 @@ importers:
         version: 2.5.14
       '@ciderjs/clasp-auth':
         specifier: 'catalog:'
-        version: 0.2.0(@types/node@26.6.2)
+        version: 0.3.0(@types/node@26.6.2)
       '@ciderjs/vitest-plugin-gas-mock':
         specifier: 'catalog:'
         version: 0.2.0(vitest@5.0.1)
@@ -662,6 +662,18 @@ importers:
         version: 3.2.7(typescript@5.9.3)
 
 packages:
+
+  '@actions/core@3.0.1':
+    resolution: {integrity: sha512-a6d/Nwahm9fliVGRhdhofo40HjHQasUPusmc7vBfyky+7Z+P2A1J68zyFVaNcEclc/Se+eO595oAr5nwEIoIUA==}
+
+  '@actions/exec@3.0.0':
+    resolution: {integrity: sha512-6xH/puSoNBXb72VPlZVm7vQ+svQpFyA96qdDBvhB8eNZOE8LtPf9L4oAsfzK/crCL8YZ+19fKYVnM63Sl+Xzlw==}
+
+  '@actions/http-client@4.0.1':
+    resolution: {integrity: sha512-+Nvd1ImaOZBSoPbsUtEhv+1z99H12xzncCkz0a3RuehINE81FZSe2QTj3uvAPTcJX/SCzUQHQ0D1GrPMbrPitg==}
+
+  '@actions/io@3.0.2':
+    resolution: {integrity: sha512-nRBchcMM+QK1pdjO7/idu86rbJI5YHUKCvKs0KxnSYbVe3F51UfGxuZX4Qy/fWlp6l7gWFwIkrOzN+oUK03kfw==}
 
   '@adobe/css-tools@4.4.4':
     resolution: {integrity: sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==}
@@ -824,8 +836,8 @@ packages:
       react-dom:
         optional: true
 
-  '@ciderjs/clasp-auth@0.2.0':
-    resolution: {integrity: sha512-mO1kPudAnjJtQjsol3eeZpwNW8B4uoRPpmj31bVAETnvDabxrs234+2AAhq27Co1yUYsCjtOMeHB8wAEg7LkuQ==}
+  '@ciderjs/clasp-auth@0.3.0':
+    resolution: {integrity: sha512-EXdnc2NHDIwV402r3kr/+XMKMxBhAhY1ch1pQDRbQ2Dw14rYU7NIrr/XHGiX4vTpJEn1zpsUz9ooG4wf25A9Tw==}
     hasBin: true
 
   '@ciderjs/gasnuki@0.5.8':
@@ -4761,6 +4773,10 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
+  tunnel@0.0.6:
+    resolution: {integrity: sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==}
+    engines: {node: '>=0.6.11 <=0.7.0 || >=0.7.3'}
+
   type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
@@ -4808,6 +4824,10 @@ packages:
 
   undici-types@8.9.0:
     resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
+
+  undici@6.29.0:
+    resolution: {integrity: sha512-R+RODBqp6i2pPflGdq+xIOUkl+RNfGgHwoinecKu/JCuf2uO06cOKoDbI2P7Dn6KcswdKwrczbU6IYJ6K8X+wg==}
+    engines: {node: '>=18.17'}
 
   undici@7.25.0:
     resolution: {integrity: sha512-xXnp4kTyor2Zq+J1FfPI6Eq3ew5h6Vl0F/8d9XU5zZQf1tX9s2Su1/3PiMmUANFULpmksxkClamIZcaUqryHsQ==}
@@ -5056,6 +5076,22 @@ packages:
 
 snapshots:
 
+  '@actions/core@3.0.1':
+    dependencies:
+      '@actions/exec': 3.0.0
+      '@actions/http-client': 4.0.1
+
+  '@actions/exec@3.0.0':
+    dependencies:
+      '@actions/io': 3.0.2
+
+  '@actions/http-client@4.0.1':
+    dependencies:
+      tunnel: 0.0.6
+      undici: 6.29.0
+
+  '@actions/io@3.0.2': {}
+
   '@adobe/css-tools@4.4.4': {}
 
   '@asamuzakjp/css-color@5.1.11':
@@ -5216,10 +5252,11 @@ snapshots:
     optionalDependencies:
       react-dom: 19.2.5(react@19.2.5)
 
-  '@ciderjs/clasp-auth@0.2.0(@types/node@26.6.2)':
+  '@ciderjs/clasp-auth@0.3.0(@types/node@26.6.2)':
     dependencies:
-      '@inquirer/prompts': 7.10.1(@types/node@26.6.2)
-      commander: 14.0.3
+      '@actions/core': 3.0.1
+      '@inquirer/prompts': 8.7.2(@types/node@26.6.2)
+      commander: 15.0.0
     transitivePeerDependencies:
       - '@types/node'
 
@@ -9343,6 +9380,8 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  tunnel@0.0.6: {}
+
   type-fest@0.21.3: {}
 
   type-fest@4.41.0: {}
@@ -9422,6 +9461,8 @@ snapshots:
   undici-types@6.21.0: {}
 
   undici-types@8.9.0: {}
+
+  undici@6.29.0: {}
 
   undici@7.25.0: {}
 

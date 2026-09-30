@@ -17,7 +17,7 @@ description: CiderJS プロジェクトにおける新規 RPC エンドポイン
 
 ```typescript
 // <%= templateType.startsWith('server-') ? 'src/app.ts' : 'server/app.ts' %>
-import { serialize, type JsonString } from '@ciderjs/gasnuki';
+import { serialize, type JsonString } from '@ciderjs/gasnuki/json';
 
 export interface Item {
   id: string;
@@ -35,6 +35,8 @@ export function getItemList(category: string): JsonString<Item[]> {
 }
 ```
 
+<% if (!templateType.startsWith('server-')) { -%>
+
 ### Step 2: 型定義の自動生成 (`gasnuki`)
 
 ターミナルで以下のコマンドを実行します。
@@ -43,7 +45,8 @@ export function getItemList(category: string): JsonString<Item[]> {
 pnpm run generate
 ```
 
-`types/appsscript.d.ts` が自動生成・更新され、`ServerScripts` インターフェースに `getItemList` が反映されます。
+`types/appsscript/client.ts` が自動生成・更新され、`ServerScripts` インターフェースに `getItemList` が反映されます。
+<% } -%>
 <% if (!templateType.startsWith('server-')) { -%>
 
 ### Step 3: ローカルモックの追加 (`src/lib/server.ts`)
@@ -76,7 +79,7 @@ async function fetchItems() {
 
 <% } -%>
 
-### Step <%= !templateType.startsWith('server-') ? '5' : '3' %>: リント・テスト・ビルド検証
+### Step <%= !templateType.startsWith('server-') ? '5' : '2' %>: リント・テスト・ビルド検証
 
 ```bash
 pnpm run check && pnpm test && pnpm run build

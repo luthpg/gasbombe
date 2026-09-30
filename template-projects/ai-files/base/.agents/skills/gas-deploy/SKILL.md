@@ -65,6 +65,14 @@ clasp update-deployment <GAS_DEPLOYMENT_ID>
 pnpm run auth my-org/my-repo
 ```
 
+> `clasp-auth upload` は `CLASPRC_JSON`（ローカル認証）と `CLASP_JSON`（`.clasp.json`）の両方を GitHub Secrets に登録します。
+
+次に `GAS_DEPLOYMENT_ID` を手動登録します（初回デプロイ後に表示される ID）:
+
+```bash
+gh secret set GAS_DEPLOYMENT_ID --repo my-org/my-repo
+```
+
 ### GitHub Actions ワークフローの例 (`.github/workflows/deploy.yml`)
 
 ```yaml
@@ -88,14 +96,10 @@ jobs:
           cache: 'pnpm'
 
       - name: Setup clasp auth
-        uses: ciderjs/clasp-auth@v0.1.3
+        uses: ciderjs/clasp-auth@v0.3.0
         with:
           json: ${{ secrets.CLASPRC_JSON }}
-
-      - name: Setup .clasp.json
-        env:
-          CLASP_JSON: ${{ secrets.CLASP_JSON }}
-        run: printf '%s' "$CLASP_JSON" > ".clasp.json"
+          clasp_json: ${{ secrets.CLASP_JSON }}
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -112,7 +116,7 @@ jobs:
       - name: Deploy (update existing deployment)
         env:
           GAS_DEPLOYMENT_ID: ${{ secrets.GAS_DEPLOYMENT_ID }}
-        run: clasp update-deployment "$GAS_DEPLOYMENT_ID"
+        run: pnpm run update
 ```
 
 <% } else { -%>
@@ -124,6 +128,7 @@ jobs:
 ```bash
 # clasp 認証情報を登録
 gh secret set CLASPRC_JSON --repo my-org/my-repo < "$HOME/.clasprc.json"
+
 
 # プロジェクト設定ファイルを登録
 gh secret set CLASP_JSON --repo my-org/my-repo < ".clasp.json"
@@ -182,7 +187,7 @@ jobs:
       - name: Deploy (update existing deployment)
         env:
           GAS_DEPLOYMENT_ID: ${{ secrets.GAS_DEPLOYMENT_ID }}
-        run: clasp update-deployment "$GAS_DEPLOYMENT_ID"
+        run: pnpm run update
 ```
 
 <% } -%>

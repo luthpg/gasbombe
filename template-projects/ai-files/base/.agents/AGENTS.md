@@ -31,7 +31,7 @@ AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ド
 | `npm run update` / `pnpm run update` | 既存デプロイのバージョン更新（`clasp update-deployment` + `$GAS_DEPLOYMENT_ID`） |
 
 <% if (templateType.includes('ciderjs')) { -%>
-| `pnpm run auth <owner/repo>` | `@ciderjs/clasp-auth` で clasp 認証情報を GitHub Secrets に登録 |
+| `pnpm run auth <owner/repo>` | `@ciderjs/clasp-auth` で clasp 認証情報・プロジェクト情報を GitHub Secrets に登録 |
 <% } -%>
 
 ---
