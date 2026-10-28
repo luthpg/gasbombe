@@ -27,8 +27,12 @@ export async function runCommand(
   cwd: string,
   capture = false,
 ): Promise<string> {
+  const parts = command.split(" ");
+  const actualCommand = parts[0] as string;
+  const actualArgs = [...parts.slice(1), ...args];
+
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, {
+    const child = spawn(actualCommand, actualArgs, {
       cwd,
       stdio: capture ? "pipe" : "inherit",
       shell: isWindows(),
@@ -72,12 +76,14 @@ async function handleClaspSetup(
     return;
   }
 
-  const npxLikeCommand =
+  const [cmd, ...baseArgs] =
     packageManager === "npm"
-      ? "npx"
+      ? ["npx"]
       : packageManager === "pnpm"
-        ? "pnpm dlx"
-        : "yarn dlx";
+        ? ["pnpm", "dlx"]
+        : ["yarn", "dlx"];
+
+  const npxLikeCommand = [cmd, ...baseArgs].join(" ");
 
   consola.start(
     `Setting up .clasp.json with \`${npxLikeCommand} @google/clasp\`...`,
@@ -85,7 +91,11 @@ async function handleClaspSetup(
 
   if (claspOption === "create" || claspOption === "list") {
     try {
-      await runCommand(npxLikeCommand, ["@google/clasp", "status"], outputDir);
+      await runCommand(
+        cmd,
+        [...baseArgs, "@google/clasp", "status"],
+        outputDir,
+      );
     } catch {
       consola.error(
         `It seems you are not logged in to clasp. Please run \`${npxLikeCommand} @google/clasp login\` and try again.`,
@@ -113,8 +123,9 @@ async function handleClaspSetup(
         }
 
         const result = await runCommand(
-          npxLikeCommand,
+          cmd,
           [
+            ...baseArgs,
             "@google/clasp",
             "create",
             "--title",
@@ -141,8 +152,8 @@ async function handleClaspSetup(
     case "list":
       try {
         const listOutput = await runCommand(
-          npxLikeCommand,
-          ["@google/clasp", "list"],
+          cmd,
+          [...baseArgs, "@google/clasp", "list"],
           outputDir,
           true,
         );

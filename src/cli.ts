@@ -72,24 +72,28 @@ export async function main(): Promise<void> {
       let claspProjectId: string | undefined;
 
       try {
-        const validProjectNameRegex = /^(?!.*\.\.)[a-zA-Z0-9_-]+$/;
+        const isValidProjectName = (name: string): boolean => {
+          if (name === ".") {
+            return true;
+          }
+          const validProjectNameRegex = /^(?!.*\.\.)[a-zA-Z0-9_-]+$/;
+          return (
+            validProjectNameRegex.test(name) &&
+            !name.includes("/") &&
+            !name.includes("\\")
+          );
+        };
+
         projectName ||= await input({
           message: "Input project name what you want to generate...",
           validate: (value) => {
-            if (value === ".") {
-              return true;
-            }
-            if (
-              validProjectNameRegex.test(value) &&
-              !value.includes("/") &&
-              !value.includes("\\")
-            ) {
+            if (isValidProjectName(value)) {
               return true;
             }
             return 'Project name must be "." or a valid folder name without path characters.';
           },
         });
-        if (!validProjectNameRegex.test(projectName)) {
+        if (!isValidProjectName(projectName)) {
           throw Error("Invalid project name");
         }
 

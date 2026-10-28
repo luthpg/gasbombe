@@ -3,7 +3,7 @@ import { spawn } from 'node:child_process';
 import type { EventEmitter } from 'node:events';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { select } from '@inquirer/prompts';
+import { confirm, select } from '@inquirer/prompts';
 import { consola } from 'consola';
 import ejs from 'ejs';
 import { glob } from 'glob';
@@ -138,6 +138,18 @@ describe('generateProject', () => {
       'Directory test-project already exists.',
     );
     expect(process.exit).toHaveBeenCalledWith(1);
+  });
+
+  it('should allow "." as projectName and succeed when confirmed', async () => {
+    vi.mocked(fs.readdir).mockResolvedValue(['file.txt'] as any);
+    vi.mocked(confirm).mockResolvedValue(true);
+
+    await generateProject({ ...projectOptions, projectName: '.' });
+
+    expect(fs.mkdir).toHaveBeenCalledWith(process.cwd(), { recursive: true });
+    expect(consola.info).toHaveBeenCalledWith(
+      expect.stringContaining("Generating project files from template"),
+    );
   });
 
   it('should create project files from templates', async () => {
@@ -293,8 +305,8 @@ describe('generateProject', () => {
       await generateProject({ ...projectOptions, clasp: 'create' });
 
       expect(spawn).toHaveBeenCalledWith(
-        'pnpm dlx',
-        expect.arrayContaining(['create']),
+        'pnpm',
+        expect.arrayContaining(['dlx', '@google/clasp', 'create']),
         expect.objectContaining({ cwd: outputDir }),
       );
       expect(fs.writeFile).toHaveBeenCalledWith(
@@ -362,8 +374,8 @@ describe('generateProject', () => {
       await generateProject({ ...projectOptions, clasp: 'list' });
 
       expect(spawn).toHaveBeenCalledWith(
-        'pnpm dlx',
-        ['@google/clasp', 'list'],
+        'pnpm',
+        ['dlx', '@google/clasp', 'list'],
         expect.objectContaining({ cwd: outputDir }),
       );
       expect(select).toHaveBeenCalled();
