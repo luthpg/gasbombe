@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite",
     "tsc": "node ./node_modules/@typescript/v7/bin/tsc --noEmit",
-    "build:server": "pnpm run tsc && rolldown -c && cpy server/*.json dist/",
-    "build:front": "pnpm run generate && vite build && vue-tsc -b",
-    "build": "rimraf dist && pnpm run build:front && pnpm run build:server",
+    "build:server": "cross-var $npm_execpath run tsc && rolldown -c && cpy server/*.json dist/",
+    "build:front": "cross-var $npm_execpath run generate && vite build && vue-tsc -b",
+    "build": "rimraf dist && cross-var $npm_execpath run build:front && cross-var $npm_execpath run build:server",
     "check": "biome check --write",
     "generate": "gasnuki",
     "test": "vitest run --coverage",

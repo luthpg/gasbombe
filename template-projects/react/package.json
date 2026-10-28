@@ -7,7 +7,7 @@
     "dev": "vite",
     "build:server": "rolldown -c && cpy server/*.json dist/",
     "build:front": "tsc -b && vite build",
-    "build": "rimraf dist && pnpm run build:front && pnpm run build:server",
+    "build": "rimraf dist && cross-var $npm_execpath run build:front && cross-var $npm_execpath run build:server",
     "check": "biome check --write",
     "test": "vitest run --coverage",
     "push": "clasp push",

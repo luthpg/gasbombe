@@ -178,7 +178,7 @@ importers:
         version: 2.5.14
       '@google/clasp':
         specifier: 'catalog:'
-        version: 3.3.0(@types/node@26.6.2)(supports-color@7.2.0)(typescript@7.0.2)
+        version: 3.3.0(@types/node@26.6.2)(supports-color@7.2.0)(typescript@5.9.3)
       '@testing-library/dom':
         specifier: 'catalog:'
         version: 10.4.1
@@ -191,9 +191,18 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.2
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 5.0.1(vitest@5.0.1)
       cpy-cli:
         specifier: 'catalog:'
         version: 7.0.0
+      cross-var:
+        specifier: 'catalog:'
+        version: 1.1.0(supports-color@7.2.0)
+      dotenv-cli:
+        specifier: 'catalog:'
+        version: 11.0.0
       jsdom:
         specifier: 'catalog:'
         version: 29.0.2
@@ -209,6 +218,12 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 8.0.10(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.2)(tsx@4.23.15)
+      vite-plugin-google-apps-script:
+        specifier: 'catalog:'
+        version: 0.4.1(supports-color@7.2.0)
+      vite-plugin-singlefile:
+        specifier: 'catalog:'
+        version: 2.3.3(rollup@4.63.5)(vite@8.0.10(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.2)(tsx@4.23.15))
       vitest:
         specifier: 'catalog:'
         version: 5.0.1(@types/node@26.6.2)(@vitest/coverage-v8@5.0.1)(jsdom@29.0.2)(vite@8.0.10(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.2)(tsx@4.23.15))
@@ -432,7 +447,7 @@ importers:
         version: 2.5.14
       '@google/clasp':
         specifier: 'catalog:'
-        version: 3.3.0(@types/node@26.6.2)(supports-color@7.2.0)(typescript@7.0.2)
+        version: 3.3.0(@types/node@26.6.2)(supports-color@7.2.0)(typescript@5.9.3)
       '@types/google-apps-script':
         specifier: 'catalog:'
         version: 2.0.8
@@ -709,10 +724,6 @@ packages:
     resolution: {integrity: sha512-+W6cISkXFa1jXsDEdYA8HeevQT/FULhxzR99pxphltZcVaugps53THCeiWA8SguxxpSp3gKPiuYfSWopkLQ4hw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-string-parser@7.27.1':
-    resolution: {integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==}
-    engines: {node: '>=6.9.0'}
-
   '@babel/helper-string-parser@7.29.7':
     resolution: {integrity: sha512-Pb5ijPrZ89GDH8223L4UP8i6QApWxs04RbPQJTeWDV0/keR2E36MeKnyr6LYmUUvqRRI+Iv87SuF1W6ErINzYw==}
     engines: {node: '>=6.9.0'}
@@ -729,11 +740,6 @@ packages:
     resolution: {integrity: sha512-HYx0YmuchRxRSpnjvcNffnPS8DCauKNmnumIuHG3jnQAVewRA7kfJGwF13ayEpSZs7s4R/oBH4eppuXcAQd5JQ==}
     engines: {node: ^22.18.0 || >=24.11.0}
 
-  '@babel/parser@7.29.2':
-    resolution: {integrity: sha512-4GgRzy/+fsBa72/RZVJmGKPmZu9Byn8o4MoLpmNe1m8ZfYnz5emHLQz3U4gLud6Zwl0RZIcgiLD7Uq7ySFuDLA==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-
   '@babel/parser@7.29.9':
     resolution: {integrity: sha512-CjXrNHTnvqBVqHgdBysY3vk2T8tpJHb5/RMeHJBTyVa9xgugCB0CJTx/3oO8RV2QRQP391RWpB7D6hLjm8V9uA==}
     engines: {node: '>=6.0.0'}
@@ -749,10 +755,6 @@ packages:
 
   '@babel/traverse@7.29.0':
     resolution: {integrity: sha512-4HPiQr0X7+waHfyXPZpWPfWL/J7dcN1mx9gL6WdQVMbPnF3+ZhSMs8tCxN7oHddJE9fhNE7+lxdnlyemKfJRuA==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/types@7.29.0':
-    resolution: {integrity: sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.29.8':
@@ -5128,15 +5130,13 @@ snapshots:
 
   '@babel/generator@7.29.1':
     dependencies:
-      '@babel/parser': 7.29.2
-      '@babel/types': 7.29.0
+      '@babel/parser': 7.29.9
+      '@babel/types': 7.29.8
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
       jsesc: 3.1.0
 
   '@babel/helper-globals@7.28.0': {}
-
-  '@babel/helper-string-parser@7.27.1': {}
 
   '@babel/helper-string-parser@7.29.7': {}
 
@@ -5147,10 +5147,6 @@ snapshots:
   '@babel/helper-validator-identifier@8.0.6':
     optional: true
 
-  '@babel/parser@7.29.2':
-    dependencies:
-      '@babel/types': 7.29.0
-
   '@babel/parser@7.29.9':
     dependencies:
       '@babel/types': 7.29.8
@@ -5160,25 +5156,20 @@ snapshots:
   '@babel/template@7.28.6':
     dependencies:
       '@babel/code-frame': 7.29.0
-      '@babel/parser': 7.29.2
-      '@babel/types': 7.29.0
+      '@babel/parser': 7.29.9
+      '@babel/types': 7.29.8
 
   '@babel/traverse@7.29.0(supports-color@7.2.0)':
     dependencies:
       '@babel/code-frame': 7.29.0
       '@babel/generator': 7.29.1
       '@babel/helper-globals': 7.28.0
-      '@babel/parser': 7.29.2
+      '@babel/parser': 7.29.9
       '@babel/template': 7.28.6
-      '@babel/types': 7.29.0
+      '@babel/types': 7.29.8
       debug: 4.4.3(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/types@7.29.0':
-    dependencies:
-      '@babel/helper-string-parser': 7.27.1
-      '@babel/helper-validator-identifier': 7.28.5
 
   '@babel/types@7.29.8':
     dependencies:
@@ -6569,7 +6560,7 @@ snapshots:
       babel-generator: 6.26.1
       babel-helpers: 6.24.1(supports-color@7.2.0)
       babel-messages: 6.23.0
-      babel-register: 6.26.0(supports-color@7.2.0)
+      babel-register: 6.26.0
       babel-runtime: 6.26.0
       babel-template: 6.26.0(supports-color@7.2.0)
       babel-traverse: 6.26.0(supports-color@7.2.0)
@@ -7028,7 +7019,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-register@6.26.0(supports-color@7.2.0):
+  babel-register@6.26.0:
     dependencies:
       babel-core: 6.26.3(supports-color@7.2.0)
       babel-runtime: 6.26.0
@@ -7037,8 +7028,6 @@ snapshots:
       lodash: 4.18.1
       mkdirp: 0.5.6
       source-map-support: 0.4.18
-    transitivePeerDependencies:
-      - supports-color
 
   babel-runtime@6.26.0:
     dependencies:
@@ -7308,7 +7297,7 @@ snapshots:
     dependencies:
       babel-preset-es2015: 6.24.1(supports-color@7.2.0)
       babel-preset-stage-0: 6.24.1(supports-color@7.2.0)
-      babel-register: 6.26.0(supports-color@7.2.0)
+      babel-register: 6.26.0
       cross-spawn: 5.1.0
       exit: 0.1.2
     transitivePeerDependencies:
@@ -9502,7 +9491,7 @@ snapshots:
   vite-plugin-google-apps-script@0.4.1(supports-color@7.2.0):
     dependencies:
       '@babel/generator': 7.29.1
-      '@babel/parser': 7.29.2
+      '@babel/parser': 7.29.9
       '@babel/traverse': 7.29.0(supports-color@7.2.0)
       terser: 5.46.2
     transitivePeerDependencies:
