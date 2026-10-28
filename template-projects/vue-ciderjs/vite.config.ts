@@ -1,5 +1,6 @@
 /// <reference types="vitest/config" />
 
+import path from "node:path";
 import { cityGasRouter } from "@ciderjs/city-gas/plugin";
 import { gasnuki } from "@ciderjs/gasnuki/vite";
 import { mockGas } from "@ciderjs/vitest-plugin-gas-mock";
@@ -22,6 +23,10 @@ export default defineConfig({
   },
   resolve: {
     tsconfigPaths: true,
+    alias: {
+      "@": path.resolve(import.meta.dirname, "./src"),
+      "~": path.resolve(import.meta.dirname, "./"),
+    },
   },
   plugins: [
     vue(),

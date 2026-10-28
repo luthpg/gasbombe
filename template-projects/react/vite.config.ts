@@ -19,8 +19,8 @@ export default defineConfig({
     },
     alias: [
       {
-        find: /^\/(.*\.(svg|png|jpg|jpeg|gif|webp|ico))$/,
-        replacement: path.resolve(__dirname, "public/$1"),
+        find: /^\/([^/]+\.(svg|png|jpg|jpeg|gif|webp|ico))$/,
+        replacement: path.resolve(import.meta.dirname, "public/$1"),
       },
     ],
   },
