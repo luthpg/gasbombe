@@ -8,7 +8,7 @@ import { consola } from 'consola';
 import ejs from 'ejs';
 import { glob } from 'glob';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { generateProject, runCommand } from '../src/index';
+import { DEFAULT_CLASP_CONFIG, generateProject, runCommand } from '../src/index';
 
 // Mock all dependencies
 vi.mock('node:child_process');
@@ -284,6 +284,14 @@ describe('generateProject', () => {
       expect(consola.error).toHaveBeenCalledWith(
         expect.stringContaining('It seems you are not logged in to clasp.'),
       );
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        path.join(outputDir, '.clasp.json'),
+        JSON.stringify(DEFAULT_CLASP_CONFIG, null, 2),
+        { encoding: 'utf-8' },
+      );
+      expect(consola.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Falling back to template .clasp.json'),
+      );
     });
 
     it('should create a new clasp project', async () => {
@@ -333,6 +341,14 @@ describe('generateProject', () => {
         'Failed to create new Apps Script project.',
         expect.any(Error),
       );
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        path.join(outputDir, '.clasp.json'),
+        JSON.stringify(DEFAULT_CLASP_CONFIG, null, 2),
+        { encoding: 'utf-8' },
+      );
+      expect(consola.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Falling back to template .clasp.json'),
+      );
     });
 
     it('should handle failure when parsing scriptId from clasp create output', async () => {
@@ -351,6 +367,14 @@ describe('generateProject', () => {
       expect(consola.error).toHaveBeenCalledWith(
         'Failed to create new Apps Script project.',
         new Error('Could not parse scriptId from clasp output.'),
+      );
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        path.join(outputDir, '.clasp.json'),
+        JSON.stringify(DEFAULT_CLASP_CONFIG, null, 2),
+        { encoding: 'utf-8' },
+      );
+      expect(consola.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Falling back to template .clasp.json'),
       );
     });
 
@@ -401,6 +425,79 @@ describe('generateProject', () => {
       await generateProject({ ...projectOptions, clasp: 'list' });
       expect(consola.warn).toHaveBeenCalledWith(
         'No existing Apps Script projects found. Please create one first.',
+      );
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        path.join(outputDir, '.clasp.json'),
+        JSON.stringify(DEFAULT_CLASP_CONFIG, null, 2),
+        { encoding: 'utf-8' },
+      );
+      expect(consola.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Falling back to template .clasp.json'),
+      );
+    });
+
+    it('should handle failure when listing clasp projects', async () => {
+      vi.mocked(spawn).mockImplementation((_cmd, args) => {
+        const mockProcess = createMockProcess();
+        process.nextTick(() => {
+          mockProcess.emit('close', args?.includes('list') ? 1 : 0);
+        });
+        return mockProcess;
+      });
+
+      await generateProject({ ...projectOptions, clasp: 'list' });
+      expect(consola.error).toHaveBeenCalledWith(
+        'Failed to list Apps Script projects.',
+        expect.any(Error),
+      );
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        path.join(outputDir, '.clasp.json'),
+        JSON.stringify(DEFAULT_CLASP_CONFIG, null, 2),
+        { encoding: 'utf-8' },
+      );
+      expect(consola.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Falling back to template .clasp.json'),
+      );
+    });
+
+    it('should preserve existing .clasp.json configuration on fallback', async () => {
+      const existingClaspJson = {
+        rootDir: 'dist',
+        parentId: ['folder-id-123'],
+      };
+
+      vi.mocked(fs.readFile).mockImplementation(async (p) => {
+        if (typeof p === 'string' && p.endsWith('.clasp.json')) {
+          return JSON.stringify(existingClaspJson);
+        }
+        if (typeof p === 'string' && p.endsWith('catalog.json')) {
+          return JSON.stringify({ '@biomejs/biome': '^2.0.0' });
+        }
+        return 'template content';
+      });
+
+      vi.mocked(spawn).mockImplementation((_cmd, args) => {
+        const mockProcess = createMockProcess();
+        process.nextTick(() => {
+          mockProcess.emit('close', args?.includes('create') ? 1 : 0);
+        });
+        return mockProcess;
+      });
+
+      await generateProject({ ...projectOptions, clasp: 'create' });
+
+      expect(fs.writeFile).toHaveBeenCalledWith(
+        path.join(outputDir, '.clasp.json'),
+        JSON.stringify(
+          {
+            ...DEFAULT_CLASP_CONFIG,
+            ...existingClaspJson,
+            scriptId: '{{ input your script id of apps-script }}',
+          },
+          null,
+          2,
+        ),
+        { encoding: 'utf-8' },
       );
     });
 
