@@ -65,6 +65,34 @@ export async function runCommand(
   });
 }
 
+export const DEFAULT_CLASP_CONFIG = {
+  $schema: "https://json.schemastore.org/clasp.json",
+  scriptId: "{{ input your script id of apps-script }}",
+  rootDir: "dist",
+};
+
+export async function fallbackClaspJson(
+  outputDir: string,
+  existingClaspJson: { [key: string]: unknown } | null,
+): Promise<void> {
+  const claspJsonPath = path.join(outputDir, ".clasp.json");
+  const fallbackJson = existingClaspJson
+    ? {
+        ...DEFAULT_CLASP_CONFIG,
+        ...existingClaspJson,
+        scriptId:
+          (existingClaspJson.scriptId as string) ||
+          "{{ input your script id of apps-script }}",
+      }
+    : DEFAULT_CLASP_CONFIG;
+
+  const content = JSON.stringify(fallbackJson, null, 2);
+  await fs.writeFile(claspJsonPath, content, { encoding: "utf-8" });
+  consola.warn(
+    "Falling back to template .clasp.json. Please set `scriptId` manually.",
+  );
+}
+
 async function handleClaspSetup(
   claspOption: ProjectOptions["clasp"],
   projectName: string,
@@ -89,6 +117,19 @@ async function handleClaspSetup(
     `Setting up .clasp.json with \`${npxLikeCommand} @google/clasp\`...`,
   );
 
+  const claspJsonPath = path.join(outputDir, ".clasp.json");
+  let existingClaspJson: {
+    scriptId: string;
+    [key: string]: string | string[];
+  } | null = null;
+
+  try {
+    const existingContent = await fs.readFile(claspJsonPath, "utf-8");
+    existingClaspJson = JSON.parse(existingContent);
+  } catch {
+    // No existing .clasp.json, which is fine.
+  }
+
   if (claspOption === "create" || claspOption === "list") {
     try {
       await runCommand(
@@ -100,23 +141,17 @@ async function handleClaspSetup(
       consola.error(
         `It seems you are not logged in to clasp. Please run \`${npxLikeCommand} @google/clasp login\` and try again.`,
       );
+      await fallbackClaspJson(outputDir, existingClaspJson);
       return;
     }
   }
 
   let scriptId: string | undefined;
-  let existingClaspJson: {
-    scriptId: string;
-    [key: string]: string | string[];
-  } | null = null;
 
   switch (claspOption) {
     case "create":
       try {
-        const claspJsonPath = path.join(outputDir, ".clasp.json");
         try {
-          const existingContent = await fs.readFile(claspJsonPath, "utf-8");
-          existingClaspJson = JSON.parse(existingContent);
           await fs.unlink(claspJsonPath);
         } catch {
           // No existing .clasp.json, which is fine.
@@ -145,6 +180,7 @@ async function handleClaspSetup(
         }
       } catch (e) {
         consola.error("Failed to create new Apps Script project.", e);
+        await fallbackClaspJson(outputDir, existingClaspJson);
         return;
       }
       break;
@@ -182,6 +218,7 @@ async function handleClaspSetup(
           consola.warn(
             "No existing Apps Script projects found. Please create one first.",
           );
+          await fallbackClaspJson(outputDir, existingClaspJson);
           return;
         }
 
@@ -191,6 +228,7 @@ async function handleClaspSetup(
         });
       } catch (e) {
         consola.error("Failed to list Apps Script projects.", e);
+        await fallbackClaspJson(outputDir, existingClaspJson);
         return;
       }
       break;
@@ -201,7 +239,6 @@ async function handleClaspSetup(
   }
 
   if (scriptId) {
-    const claspJsonPath = path.join(outputDir, ".clasp.json");
     let claspJson: { scriptId: string; [key: string]: string | string[] } = {
       scriptId,
     };
