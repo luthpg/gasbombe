@@ -1,6 +1,6 @@
 # <%= projectName %> - AI Agent 開発ガイド
 
-このプロジェクトは、Google Apps Script (GAS) 向けの開発環境（Gasbombe により生成）です。
+このプロジェクトは、Google Apps Script (GAS) 向けの開発環境（[Gasbombe](https://ciderlabs.link/docs/gasbombe) により生成）です。
 AI Coding Agent（Gemini, Codex, Claude Code, Cursor, Copilot 等）は、本ドキュメントおよび `.agents/rules/` に記載された制約とワークフローを必ず遵守してください。
 
 ---

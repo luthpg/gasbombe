@@ -1,9 +1,18 @@
 {
   "name": "@ciderjs/gasbombe",
-  "version": "0.5.2",
-  "description": "A TypeScript Project Generator for GoogleAppsScript, available as CLI",
+  "version": "0.5.3",
+  "description": "A CLI & TypeScript Project Generator for Google Apps Script (React, Vue, CiderJS, AI Agent-Ready)",
   "type": "module",
   "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
   "bin": {
     "gasbombe": "dist/cli.cjs"
   },
@@ -16,8 +25,6 @@
     "README.md",
     "README.ja.md"
   ],
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "tsx src/cli",
     "tsc": "tsc --noEmit",
@@ -28,6 +35,8 @@
     "generate": "tsx scripts/copyTemplates",
     "test": "vitest run --coverage",
     "build": "pnpm run tsc && unbuild && pnpm run generate",
+    "up:templates": "pnpm --filter \"@gasbombe/*\" --filter \"!@gasbombe/vue*\" update -L && pnpm --filter \"@gasbombe/vue*\" update -L \"!typescript\"",
+    "up:all": "pnpm --filter \"!@gasbombe/vue*\" -r update -L && pnpm --filter \"@gasbombe/vue*\" update -L \"!typescript\"",
     ":react-c": "pnpm -C template-projects/react-ciderjs",
     ":vue-c": "pnpm -C template-projects/vue-ciderjs",
     ":react": "pnpm -C template-projects/react",
@@ -39,9 +48,20 @@
   },
   "keywords": [
     "googleappsscript",
+    "google-apps-script",
+    "gas",
+    "clasp",
     "generator",
+    "scaffold",
+    "template",
+    "cli",
     "typescript",
-    "react"
+    "react",
+    "vue",
+    "vite",
+    "rolldown",
+    "ciderjs",
+    "ai-agent"
   ],
   "author": "ciderjs/luthpg",
   "license": "MIT",
@@ -52,7 +72,7 @@
   "bugs": {
     "url": "https://github.com/luthpg/gasbombe/issues"
   },
-  "homepage": "https://github.com/luthpg/gasbombe#readme",
+  "homepage": "https://ciderlabs.link/docs/gasbombe",
   "devDependencies": {
     "@biomejs/biome": "catalog:",
     "@inquirer/prompts": "^8.7.5",
@@ -77,8 +97,8 @@
     "@inquirer/prompts": "^7 || ^8",
     "commander": "^14 || ^15",
     "consola": "^3",
-    "ejs": "^3 || ^4 || ^5 || ^6",
-    "glob": "^11 || ^12 || ^13"
+    "ejs": "^3 || ^4 || ^5 || ^6 || ^7",
+    "glob": "^11 || ^12 || ^13 || ^14"
   },
   "overrides": {
     "axios": "1.14.0"

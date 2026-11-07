@@ -6,7 +6,14 @@ import { confirm, select } from "@inquirer/prompts";
 import { consola } from "consola";
 import ejs from "ejs";
 import { glob } from "glob";
-import type { ProjectOptions } from "../types";
+import type {
+  ClaspOption,
+  PackageManager,
+  ProjectOptions,
+  TemplateType,
+} from "../types";
+
+export type { ClaspOption, PackageManager, ProjectOptions, TemplateType };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

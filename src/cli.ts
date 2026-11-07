@@ -50,6 +50,10 @@ export async function main(): Promise<void> {
       "Skip Git repository initialization after generating the project",
       false,
     )
+    .addHelpText(
+      "after",
+      "\nDocumentation: https://ciderlabs.link/docs/gasbombe",
+    )
     .action(async (_param, command: Command) => {
       let {
         name: projectName,
