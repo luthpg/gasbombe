@@ -120,6 +120,9 @@ tests/
 types/
 scripts/
 template-projects/
+.agents/
+.docs/
+.local/
 
 # Other Readmes
 README.ja.md

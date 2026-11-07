@@ -2,7 +2,7 @@
 
 ## 1. 概要 (Introduction)
 
-`@ciderjs/gasbombe` は、Google Apps Script (GAS) プロジェクトをコマンド一発で構築できるTypeScript製CLIジェネレーターです。
+`@ciderjs/gasbombe` は、Google Apps Script (GAS) プロジェクトをコマンド一発で構築できるTypeScript製CLIジェネレーターです（[公式リファレンス: https://ciderlabs.link/docs/gasbombe](https://ciderlabs.link/docs/gasbombe)）。
 通常、GASでReactやVueを用いたモダンなフロントエンド開発環境や、TypeScript、claspを組み合わせたローカル開発環境を構築するには、複雑な設定ファイルやビルド構成を自作するなど多大な労力が必要です。
 このパッケージは、それらのベストプラクティスが詰まったテンプレートからプロジェクトを自動生成し、「claspの設定」「パッケージのインストール」「Gitの初期化」までをシームレスに行うことで、開発者がすぐにビジネスロジックの実装に集中できる環境を提供します。
 
@@ -35,8 +35,7 @@ npx @ciderjs/gasbombe -n my-gas-project -p pnpm -t react-ciderjs -c skip --git -
 自社のワークフロー自動化ツール内で `generateProject` を呼び出し、GASプロジェクトの足場を自動生成するユースケースです。
 
 ```typescript
-import { generateProject } from '@ciderjs/gasbombe';
-import type { ProjectOptions } from '@ciderjs/gasbombe/types';
+import { generateProject, type ProjectOptions } from '@ciderjs/gasbombe';
 
 const options: ProjectOptions = {
   projectName: 'automated-gas-app',

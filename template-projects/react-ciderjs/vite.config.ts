@@ -35,6 +35,8 @@ export default defineConfig({
     react(),
     cityGasRouter(),
     gasnuki(),
+    // Note: `gas()` is only required when using GAS scriptlets (`HtmlService.createTemplateFromFile()`).
+    // If using `createHtmlOutputFromFile()`, remove `gas()` to avoid URL stripping in template literals and JSDoc removal.
     gas(),
     mockGas(),
     viteSingleFile(),
