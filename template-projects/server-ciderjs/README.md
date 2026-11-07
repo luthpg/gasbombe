@@ -7,10 +7,6 @@ Currently, these plugins and tools are configured:
 - [@ciderjs/vitest-plugin-gas-mock](https://github.com/luthpg/vitest-plugin-gas-mock) for GAS API Mocking in Vitest
 - [rolldown](https://github.com/rolldown/rolldown) for transpiling TypeScript files and bundling server-side files
 
-<!-- coderabbit-ai-generated:v1 -->
-
-<!-- coderabbit-ai-generated-section:v1:7f850572a1f8a3dc8811e487b2eb8af1e9209c42ab9ceffe0f607fd1917aaf94 -->
-
 ## Using Clasp authentication in CI/CD workflow with @ciderjs/clasp-auth
 
 Create the workflow below in the generated project's repository; pushing a Version Tag alone does not configure deployment.
@@ -67,8 +63,6 @@ To update an existing deployment, replace the `pnpm run deploy` step with the fo
         env:
           GAS_DEPLOYMENT_ID: ${{ secrets.GAS_DEPLOYMENT_ID }}
 ```
-
-<!-- /coderabbit-ai-generated:v1 -->
 
 ## Documentation
 
